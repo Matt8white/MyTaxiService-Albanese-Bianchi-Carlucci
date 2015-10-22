@@ -1,27 +1,63 @@
-\documentclass[]{book} 
+\documentclass[a4paper,12pt]{article} 
 
+% ----------------
 % SETTINGS
+% ----------------
 \usepackage{graphicx}
-\graphicspath{{figures/}}
+\graphicspath{{figures/}{../figures/}}
 
+% ----------------
 % DOCUMENT
+% ----------------
 \begin{document}
 
-\tableofcontents
+% ----------------
+% TITLE
+% ----------------
+\begin{titlepage}
+\begin{center}
+\textsc{\LARGE Requirement Analysis and Specification Document}\\[1.5cm] % 
 
+\rule{\linewidth}{0.5mm} \\[0.7cm]
+{\huge \bfseries MyTaxiService}\\[0.4cm] % Thesis title
+\rule{\linewidth}{0.5mm} \\[1.5cm]
+ 
+\emph{Authors:}\\
+M. Albanese, M. Bianchi, A. Carlucci\\[2.0cm] 
+
+\vfill
+\vfill
+\includegraphics[width=25mm]{polimi.png}\\
+\textsc{Politecnico Di Milano}
+\end{center}
+\end{titlepage}
+
+% ----------------
+% TABLE OF CONTENTS
+% ----------------
+\tableofcontents
+\pagebreak
+
+% ----------------
 % INTRODUCTION
+% ----------------
 \input{src/subfiles/introduction.tex}
 
+% ----------------
 % DESCRIPTION
+% ----------------
 \input{src/subfiles/description.tex}
 
+% ----------------
 % OTHER CHAPTERS
-\chapter{Specific requirements}
+% ----------------
+\section{Specific requirements}
 
-\chapter{Appendix}
+\section{Appendix}
 
-% \includegraphics{smile.jpg}
-
+% ----------------
+% SOME USEFUL STUFF
+% ----------------
 
 % \begin{usecase}
 % 	\begin{description}
@@ -35,4 +71,5 @@
 % 	\item[{Extends: }] % use case that curent one extends
 % 	\end{description}
 % \end{usecase}
+
 \end{document}
