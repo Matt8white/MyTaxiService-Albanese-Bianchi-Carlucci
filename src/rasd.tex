@@ -3,14 +3,14 @@
 % ----------------
 % SETTINGS
 % ----------------
+\usepackage{import}
 \usepackage{graphicx}
 \graphicspath{{figures/}{../figures/}}
-
+\input{setpath.tex}
 % ----------------
 % DOCUMENT
 % ----------------
 \begin{document}
-
 % ----------------
 % TITLE
 % ----------------
@@ -41,12 +41,12 @@ M. Albanese, M. Bianchi, A. Carlucci\\[2.0cm]
 % ----------------
 % INTRODUCTION
 % ----------------
-\input{subfiles/introduction.tex}
+\subimport{\CommonPath}{introduction.tex}
 
 % ----------------
 % DESCRIPTION
 % ----------------
-\input{subfiles/description.tex}
+\subimport{\CommonPath}{introduction.tex}
 
 % ----------------
 % OTHER CHAPTERS
