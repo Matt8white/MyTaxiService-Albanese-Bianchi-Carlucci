@@ -9,20 +9,73 @@
 % disponibilita' tassista (solo app)
 
 \subsection{Functional Requirements}
-\begin{enumerate}
-\item il tassista che e da piu tempo in coda dovrà gestire la richiesta pervenuta dal sistema
+\subsubsection{[G1] Allow users to access the platform by logging in.}
 	\begin{enumerate}
-	\item il primo tassista in coda dovrà ricevere una notifica quando ci sarà una richiesta per un taxi
-	\item ciascun tassista dovra risponde alla notifica entro 30 secondi
+	\item \textbf [R1] The user must not be already logged in.
+	\item \textbf [R2] The user must insert correct credentials to properly access.
 	\end{enumerate}
 
-\item il tassista che e da piu tempo in coda dovrà gestire la richiesta pervenuta dal sistema
+\subsubsection{[G2] Guarantee a fair management of the zone queues.}
 	\begin{enumerate}
-	\item il primo tassista in coda dovrà ricevere una notifica quando ci sarà una richiesta per un taxi
-	\item ciascun tassista dovra risponde alla notifica entro 30 secondi 
+	\item \textbf [R1] The taxi driver on top of the queue must receive a notification when a request comes.
+	\item \textbf [R2] Taxi drivers must positively answer to the notification in 30 seconds.
+	\item \textbf [D1] There is always a taxi driver in every queue.
+	\item \textbf [D2] A driver in queue is available to accept a ride.
+	\end{enumerate}
+
+\subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
+	\begin{enumerate}
+	\item \textbf [R1] ??
 	\end{enumerate}
 	
-\end{enumerate}
+\subsubsection{[G4] Allow taxi drivers to indicate their availability.}
+	\begin{enumerate}
+	\item \textbf [R1] Drivers has to press a specified button on their app
+	\end{enumerate}
+
+\subsubsection{[G5] Guarantee presence of taxi drivers in every zone.}
+	\begin{enumerate}
+	\item \textbf [R1] ??
+	\item \textbf [D1] The number of drivers is greater than the number of zones.
+	\end{enumerate}
+	
+\subsubsection{[G6] Allow developers to create and add functionalities to the system.}
+	\begin{enumerate}
+	\item \textbf [R1] The system must provide APIs.
+	\item \textbf [R2] These APIs must allow to run programmatically all and only what can be done by web or smartphone.
+	\item \textbf [R3] The system must check that every command submitted by APIs could be run at that user's level of privileges.
+	\end{enumerate}
+	
+\subsubsection{[G7] Allow customers the possibility to immediately call for a taxi.}
+	\begin{enumerate}
+	\item \textbf [R1] When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue.
+	\item \textbf [D1] 
+	\end{enumerate}
+
+\subsubsection{[G8] Allow customers to reserve a taxi for a given date and time.}
+	\begin{enumerate}
+	\item \textbf [R1]
+	\item \textbf [D1] 
+	\end{enumerate}
+
+\subsubsection{[G9] Allow customers the possibility to share a ride.}
+	\begin{enumerate}
+	\item \textbf [R1]
+	\item \textbf [D1] 
+	\end{enumerate}
+
+\subsubsection{[G10] Allow customers to receive informations about their reservation or call.}
+	\begin{enumerate}
+	\item \textbf [R1]
+	\item \textbf [D1] 
+	\end{enumerate}
+
+\subsubsection{[G11] Allow different types of payment.}
+	\begin{enumerate}
+	\item \textbf [R1]
+	\item \textbf [D1] 
+	\end{enumerate}	
+
 % --------OLD ---------------
 %functional requirements
 %  1) garantire l'accesso agli utenti
