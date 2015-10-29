@@ -18,9 +18,10 @@
 }}
 
 \newcounter{UseCaseCounter}
+\newcounter{ScenarioCounter}
 
 \newcommand{\usecase}[6]{
-	\stepcounter{UseCaseCounter}
+	\refstepcounter{UseCaseCounter}
 	\begin{tcolorbox}[
 		tab2,
 		tabularx*={\arrayrulewidth0.5mm}{Y|X},
@@ -36,4 +37,17 @@
 	\stepcounter{UseCaseCounter}\end{tcolorbox}
 }
 
+\newcommand{\scenario}[3]{
+	\refstepcounter{ScenarioCounter}
+	\label{scenario:#1}
+	\begin{tcolorbox}[
+		tab2,
+		title=Scenario \arabic{ScenarioCounter},
+		boxrule=2pt
+	]
+		\textbf{#2}
+		\tcblower
+		#3
+	\end{tcolorbox}
+}
 % \usecase{Application}{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
