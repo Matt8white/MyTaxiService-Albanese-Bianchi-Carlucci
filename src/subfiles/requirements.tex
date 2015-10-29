@@ -9,25 +9,33 @@
 % disponibilita' tassista (solo app)
 
 \subsection{Functional Requirements}
-\subsubsection{[G1] Allow users to access the platform by logging in.}
+\subsubsection{[G1] Allow guests to register to the platform.}
+	\begin{enumerate}
+	\item \textbf [R1] The guest must not be already registrated.
+	\item \textbf [R2] Guests cannot access services offered by the platform before being registered or logged in.
+	\item \textbf [R3] The email used for registration mush not be already used by another user.
+	\item \textbf [R4] The user must insert valid informations such as email and phone number.
+	\end{enumerate}
+
+\subsubsection{[G2] Allow users to access the platform by logging in.}
 	\begin{enumerate}
 	\item \textbf [R1] The user must not be already logged in.
 	\item \textbf [R2] The user must insert correct credentials to properly access.
 	\end{enumerate}
-
-\subsubsection{[G2] Guarantee a fair management of the zone queues.}
+	
+\subsubsection{[G3] Guarantee a fair management of the zone queues.}
 	\begin{enumerate}
-	\item \textbf [R1] The taxi driver on top of the queue must receive a notification when a request comes.
+	\item \textbf [R1] The taxi driver on top of the queue must receive a notification when a request comes. ???
 	\item \textbf [R2] Taxi drivers must positively answer to the notification in 30 seconds.
 	\item \textbf [D1] There is always a taxi driver in every queue.
 	\item \textbf [D2] A driver in queue is available to accept a ride.
 	\end{enumerate}
-
+%????
 \subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
 	\begin{enumerate}
 	\item \textbf [R1] ??
 	\end{enumerate}
-	
+%????	
 \subsubsection{[G4] Allow taxi drivers to indicate their availability.}
 	\begin{enumerate}
 	\item \textbf [R1] Drivers has to press a specified button on their app
@@ -35,7 +43,7 @@
 
 \subsubsection{[G5] Guarantee presence of taxi drivers in every zone.}
 	\begin{enumerate}
-	\item \textbf [R1] ??
+	\item \textbf [R1] A minimum number of taxi drivers, equal to the number of zones must be available.
 	\item \textbf [D1] The number of drivers is greater than the number of zones.
 	\end{enumerate}
 	
@@ -48,7 +56,7 @@
 	
 \subsubsection{[G7] Allow customers the possibility to immediately call for a taxi.}
 	\begin{enumerate}
-	\item \textbf [R1] When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue.
+	\item \textbf [R1] When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue. ???
 	\item \textbf [D1] 
 	\end{enumerate}
 
