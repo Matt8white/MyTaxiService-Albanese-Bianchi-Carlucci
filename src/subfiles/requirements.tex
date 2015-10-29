@@ -8,81 +8,120 @@
 % riepilogo dati
 % disponibilita' tassista (solo app)
 
+% Counter Goals
+\newcounter{FunReqG}
+% Counter Requirements, si resetta quando cambia quello dei goal
+\newcounter{FunReqR}[FunReqG]
+% Counter Dom. Assumptions, si resetta quando cambia quello dei goal
+\newcounter{FunReqD}[FunReqG]
+
+% --- TUTORIAL SU COME FARE GOALS ---
+% \begin{Goal}{etichetta_x_refs}{Titolo}{
+%     \Req{...}
+%     \Dom{...}
+% }
+% \end{Goal}
+% --- END TUTORIAL ---
+
+% creo l'environment goal
+\newenvironment{Goal}[2]{
+    \refstepcounter{FunReqG}
+    \paragraph{Goal \arabic{FunReqG}:} #2.
+    \label{goal:#1}
+    \begin{itemize}
+}{\end{itemize}}
+
+\newcommand{\Req}[1]{
+    \stepcounter{FunReqR}
+    \item[] \textbf{Requirement \arabic{FunReqR}}: #1.
+}
+
+\newcommand{\Dom}[1]{
+    \stepcounter{FunReqD}
+    \item[] \textbf{Domain Assumption \arabic{FunReqD}}: #1.
+}
+
 \subsection{Functional Requirements}
-\subsubsection{[G1] Allow guests to register to the platform.}
-	\begin{enumerate}
-	\item \textbf [R1] The guest must not be already registrated.
-	\item \textbf [R2] Guests cannot access services offered by the platform before being registered or logged in.
-	\item \textbf [R3] The email used for registration mush not be already used by another user.
-	\item \textbf [R4] The user must insert valid informations such as email and phone number.
-	\end{enumerate}
 
-\subsubsection{[G2] Allow users to access the platform by logging in.}
-	\begin{enumerate}
-	\item \textbf [R1] The user must not be already logged in.
-	\item \textbf [R2] The user must insert correct credentials to properly access.
-	\end{enumerate}
+\begin{Goal}{register}{Allow guests to register to the platform}{
+    \Req{The guest must not be already registrated}
+    \Req{Guests cannot access services offered by the platform before being registered or logged in}
+    \Req{The email used for registration mush not be already used by another user}
+    \Req{The user must insert valid informations such as email and phone number}
+}
+\end{Goal}
+
+\begin{Goal}{login}{Allow users to access the platform by logging in}{
+    \Req{The user must not be already logged in}
+    \Req{The user must insert correct credentials to properly access}
+}
+\end{Goal}
 	
-\subsubsection{[G3] Guarantee a fair management of the zone queues.}
-	\begin{enumerate}
-	\item \textbf [R1] The taxi driver on top of the queue must receive a notification when a request comes. ???
-	\item \textbf [R2] Taxi drivers must positively answer to the notification in 30 seconds.
-	\item \textbf [D1] There is always a taxi driver in every queue.
-	\item \textbf [D2] A driver in queue is available to accept a ride.
-	\end{enumerate}
+\begin{Goal}{queue}{Guarantee a fair management of the zone queues}{
+    \Req{The taxi driver on top of the queue must receive a notification when a request comes} 
+    \Req{Taxi drivers must positively answer to the notification in 30 seconds}
+    \Dom{There is always a taxi driver in every queue}
+    \Dom{A driver in queue is available to accept a ride}
+}
+\end{Goal}
 %????
-\subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
-	\begin{enumerate}
-	\item \textbf [R1] ??
-	\end{enumerate}
+% \subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
+% 	\begin{enumerate}
+% 	\item \textbf [R1] ??
+% 	\end{enumerate}
 %????	
-\subsubsection{[G4] Allow taxi drivers to indicate their availability.}
-	\begin{enumerate}
-	\item \textbf [R1] Drivers has to press a specified button on their app
-	\end{enumerate}
 
-\subsubsection{[G5] Guarantee presence of taxi drivers in every zone.}
-	\begin{enumerate}
-	\item \textbf [R1] A minimum number of taxi drivers, equal to the number of zones must be available.
-	\item \textbf [D1] The number of drivers is greater than the number of zones.
-	\end{enumerate}
+\begin{Goal}{availability}{Allow taxi drivers to indicate their availability}{
+    \Req{Drivers has to press a specified button on their app}
+}
+\end{Goal}
+
+\begin{Goal}{zone}{Guarantee presence of taxi drivers in every zone}{
+    \Req{A minimum number of taxi drivers, equal to the number of zones must be available}
+    \Dom{The number of drivers is greater than the number of zones}
+}
+\end{Goal}
 	
-\subsubsection{[G6] Allow developers to create and add functionalities to the system.}
-	\begin{enumerate}
-	\item \textbf [R1] The system must provide APIs.
-	\item \textbf [R2] These APIs must allow to run programmatically all and only what can be done by web or smartphone.
-	\item \textbf [R3] The system must check that every command submitted by APIs could be run at that user's level of privileges.
-	\end{enumerate}
+\begin{Goal}{api}{Allow developers to add functionalities to the system}{
+    \Req{The system must provide APIs}
+    \Req{These APIs must allow to run programmatically all and only what can be done by web or smartphone}
+    \Req{The system must check that every command submitted by APIs could be run at that user's level of privileges}
+}
+\end{Goal}
 	
-\subsubsection{[G7] Allow customers the possibility to immediately call for a taxi.}
-	\begin{enumerate}
-	\item \textbf [R1] When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue. ???
-	\item \textbf [D1] 
-	\end{enumerate}
+\begin{Goal}{call}{Allow customers the possibility to immediately call for a taxi}{
+    \Req{When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue}
+    \Dom{TODO}
+}
+\end{Goal}
 
-\subsubsection{[G8] Allow customers to reserve a taxi for a given date and time.}
-	\begin{enumerate}
-	\item \textbf [R1]
-	\item \textbf [D1] 
-	\end{enumerate}
+\begin{Goal}{reserve}{Allow customers to reserve a taxi for a given date and time}{
+    \Req{TODO}
+    \Dom{TODO}
+}
+\end{Goal}
 
-\subsubsection{[G9] Allow customers the possibility to share a ride.}
-	\begin{enumerate}
-	\item \textbf [R1]
-	\item \textbf [D1] 
-	\end{enumerate}
+\begin{Goal}{share}{Allow customers the possibility to share a ride}{
+    \Req{TODO}
+    \Dom{TODO}
+}
+\end{Goal}
 
-\subsubsection{[G10] Allow customers to receive informations about their reservation or call.}
-	\begin{enumerate}
-	\item \textbf [R1]
-	\item \textbf [D1] 
-	\end{enumerate}
+\begin{Goal}{info}{Allow customers to receive informations about their reservation or call}{
+    \Req{TODO}
+    \Dom{TODO}
+}
+\end{Goal}
 
-\subsubsection{[G11] Allow different types of payment.}
-	\begin{enumerate}
-	\item \textbf [R1]
-	\item \textbf [D1] 
-	\end{enumerate}	
+\begin{Goal}{payment}{Allow different types of payment}{
+    \Req{TODO}
+    \Dom{TODO}
+}
+\end{Goal}
+
+% -- TUTORIAL REFS+LABEL --
+% Il goal \ref{goal:info} si trova a pagina \pageref{goal:info}
+% -- END TUTORIAL --
 
 % --------OLD ---------------
 %functional requirements
