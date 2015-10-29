@@ -1,0 +1,39 @@
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\tcbuselibrary{skins}
+
+\newcolumntype{Y}{>{\hsize=.5\hsize}X}
+ 
+\tcbset{tab2/.style={
+	enhanced,
+	fonttitle=\bfseries,
+	fontupper=\normalsize\sffamily,
+	colback=white,
+	colframe=red!75!black,
+	colbacktitle=red!75!black,
+	coltitle=white,
+}}
+
+\newcounter{UseCaseCounter}
+
+\newcommand{\usecase}[6]{
+	\stepcounter{UseCaseCounter}
+	\begin{tcolorbox}[
+		tab2,
+		tabularx*={\arrayrulewidth0.5mm}{Y|X},
+		title=Use Case \arabic{UseCaseCounter},
+		boxrule=2pt
+	]
+		Application & #1 \\ \hline
+		Name & #2 \\ \hline
+		Description & #3 \\ \hline
+		Primary Actor & #4 \\ \hline
+		Basic Flow & #5 \\ \hline
+		Alternate Flows & #6
+	\stepcounter{UseCaseCounter}\end{tcolorbox}
+}
+
+% \usecase{Application}{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
