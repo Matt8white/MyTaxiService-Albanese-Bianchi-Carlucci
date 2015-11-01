@@ -165,5 +165,99 @@
 \scenario{max}{The taxi driver}{Max is a driver working for the public taxi service of his own city. During his daytime turn, he gets a request for a ride from a man nearby; Max accepts since the application has not notified anything at the moment. During the ride a request comes from the system, but Max refuses to accept it by clicking on the “Decline Request” button. The system puts the driver in his zone queue tail}
 
 % --- TUTORIAL USECASE --- 
-% \usecase{Application}{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
+% \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
 % --- END TUTORIAL ---
+\pagebreak
+\subsection{Use cases and UML diagrams}
+INSERT DIAGRAM HERE
+\includegraphics[scale=0.5]{wip.png}
+\pagebreak
+
+% ---------- SIGN UP --------------------
+\usecase
+{Customer}
+{Sign Up}
+{Registration to the system by a customer-to-be.}
+{Guest}
+{
+\begin{enumerate}
+	\item Guests visit the service home page
+	\item The guest clicks on "Register"
+	\item The system outputs the form on screen
+	\item The guest inserts his name, mail, password and mobile phone number and then clicks on "Continue"
+	\item The system checks if the mail, password and phone number are valid; if so, it sends a mail and a sms with a verification link
+	\item The guest clicks on the link and verifies his account
+	\item The guest is now a customer registered to the service. 
+\end{enumerate}
+}
+{
+\begin{enumerate}
+	\item The guest is already registered
+	\item One or more fields are not well-formed
+	\item Username already in use
+    \item The validation link is not more valid (after 48 hours)
+\end{enumerate}
+}
+
+% SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
+
+% ---------- SIGN IN --------------------
+\usecase
+{Customer}
+{Sign in}
+{Login by a customer}
+{Guest, Customer}
+{
+\begin{enumerate}
+	\item A guest visits the service home page
+	\item The guest clicks on "Log in"
+	\item The system outputs the form on screen
+	\item The guest inserts his name, password then clicks on "Continue"
+	\item The system checks if the mail, password and phone number are valid and present in the DB
+	\item The guest is redirected to the home page and recognized as a customer from now on.
+\end{enumerate}
+}
+{
+\begin{enumerate}
+	\item The user and/or password are incorrect
+	\item One or more fields are not well-formed
+	\item Username not registered
+\end{enumerate}
+}
+
+% SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
+
+% ---------- RESERVATION --------------------
+\usecase
+{Customer}
+{Reserve a taxi}
+{Reservation of a taxi by a customer for a specified date, start and destination}
+{Customer, Taxi Handler}
+{
+\begin{enumerate}
+	\item The customer clicks on "Reserve a taxi"
+	\item The system shows the reservation page
+	\item The customer fills in the mandatory information (starting point, destination and date-time)
+	\item The TaxiHandler registers the request and evaluate it when needed (see "Allocate a taxi" use case)
+	\item The customer is informed that the operation did not fail thanks to a confirmation screen
+\end{enumerate}
+}
+{
+\textbf{Sharing option}
+\begin{enumerate}
+	\item Same operations as before till point 3
+	\item The user also specifies that he wants to share his taxi
+	\item The TaxiHandler assigns the customer to the first reserved taxi for that ride if present
+	\item If there are no available shared rides, a new one is created on the spot
+	\item Same operation as before from point 4 on
+\end{enumerate}
+	
+}
+
+% SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
