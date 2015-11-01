@@ -28,13 +28,13 @@
 		title=Use Case \arabic{UseCaseCounter},
 		boxrule=2pt
 	]
-		Application & #1 \\ \hline
-		Name & #2 \\ \hline
-		Description & #3 \\ \hline
-		Primary Actor & #4 \\ \hline
-		Basic Flow & #5 \\ \hline
-		Alternate Flows & #6
-	\stepcounter{UseCaseCounter}\end{tcolorbox}
+		Name & #1 \\ \hline
+		Description & #2 \\ \hline
+		Primary Actor & #3 \\ \hline
+		Basic Flow & #4 \\ \hline
+		Alternate Flows & #5 \\ \hline
+		Exception & #6 
+	\end{tcolorbox}
 }
 
 \newcommand{\scenario}[3]{
@@ -50,4 +50,4 @@
 		#3
 	\end{tcolorbox}
 }
-% \usecase{Application}{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
+% \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}{Exception}
