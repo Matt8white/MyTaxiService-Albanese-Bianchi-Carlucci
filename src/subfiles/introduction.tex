@@ -7,12 +7,7 @@ This is the Requirement Analysis and Specification Document (RASD from now on). 
 The system will be an optimization of a pre-existing, non-software solution for renting taxis already in use in the city. The new system will let users to rent or reserve a taxi through a mobile or a web application and will also let taxi drivers to take care of the users' requests in a more simple and effective way. In addition to a better user inteface, the new system will focus on a smarter organization of the vehicles deployed in each city zone, resulting in a more efficient service for the citizens.
 
 \subsection{Actors}
-\begin{itemize}
-	\item \textbf{Guest}: A person who has not logged in yet. He can only sign up or sign in if already registered in the system.
-	\item \textbf{User}: A registered person either as a Customer or as a Taxi driver.
-	\item \textbf{Customer}: A person who has already registered as a client of the service via mobile or web app. He can call for a taxi, reserve one or modify his own profile info.
-	\item \textbf{Taxi driver}: This user is registered as a counterpart of an actual driver. He can notify his availability to the system and accept a request for a ride.
-\end{itemize}
+
 
 % goals:
 %  1) garantire l'accesso agli utenti
@@ -27,5 +22,46 @@ The system will be an optimization of a pre-existing, non-software solution for 
 % 10) garantire piu' possibilita' di pagamento
 
 \subsection{Definitions, acronyms and abbreviations}
+\subsubsection{Definitions}
+	\begin{itemize}
+		\item \textbf{Request} for a taxi: A customer asks for a taxi that he wants to use immediately. 
+		\item \textbf{Reserve} a taxi: A customer asks for a taxi for a specified date and hour.
+		\item \textbf{Place}: the address made of street name and street number
+		\item \textbf{Sharing}: The possibility for a customer to share a reserved taxi (does not apply to requested taxis).
+		
+		\item \textbf{Agents}
+		\begin{itemize}
+			\item \textbf{Guest}: A person who has not logged in yet. He can only sign up or sign in if already registered in the system.
+			\item \textbf{User}: A registered person either as a Customer or as a Taxi driver.
+			\item \textbf{Customer} / \textbf{Passenger}: A person who has already registered as a client of the service via mobile or web app. He can call for a taxi, reserve one or modify his own profile info.
+			\item \textbf{Taxi driver}: This user is registered as a counterpart of an actual driver. He can notify his availability to the system and accept a request for a ride.
+		\end{itemize}
+		
+		\item \textbf{Taxi queue}: the internal data structure that handles the taxi for a certain zone in the city.
+	\end{itemize}
+	
+\subsubsection{Acronyms}
+\begin{itemize}
+	\item \textbf{RASD}: Requirement Analysis and Specification Document
+	\item \textbf{DB}: Database
+	\item \textbf{DBMS}: Database Management System
+\end{itemize}
+
+\subsubsection{Abbreviations}
+
+
 \subsection{References}
+\begingroup
+% Override default new section behaviour
+\renewcommand{\section}[2]{}%
+\begin{thebibliography}{9}
+\bibitem{specDoc}
+Assignments 1 and 2 (RASD and DD).pdf
+
+\bibitem{rasd}
+IEEE Std 830-1998 IEEE Recommended Practice for Software Requirements
+Specifications.
+\end{thebibliography}
+\endgroup
+
 \subsection{Overview}
