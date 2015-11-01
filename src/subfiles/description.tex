@@ -1,40 +1,108 @@
 \pagebreak
 \section{Overall Description}
 \subsection{Product perspective}
-% il prodotto e' self-contained. fare qua un possibile confronto con
-% altri prodotti simili (uber, mytaxi)
-\subsubsection{System interfaces}
+% il prodotto e' self-contained. (???)
+
+The software-to-be is going to be made of several parts: two front-end applications for the customers, a different one for the taxi drivers and an API for developers. 
+
+Concerning the customer interface, it will be pretty similar to other related apps (for example, Uber or MyTaxi), since it will supply similar functions. It will primarly let them reserve or request a taxi.
+
+As for the taxi drivers, a simpler interface will be given, since only one functionality will be developed (accepting a request for a ride).
+ 
 \subsubsection{User interfaces}
-% interfaccia grafica, accessibilita', etc..
-% pulsanti da mettere, azioni da fare per tutti (login)
-% o solo per alcuni (prenota qualcosa)
+The application will have two client interfaces, a web app and a mobile app. For simplicity's sake, here are presented the mobile interfaces only.
+
+\pagebreak
+\paragraph{Home}
+The home app page. Clicking on "Call a taxi" opens the "Request a taxi" screen.
+\begin{center}
+\includegraphics[scale=0.5]{mockup_home.jpg}
+\end{center}
+
+\pagebreak
+\paragraph{Log in}
+The login screen for a customer.
+\begin{center}
+\includegraphics[scale=0.5]{mockup_login.jpg}
+\end{center}
+
+\pagebreak
+\paragraph{Sign up}
+The registration page for a guest willing to become a customer.
+\begin{center}
+\includegraphics[scale=0.5]{mockup_signup.jpg}
+\end{center}
+
+\pagebreak
+\paragraph{Reserve a taxi}
+Here is the page where a customer can reserve a taxi for a specified day. Starting point, destination and time are mandatory information. The mockup also illustrates the "Sharing" option enabled. The "Request a taxi" functionality uses a stripped-down version of this window (no sharing option, only current day available)
+\begin{center}
+\includegraphics[scale=0.5]{mockup_reserve.jpg}
+\end{center}
+
+\pagebreak
+\paragraph{Confirmation screen}
+After requesting or reserving a taxi, the service shows you a confirmation screen, 
+\begin{center}
+\includegraphics[scale=0.5]{wip.png}
+\end{center}
+
+\pagebreak
+\paragraph{Notification to a taxi driver}
+This shows how the notification appears on a taxi driver's smartphone. No web app interfaces available for this functionality.
+\begin{center}
+\includegraphics[scale=0.5]{mockup_call.jpg}
+\end{center}
+
+\pagebreak
 \subsubsection{Hardware interfaces}
-% coso che conta i km, costo, gps, ..
-% 
+In order to correctly use myTaxiService, a GPS system is required in order to track all vehicles and distribute them fairly in each zone. In addition to this, some vehicles have a point-of-sale terminal (POS), which is expressely indicated in the system; this way, if a user chooses to pay with a credit card, only POS-enabled cars are used to grant the service.
+
 \subsubsection{Software interfaces}
-% interfaccia web, supporto mobile
-% server linux, db mysql, backend php, tecnologie usate, ..
-\subsubsection{Communication interfaces}
-% network protocols, ecc
-\subsubsection{Memory}
-% quanto hdd? quanta ram?
+\begin{itemize}
+\item Back-end
+\begin{itemize}
+	\item DBMS:
+	\begin{itemize}
+		\item Name: MySQL
+		\item Version: 5.7
+		\item Source: http://www.mysql.it/
+	\end{itemize}
+	
+	\item Programming language:
+	\begin{itemize}
+		\item Name: PHP
+		\item Version: 5.6.7
+		\item Source: http://www.php.net/
+	\end{itemize}
+	
+	\item Operating System:
+	\begin{itemize}
+		\item Name: Linux Debian
+		\item Version: 8.2
+		\item Source: https://www.debian.org/
+	\end{itemize}	
+\end{itemize}
 
-\subsection{Product functions}
-\subsection{User characteristics}
+\item Front-end
+\begin{itemize}
+\item Operating System (for both customers and taxi drivers):
+	\begin{itemize}
+		\item Android
+		\item iOS
+		\item Blackberry
+	\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\pagebreak
 \subsection{Constraints}
-
-\subsubsection{Regulatory policies}
-% TODO: cercare leggi
 
 \subsubsection{Hardware limitations}
 % a memoria nulla in particolare
 
 \subsubsection{Interfaces to other applications}
 % layer con servizio taxi gia' esistente
-
-
-\subsubsection{Reliability requirements}
-% (???)
 
 \subsection{Assumptions and Dependecies}
 % esiste gia' un sistema di geolocaliz. per i taxi
