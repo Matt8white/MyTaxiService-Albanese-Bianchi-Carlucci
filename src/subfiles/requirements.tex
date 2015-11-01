@@ -266,3 +266,52 @@ INSERT DIAGRAM HERE
 % SEQUENCE 
 \pagebreak
 \includegraphics[scale=0.5]{wip.png}
+
+% ---------- REQUEST --------------------
+\usecase
+{Request a taxi}
+{Quick taxi request for a customer who needs a taxi for the immediate future at its location}
+{Customer, Taxi Handler}
+{
+\begin{enumerate}
+	\item The customer clicks on "Request a taxi"
+	\item The system take charge of the customer's request by selecting the right "zone queue" according to the user's gps location
+	\item The TaxiHandler processes the call (see "Allocate a taxi" use case)
+	\item The customer is informed that the operation did not fail thanks to a confirmation screen
+\end{enumerate}
+}
+{
+/
+}
+{ 
+\begin{itemize}
+\item No taxi available in the specified zone queue
+\end{itemize}
+}
+
+% SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
+
+% ---------- ALLOCATE --------------------
+\usecase
+{Allocate a taxi}
+{Selection and notification of a taxi driver to process a request or a reservation by the TaxiHandler}
+{Taxi Handler, Taxi Driver}
+{
+\begin{enumerate}
+	\item The TaxiHandler sends a notification to the first taxi driver in the given zone queue
+	\item If a positive answer is given in 10 seconds the TaxiHandler provides to set the Driver as "busy"
+	\item Otherwise the driver's "missed calls" counter is increased and the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1
+\end{enumerate}
+}
+{
+/
+}
+{ 
+/
+}
+
+% SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
