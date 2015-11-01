@@ -82,6 +82,12 @@ In order to correctly use myTaxiService, a GPS system is required in order to tr
 		\item Version: 8.2
 		\item Source: https://www.debian.org/
 	\end{itemize}	
+	
+	\item Map API:
+	\begin{itemize}
+		\item Name: Google Maps
+		\item Source: https://developers.google.com/maps/
+	\end{itemize}	
 \end{itemize}
 
 \item Front-end
@@ -98,20 +104,16 @@ In order to correctly use myTaxiService, a GPS system is required in order to tr
 \pagebreak
 \subsection{Constraints}
 
-\subsubsection{Hardware limitations}
-% a memoria nulla in particolare
-
 \subsubsection{Interfaces to other applications}
 % layer con servizio taxi gia' esistente
 
 \subsection{Assumptions and Dependecies}
-% esiste gia' un sistema di geolocaliz. per i taxi
-% usato dalle centraliniste e le richieste vengono mandate mirate al taxi
-% piu' vicino e non in broadcast
+Here is a list of domain assumptions and dependecies the writers of this document assume to hold in the real world:
+\begin{itemize}
+\item There already is a geolocalization system for each taxi, based on the GPS information
+\item Each request is sent to one taxi at a time
+\item Each taxi driver actually serves a request if he accepted it
+\item A taxi driver is available only when in his own vehicle 
+\item If a customer reserves or requests a taxi, he will use it
 
-% il tassista deve rispettare la prenotazione
-% quando il tassista da la disponibilita' si trova in taxi
-
-% se un utente prenota, ci va
-
-% nelle auto c'e' benzina
+\end{itemize}
