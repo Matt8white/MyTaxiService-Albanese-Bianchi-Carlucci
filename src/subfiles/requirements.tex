@@ -38,26 +38,31 @@
 \subsection{Functional Requirements}
 
 \begin{Goal}{register}{Allow guests to register to the platform}{
-    \Req{The guest must not be already registrated}
-    \Req{Guests cannot access services offered by the platform before being registered or logged in}
-    \Req{The email used for registration mush not be already used by another user}
-    \Req{The user must insert valid informations such as email and phone number}
+    %\Dom{The guest must not be already registrated}
+    %\Dom{The email used for registration must not be already
+%used by another user}
+    \Req{The service shall prevent guests from accessing any service before being registered or logged in}
+    \Req{The system shall validate any input by the guest}
+    \Req{The system shall send a verification link to the user who has just signed up in less than 5 minutes} 	
+    \Req{The system shall expire the validation link if not used after 48 hours} 	
 }
 \end{Goal}
 
 \begin{Goal}{login}{Allow users to access the platform by logging in}{
-    \Req{The user must not be already logged in}
-    \Req{The user must insert correct credentials to properly access}
+    \Req{The system shall validate any input by the system before sending it}
+    \Req{The system shall check in the DB if user and password are correct and grant access if so}
+    \Req{The system shall prevent anyone from logging more than once at a time} 
 }
 \end{Goal}
 	
 \begin{Goal}{queue}{Guarantee a fair management of the zone queues}{
-    \Req{The taxi driver on top of the queue must receive a notification when a request comes} 
-    \Req{Taxi drivers must positively answer to the notification in 30 seconds}
+    \Req{The system shall send a notification to the taxi driver on top of the queue when a request comes from a customer in the same zone} 
+    %\Req{Taxi drivers must positively answer to the notification within 30 seconds}
     \Dom{There is always a taxi driver in every queue}
-    \Dom{A driver in queue is available to accept a ride}
+    \Dom{A driver in a queue is available to accept a ride}
 }
 \end{Goal}
+
 %????
 % \subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
 % 	\begin{enumerate}
@@ -66,7 +71,9 @@
 %????	
 
 \begin{Goal}{availability}{Allow taxi drivers to indicate their availability}{
-    \Req{Drivers has to press a specified button on their app}
+    \Req{The system shall provide two buttons on the taxi driver's app, "Notify Availability" and "Notify Unavailability"}
+    \Req{The system shall let a taxi driver to notify his availability only when unavailable and viceversa}
+    \Dom{A taxi driver notifies his availability iff he is actually available for a ride (not busy in another one nor not working at the moment)}
 }
 \end{Goal}
 
@@ -293,7 +300,7 @@ INSERT DIAGRAM HERE
 {
 \begin{enumerate}
 	\item The TaxiHandler sends a notification to the first taxi driver in the given zone queue
-	\item If a positive answer is given in 10 seconds the TaxiHandler provides to set the Driver as "busy"
+	\item If a positive answer is given in 30 seconds the TaxiHandler provides to set the Driver as "busy"
 	\item Otherwise the driver's "missed calls" counter is increased and the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1
 \end{enumerate}
 }
@@ -305,5 +312,9 @@ INSERT DIAGRAM HERE
 }
 
 % SEQUENCE 
+\pagebreak
+\includegraphics[scale=0.5]{wip.png}
+
+% WORKFLOW 
 \pagebreak
 \includegraphics[scale=0.5]{wip.png}
