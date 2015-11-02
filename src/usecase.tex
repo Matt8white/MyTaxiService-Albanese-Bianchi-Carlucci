@@ -50,4 +50,13 @@
 		#3
 	\end{tcolorbox}
 }
+
+\newcommand{\mockup}[2]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{mockup_#1.jpg}
+        \caption{#2}
+        \label{mockup:#1}
+    \end{figure}
+}
 % \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}{Exception}
