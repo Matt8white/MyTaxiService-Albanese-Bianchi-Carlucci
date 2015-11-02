@@ -78,73 +78,62 @@
 \end{Goal}
 
 \begin{Goal}{zone}{Guarantee presence of taxi drivers in every zone}{
-    \Req{A minimum number of taxi drivers, equal to the number of zones must be available}
-    \Dom{The number of drivers is greater than the number of zones}
+   \Req{The system shall assign each taxi to a zone only if the number of taxis in that zone is between a minimum and a maximum threshold, determined according to the expected traffic}
+   \Dom{The number of drivers is greater than the number of zones}
 }
 \end{Goal}
-	
+    
 \begin{Goal}{api}{Allow developers to add functionalities to the system}{
-    \Req{The system must provide APIs}
-    \Req{These APIs must allow to run programmatically all and only what can be done by web or smartphone}
-    \Req{The system must check that every command submitted by APIs could be run at that user's level of privileges}
+   \Req{The system must provide APIs in at least a programming language}
+   \Req{The system shall provide all basic functionalities that can be found in the web/mobile app through these APIs}
+   \Req{The system must check that every command submitted by APIs could be run at that user level of privileges}
 }
 \end{Goal}
-	
-\begin{Goal}{call}{Allow customers the possibility to immediately call for a taxi}{
-    \Req{When a customer calls for a taxi using his app the system must deliver a request to the first taxi driver in the customer's zone queue}
-    \Dom{TODO}
+    
+\begin{Goal}{call}{Allow customers to request a taxi}{
+   \Req{The system shall let the user insert starting point and destination}
+   \Req{The system shall check if the input is valid (aka the places actually exist)}
+   \Req{The system shall send the request as soon as the customer clicks on the Request button}
+  \Req{The system shall show a confirmation screen with the Taxi ID and expected time of arrival}
+\Req{The system shall let the user choose a payment method between cash and credit card} 
+   \Dom{ If a user requests a taxi, he actually wants to use it }
+}
+\end{Goal}
+
+\begin{Goal}{allocate}{Allow the system to efficiently allocate a taxi}{
+ \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method)}
+\Req{The system shall set the taxi driver status to Busy when a request is accepted by him}
+\Req{The system shall dequeue the taxi driver from the front and enqueue it in the bottom if he does not accept a request}
+\Req{The system shall definitely dequeue a taxi driver if he refuses 3 rides in a row}
+\Dom{If a taxi driver wants to take care of a request, he accepts it}
 }
 \end{Goal}
 
 \begin{Goal}{reserve}{Allow customers to reserve a taxi for a given date and time}{
-    \Req{TODO}
-    \Dom{TODO}
+   \Req{The system shall let the user insert starting point and destination}
+    \Req{The system shall prevent the customer from reserving a taxi in less than 2 hours}
+   \Req{The system shall start the allocation process only 10 minutes before the reservation time}
+   \Req{The system shall check if the input is valid (aka the places actually exist)}
+   \Req{The system shall let the user choose a payment method between cash and credit card}
+
+   \Dom{The customer will actually show up at the given place, date and time}
 }
 \end{Goal}
 
 \begin{Goal}{share}{Allow customers the possibility to share a ride}{
-    \Req{TODO}
-    \Dom{TODO}
-}
-\end{Goal}
-
-\begin{Goal}{info}{Allow customers to receive informations about their reservation or call}{
-    \Req{TODO}
-    \Dom{TODO}
-}
-\end{Goal}
-
-\begin{Goal}{payment}{Allow different types of payment}{
-    \Req{TODO}
-    \Dom{TODO}
+   \Req{The system shall provide a Sharing option when reserving a taxi}
+   \Req{The system shall automatically insert the customer willing to share in the first shared-reserved taxi if the info provided coincide and at least one taxi meet these requirements}
+   \Req{If a user wants to share a ride but no taxis are already shared-reserved, the system shall let the user reserve a new one as usual}
+   \Req{The system shall automatically elaborate the shortest path to reach each customer for that ride}
+  \Req{The system shall calculate each fee according to the actual distance run by each customer}  
+   \Dom{Given a place, the system can always detect the zone where it is}
+   \Dom{Customers who decided to share a taxi always accept other customers without any discrimination}
 }
 \end{Goal}
 
 % -- TUTORIAL REFS+LABEL --
 % Il goal \ref{goal:info} si trova a pagina \pageref{goal:info}
 % -- END TUTORIAL --
-
-% --------OLD ---------------
-%functional requirements
-%  1) garantire l'accesso agli utenti
-%  2) una richiesta viene gestita dal tassista che e' da piu' tempo in coda
-%     Assumption: c'e' sempre qualcuno in coda, se  e' in coda e' disponibile,
-%     Requirement: il primo tassista in coda riceve una notifica quando c'e'
-%                  una richiesta di taxi e risponde alla notifica 
-%                  positivamente entro 30 secondi.
-%
-%  3) se un tassista non risponde, viene reimmesso in fondo alla coda per un numero limitato di volte
-%  4) permettere al tassista di indicare la propria disponibilita'
-%  5) garantire la presenza di taxi in ogni zona
-%  6) fare le API
-%  7) garantire possibilita' di prenotazione taxi per il momento
-%  8) possibilita' riservare taxi a una data/ora con src/dest
-%  9) garantire condivisione di un taxi
-% 10) tenere aggiornato l'utente sullo stato delle prenotazioni
-% 11) garantire piu' possibilita' di pagamento
-% -------- END OLD ---------------
-\subsection{Performance requirements}
-\subsection{Logical database Requirement}
 
 % --- TUTORIAL SCENARIOS --- 
 % \scenario{etichetta}{titolo}{testo}
