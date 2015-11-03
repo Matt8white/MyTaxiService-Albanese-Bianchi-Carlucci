@@ -92,14 +92,15 @@ INSERT DIAGRAM HERE
 \usecase
 {Reserve a taxi}
 {Reservation of a taxi by a customer for a specified date, start and destination}
-{Customer, Taxi Handler}
+{Customer}
 {
 \begin{enumerate}
 	\item The customer clicks on "Reserve a taxi"
 	\item The system shows the reservation page
-	\item The customer fills in the mandatory information (starting point, destination and date-time)
-	\item The TaxiHandler registers the request and evaluate it when needed (see "Allocate a taxi" use case)
+	\item The customer fills in the mandatory information (starting point, destination, payment method, number of people and date-time)
+	\item The system registers the request and inserts it in the correct zone queue, according to the specified starting point.
 	\item The customer is informed that the operation did not fail thanks to a confirmation screen
+    \item TaxiHandler will evaluate it when needed (see "Allocate a taxi" use case)
 \end{enumerate}
 }
 {
@@ -126,12 +127,13 @@ INSERT DIAGRAM HERE
 \usecase
 {Request a taxi}
 {Quick taxi request for a customer who needs a taxi for the immediate future at its location}
-{Customer, Taxi Handler}
+{Customer, TaxiHandler}
 {
 \begin{enumerate}
 	\item The customer clicks on "Request a taxi"
-	\item The system take charge of the customer's request by selecting the right "zone queue" according to the user's gps location
-	\item The TaxiHandler processes the call (see "Allocate a taxi" use case)
+	\item The customer fills in the mandatory information (starting point, destination, payment method and number of people)
+	\item The system registers the request and inserts it in the correct zone queue, according to the specified starting point.
+	\item TaxiHandler processes the call (see "Allocate a taxi" use case)
 	\item The customer is informed that the operation did not fail thanks to a confirmation screen
 \end{enumerate}
 }
@@ -139,9 +141,7 @@ INSERT DIAGRAM HERE
 /
 }
 { 
-\begin{itemize}
-\item No taxi available in the specified zone queue
-\end{itemize}
+/
 }
 
 % SEQUENCE 
