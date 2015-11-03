@@ -155,9 +155,9 @@ INSERT DIAGRAM HERE
 {Taxi Handler, Taxi Driver}
 {
 \begin{enumerate}
-	\item The TaxiHandler sends a notification to the first taxi driver in the given zone queue
+	\item The TaxiHandler sends a notification to the first taxi driver who meets the requirements in the given zone queue
 	\item If a positive answer is given in 30 seconds the TaxiHandler provides to set the Driver as "busy"
-	\item Otherwise the driver's "missed calls" counter is increased and the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1
+	\item Otherwise the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1
 \end{enumerate}
 }
 {

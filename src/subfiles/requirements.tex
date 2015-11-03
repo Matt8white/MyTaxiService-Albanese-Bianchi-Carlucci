@@ -101,10 +101,9 @@
 \end{Goal}
 
 \begin{Goal}{allocate}{Allow the system to efficiently allocate a taxi}{
-    \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method)}
+    \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method) and has enough seats}
     \Req{The system shall set the taxi driver status to Busy when a request is accepted by him}
     \Req{The system shall dequeue the taxi driver from the front and enqueue it in the bottom if he does not accept a request}
-    \Req{The system shall definitely dequeue a taxi driver if he refuses 3 rides in a row}
     \Dom{If a taxi driver wants to take care of a request, he accepts it}
 }
 \end{Goal}
