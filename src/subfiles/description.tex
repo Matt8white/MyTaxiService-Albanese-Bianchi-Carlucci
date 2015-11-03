@@ -76,13 +76,20 @@ In order to correctly use myTaxiService, a GPS system is required in order to tr
 \subsubsection{Interfaces to other applications}
 % layer con servizio taxi gia' esistente
 
-\subsection{Assumptions and Dependecies}
-Here is a list of domain assumptions and dependecies the writers of this document assume to hold in the real world:
+\subsection{Assumptions}
+Here is a list of domain assumptions the writers of this document assume to hold in the real world:
 \begin{itemize}
-\item There already is a geolocalization system for each taxi, based on the GPS information
-\item Each request is sent to one taxi at a time
-\item Each taxi driver actually serves a request if he accepted it
-\item A taxi driver is available only when in his own vehicle 
-\item If a customer reserves or requests a taxi, he will use it
-
+    \item A taxi driver is available only when in his own vehicle 
+    \item A taxi driver notifies his availability if and only if he is actually available for a ride (not busy in another one nor not working at the moment)
+    \item At least a driver in a queue is available to accept a ride
+    \item Customers who decided to share a taxi always accept other customers without any discrimination
+    \item Each request is sent to one taxi at a time
+    \item Each taxi driver actually serves a request if he accepted it
+    \item Given a place, the system can always detect the zone where it is
+    \item if a customer reserves or requests a taxi, he will use it
+    \item If a taxi driver wants to take care of a request, he accepts it
+    \item The customer will actually show up at the given place, date and time when his request or reservation is made
+    \item The number of drivers is greater than the number of zones
+    \item There already is a geolocalization system for each taxi, based on the GPS information
+    \item There is always a taxi driver in every queue
 \end{itemize}

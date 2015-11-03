@@ -59,7 +59,7 @@
     \Req{The system shall send a notification to the taxi driver on top of the queue when a request comes from a customer in the same zone} 
     %\Req{Taxi drivers must positively answer to the notification within 30 seconds}
     \Dom{There is always a taxi driver in every queue}
-    \Dom{A driver in a queue is available to accept a ride}
+    \Dom{At least a driver in a queue is available to accept a ride}
 }
 \end{Goal}
 
@@ -73,7 +73,7 @@
 \begin{Goal}{availability}{Allow taxi drivers to indicate their availability}{
     \Req{The system shall provide two buttons on the taxi driver's app, "Notify Availability" and "Notify Unavailability"}
     \Req{The system shall let a taxi driver to notify his availability only when unavailable and viceversa}
-    \Dom{A taxi driver notifies his availability iff he is actually available for a ride (not busy in another one nor not working at the moment)}
+    \Dom{A taxi driver notifies his availability if and only if he is actually available for a ride (not busy in another one nor not working at the moment)}
 }
 \end{Goal}
 
@@ -91,49 +91,49 @@
 \end{Goal}
     
 \begin{Goal}{call}{Allow customers to request a taxi}{
-   \Req{The system shall let the user insert starting point and destination}
+   \Req{The system shall let the user insert starting point, destination, payment method and number of people}
    \Req{The system shall check if the input is valid (aka the places actually exist)}
    \Req{The system shall send the request as soon as the customer clicks on the Request button}
-  \Req{The system shall show a confirmation screen with the Taxi ID and expected time of arrival}
-\Req{The system shall let the user choose a payment method between cash and credit card} 
-   \Dom{ If a user requests a taxi, he actually wants to use it }
+   \Req{The system shall show a confirmation screen with the Taxi ID and expected time of arrival}
+   \Req{The system shall let the user choose a payment method between cash and credit card} 
+   \Dom{If a customer reserves or requests a taxi, he will use it}
 }
 \end{Goal}
 
 \begin{Goal}{allocate}{Allow the system to efficiently allocate a taxi}{
- \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method)}
-\Req{The system shall set the taxi driver status to Busy when a request is accepted by him}
-\Req{The system shall dequeue the taxi driver from the front and enqueue it in the bottom if he does not accept a request}
-\Req{The system shall definitely dequeue a taxi driver if he refuses 3 rides in a row}
-\Dom{If a taxi driver wants to take care of a request, he accepts it}
+    \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method)}
+    \Req{The system shall set the taxi driver status to Busy when a request is accepted by him}
+    \Req{The system shall dequeue the taxi driver from the front and enqueue it in the bottom if he does not accept a request}
+    \Req{The system shall definitely dequeue a taxi driver if he refuses 3 rides in a row}
+    \Dom{If a taxi driver wants to take care of a request, he accepts it}
 }
 \end{Goal}
 
 \begin{Goal}{reserve}{Allow customers to reserve a taxi for a given date and time}{
-   \Req{The system shall let the user insert starting point and destination}
+    \Req{The system shall let the user insert starting point, destination, payment method, number of people and date time}
     \Req{The system shall prevent the customer from reserving a taxi in less than 2 hours}
-   \Req{The system shall start the allocation process only 10 minutes before the reservation time}
-   \Req{The system shall check if the input is valid (aka the places actually exist)}
-   \Req{The system shall let the user choose a payment method between cash and credit card}
+    \Req{The system shall start the allocation process only 10 minutes before the reservation time}
+    \Req{The system shall check if the input is valid (aka the places actually exist)}
+    \Req{The system shall let the user choose a payment method between cash and credit card}
 
-   \Dom{The customer will actually show up at the given place, date and time}
+    \Dom{If a customer reserves or requests a taxi, he will use it}
+    \Dom{The customer will actually show up at the given place, date and time when his request or reservation is made}
 }
 \end{Goal}
 
 \begin{Goal}{share}{Allow customers to share a ride}{
-   \Req{The system shall provide a Sharing option when reserving a taxi}
-   \Req{The system shall automatically insert the customer willing to share in the first shared-reserved taxi if the info provided coincide and at least one taxi meet these requirements}
-   \Req{If a user wants to share a ride but no taxis are already shared-reserved, the system shall let the user reserve a new one as usual}
-   \Req{The system shall automatically elaborate the shortest path to reach each customer for that ride}
-  \Req{The system shall calculate each fee according to the actual distance run by each customer}  
-   \Dom{Given a place, the system can always detect the zone where it is}
-   \Dom{Customers who decided to share a taxi always accept other customers without any discrimination}
+    \Req{The system shall provide a Sharing option when reserving a taxi}
+    \Req{The system shall automatically insert the customer willing to share in the first shared-reserved taxi if the info provided coincide and at least one taxi meet these requirements}
+    \Req{If a user wants to share a ride but no taxis are already shared-reserved, the system shall let the user reserve a new one as usual}
+    \Req{The system shall automatically elaborate the shortest path to reach each customer for that ride}
+    \Req{The system shall calculate each fee according to the actual distance run by each customer}  
+    \Dom{Given a place, the system can always detect the zone where it is}
+    \Dom{Customers who decided to share a taxi always accept other customers without any discrimination}
 }
 \end{Goal}
 
-\begin{Goal}{share}{Allow customers to manage their reservations and eventually delete them at least two hours before the given time}{
-   \Req{The system shall provide a list of personal reservations}
-   \Req{The system shall let the possibility to remove a reservation if it?s done at least two hours before the reservation time}
-   \Dom{The customer has at least one reservation booked}
+\begin{Goal}{share}{Allow customers to manage their reservations}{
+    \Req{The system shall provide a list of personal reservations}
+    \Req{The system shall let the possibility to remove a reservation if that is done at least 10 minutes before the reservation time}
 }
 \end{Goal}
