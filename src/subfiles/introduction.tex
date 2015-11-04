@@ -6,20 +6,8 @@ This is the Requirement Analysis and Specification Document (RASD from now on). 
 \subsection{Scope}
 The system will be an optimization of a pre-existing, non-software solution for renting taxis already in use in the city. The new system will let users to rent or reserve a taxi through a mobile or a web application and will also let taxi drivers to take care of the users' requests in a more simple and effective way. In addition to a better user inteface, the new system will focus on a smarter organization of the vehicles deployed in each city zone, resulting in a more efficient service for the citizens.
 
-\subsection{Actors}
-
-
-% goals:
-%  1) garantire l'accesso agli utenti
-%  2) garantire un fair management delle code
-%  3) permettere al tassista di indicare la propria disponibilita'
-%  4) garantire la presenza di taxi in ogni zona
-%  5) fare le API
-%  6) garantire possibilita' di prenotazione taxi per il momento
-%  7) possibilita' riservare taxi a una data/ora con src/dest
-%  8) garantire condivisione di un taxi
-%  9) tenere aggiornato l'utente sullo stato delle prenotazioni
-% 10) garantire piu' possibilita' di pagamento
+\subsection{Stakeholders}
+%chiunque abbia a che vedere con la piattaforma: città, cittadini, tassisti,
 
 \subsection{Definitions, acronyms and abbreviations}
 \subsubsection{Definitions}
@@ -27,7 +15,7 @@ The system will be an optimization of a pre-existing, non-software solution for 
 		\item \textbf{Request} for a taxi: A customer asks for a taxi that he wants to use immediately. 
 		\item \textbf{Reserve} a taxi: A customer asks for a taxi for a specified date and hour.
 		\item \textbf{Place}: the address made of street name and street number
-		\item \textbf{Sharing}: The possibility for a customer to share a reserved taxi (does not apply to requested taxis).
+		\item \textbf{Sharing}: The possibility for a customer to share a reserved taxi (does not apply to requested taxis).		
 		
 		\item \textbf{Agents}
 		\begin{itemize}
@@ -38,18 +26,13 @@ The system will be an optimization of a pre-existing, non-software solution for 
 		\end{itemize}
 		
 		\item \textbf{Taxi queue}: the internal data structure that handles the taxi for a certain zone in the city.
-	\end{itemize}
+
 	
-\subsubsection{Acronyms}
-\begin{itemize}
-	\item \textbf{RASD}: Requirement Analysis and Specification Document
-	\item \textbf{DB}: Database
-	\item \textbf{DBMS}: Database Management System
+		\item \textbf{Zone}: area of approximately 2 mq\textsuperscript{2}. The city is partitioned into several zones, each of which are covered by at most a taxi.
+		
+		\item \textbf{Taxi Handler}: the object which handles each taxi allocation after a request or a reservation has been made by a customer.
 \end{itemize}
-
-\subsubsection{Abbreviations}
-
-
+	
 \subsection{References}
 The following documents were used to produce this one:
 \begingroup
@@ -65,4 +48,11 @@ Specifications.
 \end{thebibliography}
 \endgroup
 
-\subsection{Overview}
+\subsection{Tools used}
+The following tools were used to produce this document:
+\begin{itemize}
+\item \textbf{Draw.io}: to draw all the diagrams
+\item \textbf{Photoshop}: to make all mockups
+\item \textbf{Alloy Analyzer 4.0}: to verify alloy models
+\item \textbf{TeX}: to write this document
+\end{itemize}
