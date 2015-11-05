@@ -2,52 +2,49 @@
 
 sig Address {
         streetName: one String,
-        streetNr: one int,
+        streetNr: one Int,
         gpsCoords: one String,
         zone: one Zone
 }
 
 sig Zone {
-        id: one int,
+        id: one Int,
         name: one String,
-        // numberOfTaxisAvailable : one int
-}
-
-sig Date {
-        day: one int,
-        month: one int,
-        year: one int,
-        hour: one int,
-        min: one int
+        // numberOfTaxisAvailable : one Int
 }
 
 sig Ride {
-   id: one int,
+   id: one Int,
    status: one RideStatus,
-   dateTimeRide: one Date,
-   totalNrPeople: one int
+   dateTimeRide: one Int,
+   totalNrPeople: one Int
+} {
+	dateTimeRide > 0
 }
 
 abstract sig Call {
-        id: one int,
-        dateTimeRegistration: one Date,
+        id: one Int,
+        TimeRegistration: one Int,
         startPoint: one Address,
         endPoint: one Address,
-        nrPeople: one int,
-        paymentMethod: one int,
+        nrPeople: one Int,
+        paymentMethod: one Int,
         ride: one Ride
-} 
+} {
+	dateTimeRegistration > 0
+}
 
 sig Reservation extends Call {
         isShareable: one Bool,
-        desideredDateTime: one Date
-
+        desideredDateTime: one Int
+} {
+	desideredDateTime > 0
 }
 
 sig Request extends Call {}
 
 sig Customer {
-        id : one int,
+        id : one Int,
         name : one String,
         email : one String,
         mobilePhone : one String,
@@ -68,10 +65,10 @@ sig TaxiHandler {
 }
 
 sig Taxi {
-        id: one int,
+        id: one Int,
         licencePlate: one String,
         taxiDriverName: one String,
-        numberOfSeats: one int,
+        numberOfSeats: one Int,
         status: one TaxiStatus
 }
 
@@ -100,6 +97,8 @@ enum RideStatus {
         COMPLETED
 }
 
+// note on dates: UNIX timestamps are used for convenience
+
 //////////// FACTS ////////////////
 
 fact notifyAvailabilityOnlyWhenUnavailable {
@@ -120,8 +119,8 @@ fact correlationRideTaxiDriver {
 fact oneAcceptingTaxiForACall {
         all r : Ride | r.status = PENDING implies 
                 one th : TaxiHandler | th.ride = r && 
-                        !(t1, t2: Taxi | t1 in th.taxiQueue.taxis && t2 in th.taxiQueue.taxis && 
-                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2)
+                        no t1, t2: Taxi | t1 in th.taxiQueue.taxis && t2 in th.taxiQueue.taxis && 
+                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2
 }
 
 // una notifica alla volta 
@@ -177,3 +176,7 @@ fact taxiCanActuallyTakeRide {
 			(#th.ride.totalNrPeople <= #th.allocate.numberOfSeats)
 }
  
+// all requests have been made before the ride actually started
+fact noRequestsAfterRide {
+   
+}
