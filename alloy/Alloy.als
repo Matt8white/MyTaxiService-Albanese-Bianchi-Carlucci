@@ -110,17 +110,17 @@ fact atLeastOneTaxiInQueue {
         //some taxi : Taxi | taxi in contact
 }
 
-// se una ride e' inride, allora il suo tassista deve essere busy
+// se una ride e' inride, allora il suo tassista c'è e deve essere busy
 fact correlationRideTaxiDriver {
         all r : Ride | r.status = INRIDE implies 
-                one th : TaxiHandler | th.handle = c && th.allocate.status = BUSY
+                one th : TaxiHandler | th.ride = r && #th.allocate = 1 && th.allocate.status = BUSY
 }
 
 // se una call e' pending, non ci devono essere 2 taxi che la accetteranno
 fact oneAcceptingTaxiForACall {
-        all c : Call | c.status = PENDING implies 
-                one th : TaxiHandler | th.handle = c && 
-                        !(t1, t2: Taxi | t1 in th.contact && t2 in th.contact && 
+        all r : Ride | r.status = PENDING implies 
+                one th : TaxiHandler | th.ride = r && 
+                        !(t1, t2: Taxi | t1 in th.taxiQueue.taxis && t2 in th.taxiQueue.taxis && 
                                 t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2)
 }
 
@@ -143,11 +143,12 @@ fact noDuplicatedZones {
 
 // NOTE: can fail if a street is very long (think of Viale Monza..)
 fact addressConsistentZone {
-   all a1 : Address | no a2 : Address | a1.streetName = a2.streetName /*&& a1.streetNr = a2.streetNr*/ && a1.zone != a2.zone
+   all a1 : Address | no a2 : Address |
+	a1.streetName = a2.streetName /*&& a1.streetNr = a2.streetNr*/ && a1.zone != a2.zone
 }
 
 // there are no more than one reservation for a not sharable ride
 fact notSharableRideNumberOfPassengers {
-   all res : Reservation | (isSharable = FALSE implies   
+   
 }
  
