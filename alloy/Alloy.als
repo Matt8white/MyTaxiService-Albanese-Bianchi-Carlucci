@@ -29,7 +29,7 @@ abstract sig Call {
         startPoint: one Address,
         endPoint: one Address,
         nrPeople: one Int,
-        paymentMethod: one Int,
+        paymentMethod: set PaymentMethod,
         ride: one Ride
 } {
 	timeRegistration > 0
@@ -70,7 +70,8 @@ sig Taxi {
         licencePlate: one String,
         taxiDriverName: one String,
         numberOfSeats: one Int,
-        status: one TaxiStatus
+        status: one TaxiStatus, 
+        paymentMethodsAccepted: set PaymentMethod
 }
 
 sig TaxiQueue {
@@ -96,6 +97,11 @@ enum RideStatus {
         ASSIGNED,
         INRIDE,
         COMPLETED
+}
+
+enum PaymentMethod {
+	CASH,
+	POS
 }
 
 // note on dates: UNIX timestamps are used for convenience
@@ -197,4 +203,17 @@ fact taxiCanActuallyTakeRide {
 fact noRequestsAfterRide {
    all c : Call |
 	c.dateTimeRegistration < c.ride.dateTime
+}
+
+// the allocated taxi is compatible with the chosen payment method
+fact POSEnabled {
+   all c : Call | 
+	one th : TaxiHandler | th.ride = c.r &&
+	th.allocate.paymentMethod & c.paymentMethod != none
+}
+
+// all taxis must accept cash as a valid payment method
+fact cashTaxi {
+	all t: Taxi |
+	   CASH in t.paymentMethodsAccepted
 }
