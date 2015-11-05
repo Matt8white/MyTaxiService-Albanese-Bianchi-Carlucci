@@ -178,5 +178,6 @@ fact taxiCanActuallyTakeRide {
  
 // all requests have been made before the ride actually started
 fact noRequestsAfterRide {
-   
+   all c : Call |
+	c.dateTimeRegistration < c.ride.dateTime
 }
