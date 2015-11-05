@@ -11,16 +11,21 @@ sig Zone {
         id: one Int,
         name: one String,
         // numberOfTaxisAvailable : one Int
+} {
+	id > 0
 }
 
 sig Ride {
    id: one Int,
    status: one RideStatus,
    startTime: one Int,
-   endTime: one Int,
+   endTime: lone Int,
    totalNrPeople: one Int
 } {
+	id > 0
 	startTime > 0
+	endTime > 0
+	totalNrPeople > 0
 }
 
 abstract sig Call {
@@ -32,7 +37,9 @@ abstract sig Call {
         paymentMethod: set PaymentMethod,
         ride: one Ride
 } {
+	id > 0
 	timeRegistration > 0
+	nrPeople > 0
 }
 
 sig Reservation extends Call {
@@ -52,9 +59,9 @@ sig Customer {
         call: set Call
 }
 
-sig TaxiAllocationDaemon {
-	queues: set TaxiQueue
-}
+//sig TaxiAllocationDaemon {
+//	queues: set TaxiQueue
+//}
 
 sig TaxiHandler {
         ride: one Ride,
@@ -72,6 +79,8 @@ sig Taxi {
         numberOfSeats: one Int,
         status: one TaxiStatus, 
         paymentMethodsAccepted: set PaymentMethod
+} {
+	id > 0
 }
 
 sig TaxiQueue {
@@ -126,8 +135,8 @@ fact inRideTaxiDriver {
 
 // each ride must end after it started
 fact noNegativeTimeRides {
-	all r: Ride | r.status = COMPLETED implies
-		r.startTime <= r.endTime
+	all r: Ride | (r.status = COMPLETED implies r.startTime < r.endTime) && 
+	(r.status != COMPLETED implies #r.endTime = 0)
 }
 
 // if there's a PENDING call, there must not be 2 taxis in ACCEPTING status
@@ -142,15 +151,22 @@ fact oneAcceptingTaxiForACall {
 fact driverInOneQueueOnly {
 	no q1, q2 : TaxiQueue | 
              q1 != q2 &&
-	   some t : Taxi | t in q1 && t in q2 
+	   some t : Taxi | t in q1.taxis && t in q2.taxis 
 }
 
 // there is at least a taxi available in each queue
 fact atLeastOneTaxiAvailableInEveryQueue {
     all queue : TaxiQueue | 
 	some t : Taxi | 
-		t in queue &&
+		t in queue.taxis &&
 		t.status = AVAILABLE
+}
+
+// each ride is not duplicated
+fact noDuplicatedRides {
+   no r1, r2 : Ride | 
+	r1.id = r2.id && 
+	r1 != r2
 }
 
 // each zone is not duplicated
@@ -163,7 +179,7 @@ fact noDuplicatedZones {
 // each taxi is not duplicated
 fact noDuplicatedTaxis {
    no t1, t2 : Taxi | 
-	t1.id = t2.id && 
+	(t1.id = t2.id || t1.licencePlate = t2.licencePlate) && 
 	t1 != t2
 }
 
@@ -189,7 +205,7 @@ fact numberOfSeatsForARide {
    all r : Ride |
 	all c : Call |
 		c.ride = r && // for all calls relative to a ride
-		(sum p : c | #c.nrPeople) = #r.totalNrPeople // the sum of people in all calls ...
+		(sum p : Call | #p.nrPeople) = #r.totalNrPeople // the sum of people in all calls ...
 }
 
 // number of people in a ride must be <= than the taxi availability
@@ -202,14 +218,14 @@ fact taxiCanActuallyTakeRide {
 // all requests have been made before the ride actually started
 fact noRequestsAfterRide {
    all c : Call |
-	c.dateTimeRegistration < c.ride.dateTime
+	c.timeRegistration < c.ride.startTime
 }
 
 // the allocated taxi is compatible with the chosen payment method
 fact POSEnabled {
    all c : Call | 
-	one th : TaxiHandler | th.ride = c.r &&
-	th.allocate.paymentMethod & c.paymentMethod != none
+	one th : TaxiHandler | th.ride = c.ride &&
+	th.allocate.paymentMethodsAccepted & c.paymentMethod != none
 }
 
 // all taxis must accept cash as a valid payment method
@@ -217,3 +233,15 @@ fact cashTaxi {
 	all t: Taxi |
 	   CASH in t.paymentMethodsAccepted
 }
+
+
+//////////// ASSERTIONS ////////////////
+
+//////////// PREDICATES ////////////////
+pred show(){ 
+	#TaxiHandler >= 5
+}
+
+//////////// RUN ////////////////
+
+run show for 10
