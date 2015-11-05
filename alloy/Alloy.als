@@ -7,7 +7,11 @@ sig Address {
 	has: one Zone
 }
 
-sig Zone {}
+sig Zone {
+	id: one int,
+	name: one String,
+	numberOfTaxisAvailable : one int
+}
 
 sig Date {
 	day: one int,
@@ -19,7 +23,7 @@ sig Date {
 
 abstract sig Call {
 	ID: one int,
-	status: one int,
+	status: one CallStatus,
 	dateTime: one Date,
 	accepted: one Bool,
 	startPoint: one Address,
@@ -39,17 +43,19 @@ sig Customer {
 }
 
 sig TaxiHandler {
-	queues: set Queue,
 	handle: one Call,
 	serve: set Customer,
-	contact: set Taxi,
+	contact: one TaxiQueue,
 	allocate: one Taxi
 } 
 
 sig Taxi {
 	id: one int,
-	name: one String,
-	numberOfTaxisAvailable : one int
+	licencePlate: one String,
+	taxiDriverName: one String,
+	numberOfSeats: one int,
+	seatsAvailable: one int,
+	status: one TaxiStatus
 }
 
 sig Reservation extends Call {
@@ -60,7 +66,7 @@ sig Reservation extends Call {
 
 sig Request extends Call {}
 
-sig Queue {
+sig TaxiQueue {
 	taxis: set Taxi
 }
 
@@ -98,5 +104,12 @@ fact atLeastOneTaxiInQueue {
 fact correlationRideTaxiDriver {
 	all c : Call | c.status = INRIDE implies 
 		one th : TaxiHandler | th.handle = c && th.allocate.status = BUSY
+}
+
+fact oneAcceptingTaxiForACall {
+	all c : Call | c.status = PENDING implies 
+		one th : TaxiHandler | th.handle = c && 
+			!(t1, t2: Taxi | t1 in th.contact && t2 in th.contact && 
+				t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2)
 }
 
