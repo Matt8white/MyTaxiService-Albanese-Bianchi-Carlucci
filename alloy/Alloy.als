@@ -134,21 +134,40 @@ fact oneNotifyAtTimeForATaxiDriver {
 
 //almeno 1 taxi disponibile per ogni coda
 fact atLeastOneTaxiAvailableInEveryQueue {
-    all queue : TaxiQueue | some t : Taxi | t in queue && t.status = AVAILABLE
+    all queue : TaxiQueue | 
+	some t : Taxi | 
+		t in queue &&
+		t.status = AVAILABLE
 }
 
 fact noDuplicatedZones {
-   no z1, z2 : Zone | z1.id = z2.id && z1 != z2
+   no z1, z2 : Zone | 
+	z1.id = z2.id && 
+	z1 != z2
 }
 
 // NOTE: can fail if a street is very long (think of Viale Monza..)
 fact addressConsistentZone {
    all a1 : Address | no a2 : Address |
-	a1.streetName = a2.streetName /*&& a1.streetNr = a2.streetNr*/ && a1.zone != a2.zone
+	a1.streetName = a2.streetName 
+	/*&& a1.streetNr = a2.streetNr*/ 
+	&& a1.zone != a2.zone
 }
 
 // there are no more than one reservation for a not sharable ride
 fact notSharableRideNumberOfPassengers {
-   
+   no r1, r2 : Reservation | 
+	r1.isShareable = FALSE && r2.isShareable = FALSE &&
+	r1.ride = r2.ride &&
+	r1 != r2
 }
+
+// the number of people for a certain ride must equal the sum of all people that booked that ride through several reservations
+fact numberOfSeatsForARide {
+   all r : Ride |
+	all c : Call |
+		c.ride = r &&
+		(sum p : c | #c.nrPeople) = #r.totalNrPeople
+}
+
  
