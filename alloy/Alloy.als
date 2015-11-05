@@ -16,22 +16,23 @@ sig Zone {
 sig Ride {
    id: one Int,
    status: one RideStatus,
-   dateTimeRide: one Int,
+   startTime: one Int,
+   endTime: one Int,
    totalNrPeople: one Int
 } {
-	dateTimeRide > 0
+	startTime > 0
 }
 
 abstract sig Call {
         id: one Int,
-        TimeRegistration: one Int,
+        timeRegistration: one Int,
         startPoint: one Address,
         endPoint: one Address,
         nrPeople: one Int,
         paymentMethod: one Int,
         ride: one Ride
 } {
-	dateTimeRegistration > 0
+	timeRegistration > 0
 }
 
 sig Reservation extends Call {
@@ -59,7 +60,7 @@ sig TaxiHandler {
         ride: one Ride,
         serve: set Customer,
         taxiQueue: one TaxiQueue,
-        allocate: lone Taxi // zero if no taxis is assigned yet
+        allocate: lone Taxi // zero if no taxis are assigned yet
 } {
 	allocate in taxiQueue.taxis
 }
@@ -101,21 +102,29 @@ enum RideStatus {
 
 //////////// FACTS ////////////////
 
-fact notifyAvailabilityOnlyWhenUnavailable {
-//
+// if a ride is in PENDING status, no taxi must be allocated yet
+fact pendingRideNoAllocation {
+	all r : Ride | r.status = PENDING implies
+		one th : TaxiHandler | th.ride = r &&
+		       #th.allocate = 0
+		
 }
 
-fact atLeastOneTaxiInQueue {
-        //some taxi : Taxi | taxi in contact
-}
-
-// se una ride e' inride, allora il suo tassista c'è e deve essere busy
-fact correlationRideTaxiDriver {
+// if a ride is in INRIDE status, then the taxi driver must be busy
+fact inRideTaxiDriver {
         all r : Ride | r.status = INRIDE implies 
-                one th : TaxiHandler | th.ride = r && #th.allocate = 1 && th.allocate.status = BUSY
+                one th : TaxiHandler | th.ride = r && 
+		   #th.allocate = 1 && 
+		   th.allocate.status = BUSY
 }
 
-// se una call e' pending, non ci devono essere 2 taxi che la accetteranno
+// each ride must end after it started
+fact noNegativeTimeRides {
+	all r: Ride | r.status = COMPLETED implies
+		r.startTime <= r.endTime
+}
+
+// if there's a PENDING call, there must not be 2 taxis in ACCEPTING status
 fact oneAcceptingTaxiForACall {
         all r : Ride | r.status = PENDING implies 
                 one th : TaxiHandler | th.ride = r && 
@@ -123,15 +132,14 @@ fact oneAcceptingTaxiForACall {
                                 t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2
 }
 
-// una notifica alla volta 
-fact oneNotifyAtTimeForATaxiDriver {
-//        all c : Call | c.status = PENDING implies 
-//                one th : TaxiHandler | th.handle = c && 
-//                        !(t1, t2: Taxi | t1 in th.contact && t2 in th.contact && 
-//                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2)
+// a driver must be in just a queue
+fact driverInOneQueueOnly {
+	no q1, q2 : TaxiQueue | 
+             q1 != q2 &&
+	   some t : Taxi | t in q1 && t in q2 
 }
 
-//almeno 1 taxi disponibile per ogni coda
+// there is at least a taxi available in each queue
 fact atLeastOneTaxiAvailableInEveryQueue {
     all queue : TaxiQueue | 
 	some t : Taxi | 
@@ -139,12 +147,21 @@ fact atLeastOneTaxiAvailableInEveryQueue {
 		t.status = AVAILABLE
 }
 
+// each zone is not duplicated
 fact noDuplicatedZones {
    no z1, z2 : Zone | 
 	z1.id = z2.id && 
 	z1 != z2
 }
 
+// each taxi is not duplicated
+fact noDuplicatedTaxis {
+   no t1, t2 : Taxi | 
+	t1.id = t2.id && 
+	t1 != t2
+}
+
+// Each street must be in the same zone
 // NOTE: can fail if a street is very long (think of Viale Monza..)
 fact addressConsistentZone {
    all a1 : Address | no a2 : Address |
