@@ -166,8 +166,14 @@ fact notSharableRideNumberOfPassengers {
 fact numberOfSeatsForARide {
    all r : Ride |
 	all c : Call |
-		c.ride = r &&
-		(sum p : c | #c.nrPeople) = #r.totalNrPeople
+		c.ride = r && // for all calls relative to a ride
+		(sum p : c | #c.nrPeople) = #r.totalNrPeople // the sum of people in all calls ...
 }
 
+// number of people in a ride must be <= than the taxi availability
+fact taxiCanActuallyTakeRide {
+	all th : TaxiHandler |
+		th.allocate.status = ACCEPTING or th.allocate.status = BUSY implies
+			(#th.ride.totalNrPeople <= #th.allocate.numberOfSeats)
+}
  
