@@ -132,6 +132,13 @@ fact oneAcceptingTaxiForACall {
                                 t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2
 }
 
+// a driver must be in just a queue
+fact driverInOneQueueOnly {
+	no q1, q2 : TaxiQueue | 
+             q1 != q2 &&
+	   some t : Taxi | t in q1 && t in q2 
+}
+
 // there is at least a taxi available in each queue
 fact atLeastOneTaxiAvailableInEveryQueue {
     all queue : TaxiQueue | 
