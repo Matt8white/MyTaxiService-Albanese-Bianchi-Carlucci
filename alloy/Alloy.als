@@ -16,22 +16,23 @@ sig Zone {
 sig Ride {
    id: one Int,
    status: one RideStatus,
-   dateTimeRide: one Int,
+   startTime: one Int,
+   endTime: one Int,
    totalNrPeople: one Int
 } {
-	dateTimeRide > 0
+	startTime > 0
 }
 
 abstract sig Call {
         id: one Int,
-        TimeRegistration: one Int,
+        timeRegistration: one Int,
         startPoint: one Address,
         endPoint: one Address,
         nrPeople: one Int,
         paymentMethod: one Int,
         ride: one Ride
 } {
-	dateTimeRegistration > 0
+	timeRegistration > 0
 }
 
 sig Reservation extends Call {
@@ -102,7 +103,7 @@ enum RideStatus {
 //////////// FACTS ////////////////
 
 // if a ride is in PENDING status, no taxi must be allocated yet
-fact pendingRide {
+fact pendingRideNoAllocation {
 	all r : Ride | r.status = PENDING implies
 		one th : TaxiHandler | th.ride = r &&
 		       #th.allocate = 0
@@ -117,7 +118,13 @@ fact inRideTaxiDriver {
 		   th.allocate.status = BUSY
 }
 
-// if there's a pending call, there must not be 2 taxis in ACCEPTING status
+// each ride must end after it started
+fact noNegativeTimeRides {
+	all r: Ride | r.status = COMPLETED implies
+		r.startTime <= r.endTime
+}
+
+// if there's a PENDING call, there must not be 2 taxis in ACCEPTING status
 fact oneAcceptingTaxiForACall {
         all r : Ride | r.status = PENDING implies 
                 one th : TaxiHandler | th.ride = r && 
@@ -140,6 +147,7 @@ fact noDuplicatedZones {
 	z1 != z2
 }
 
+// each taxi is not duplicated
 fact noDuplicatedTaxis {
    no t1, t2 : Taxi | 
 	t1.id = t2.id && 
