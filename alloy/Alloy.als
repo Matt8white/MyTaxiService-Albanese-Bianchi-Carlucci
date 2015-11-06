@@ -205,7 +205,8 @@ fact oneAcceptingTaxiForACall {
 fact driverInOneQueueOnly {
 	(no q1, q2 : TaxiQueue | 
              q1 != q2 &&
-	   some t : Taxi | t in q1.taxis && t in q2.taxis) 
+	   some t : Taxi | t in q1.taxis && t in q2.taxis) &&
+	( all t2 : Taxi | some q : TaxiQueue | t2 in q.taxis )
 }
 
 // there is at least a taxi available in each queue
