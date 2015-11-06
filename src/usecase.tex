@@ -22,6 +22,7 @@
 \newcounter{ScenarioCounter}
 \newcounter{MockupCounter}
 \newcounter{SequenceCounter}
+\newcounter{FSMCounter}
 
 \newcommand{\usecase}[6]{
 	\refstepcounter{UseCaseCounter}
@@ -75,6 +76,19 @@
         \centering
         \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Sequence#1.png}
         \caption*{Sequence Diagram \arabic{SequenceCounter}: #2}
+        \label{sequence:#1}
+    \end{figure}
+    \pagebreak
+}
+
+\newcommand{\FSM}[2]{
+    \refstepcounter{FSMCounter}
+    \pagebreak
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{#1.png}
+        \caption*{FSM \arabic{FSMCounter}: #2}
         \label{sequence:#1}
     \end{figure}
     \pagebreak
