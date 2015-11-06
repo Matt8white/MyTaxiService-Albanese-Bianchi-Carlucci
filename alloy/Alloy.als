@@ -1,16 +1,19 @@
 //////////// SIGS ////////////////
 
+sig Stringa { }
+
 sig Address {
-        streetName: one String,
+        streetName: one Stringa,
         streetNr: one Int,
-        gpsCoords: one String,
+        gpsCoords: one Stringa,
         zone: one Zone
+} {
+	streetNr > 0
 }
 
 sig Zone {
         id: one Int,
-        name: one String,
-        // numberOfTaxisAvailable : one Int
+        name: one Stringa
 } {
 	id > 0
 }
@@ -53,9 +56,9 @@ sig Request extends Call {}
 
 sig Customer {
         id : one Int,
-        name : one String,
-        email : one String,
-        mobilePhone : one String,
+        name : one Stringa,
+        email : one Stringa,
+        mobilePhone : one Stringa,
         call: set Call
 }
 
@@ -74,13 +77,14 @@ sig TaxiHandler {
 
 sig Taxi {
         id: one Int,
-        licencePlate: one String,
-        taxiDriverName: one String,
+        licencePlate: one Stringa,
+        taxiDriverName: one Stringa,
         numberOfSeats: one Int,
         status: one TaxiStatus, 
         paymentMethodsAccepted: set PaymentMethod
 } {
 	id > 0
+	numberOfSeats > 0
 }
 
 sig TaxiQueue {
@@ -118,13 +122,14 @@ enum PaymentMethod {
 //////////// FACTS ////////////////
 // at least a zone in the city
 fact atLeastAZone {
-	some Zone
+	#Zone >= 1
 }
 
 // there is always an allocation daemon running
 fact taxiAllocationDaemonRunning {
-	one TaxiAllocationDaemon 
+	#TaxiAllocationDaemon = 1
 }
+
 
 // bijection between taxiHandlers and rides
 fact bijectionTaxiHandlerRide {
@@ -138,6 +143,13 @@ fact consistentZoneQueues {
 	all th: TaxiHandler |
 		one tad : TaxiAllocationDaemon | 
 			th.taxiQueue in tad.queues
+}
+
+// there are no queues outside the ones in the TaxiAllocationDaemon set
+fact noExternalQueues {
+	all q : TaxiQueue |
+		one tad : TaxiAllocationDaemon | 
+			q in tad.queues
 }
 
 // number of zones = number of queues
@@ -185,8 +197,7 @@ fact driverInOneQueueOnly {
 fact atLeastOneTaxiAvailableInEveryQueue {
     all queue : TaxiQueue | 
 	some t : Taxi | 
-		t in queue.taxis && 						// there are some taxis...
-		(some t2 : Taxi | t2 = t && t2.status = AVAILABLE)		// but at least one of them is available
+		t in queue.taxis && t.status = AVAILABLE		// but at least one of them is available
 }
 
 // each ride is not duplicated
@@ -215,7 +226,7 @@ fact noDuplicatedTaxis {
 fact addressConsistentZone {
    all a1 : Address | no a2 : Address |
 	a1.streetName = a2.streetName 
-	/*&& a1.streetNr = a2.streetNr*/ 
+	//&& a1.streetNr = a2.streetNr
 	&& a1.zone != a2.zone
 }
 
@@ -264,23 +275,23 @@ fact cashTaxi {
 
 //////////// ASSERTIONS ////////////////
 
+// ######## A1 ########
 assert noAllUnavailableTaxisInAQueue {
-	// QUESTA DOVREBBE FALLIRE!!!!
-	some q : TaxiQueue | no t : Taxi | t in q.taxis && t.status = AVAILABLE
+    all q : TaxiQueue |
+	some t : Taxi | t in q.taxis && t.status = AVAILABLE
 }
 
-check noAllUnavailableTaxisInAQueue for 20
+// WORKING!
+// check noAllUnavailableTaxisInAQueue for 25
+
+// ######## A2 ########
+// new assertions coming along
 
 //////////// PREDICATES ////////////////
 pred show(){ 
-	#TaxiAllocationDaemon = 1
-	#TaxiHandler >= 5
-	#Ride = #TaxiHandler
-	#Taxi = 100
-	#Zone = 5
-	#TaxiQueue = #Zone
+	// to be completed
 }
 
 //////////// RUN ////////////////
 
-run show for 10
+run show for 3
