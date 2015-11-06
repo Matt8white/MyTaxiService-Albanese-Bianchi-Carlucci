@@ -133,10 +133,10 @@ fact unavailableTaxiDriversNoQueue {
 		(no q : TaxiQueue | t in q.taxis)
 }
 
-// if there is no taxiHandler pointing to a taxi driver, that driver must not be BUSY
+// if there is no taxiHandler pointing to a taxi driver, that driver must not be BUSY and ACCEPTING
 fact noBusyDriversWithoutTaxiHandlers {
 	all t : Taxi | 
-		(no th : TaxiHandler | th.allocate = t) implies t.status != BUSY
+		(no th : TaxiHandler | th.allocate = t) implies (t.status != BUSY && t.status != ACCEPTING)
 }
 
 
@@ -172,6 +172,8 @@ fact pendingRideNoAllocation {
 		one th : TaxiHandler | th.ride = r &&
 		       #th.allocate = 0	
 }
+
+
 
 // if a ride is in COMPLETE status, then the corresponding taxiHandler must not exist anymore
 fact noTaxiHandlerForCompleteRides {
@@ -353,14 +355,16 @@ run changeQueue for 5
 */
 
 pred show(){ 
-	#Address = 1
-	#Zone = 1
-	#Ride = 1
+	#Address = 3
+	#Zone = 2
+	#Ride = 5
 	#TaxiQueue = #Zone
 	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
 	#TaxiAllocationDaemon = 1
 	#Taxi >= #Zone + 1
 	#{ r : Ride | r.status = INRIDE } >= 1
+	#{ r : Ride | r.status = PENDING } >= 1
+	#{ t : Taxi | t.status = ACCEPTING } >= 1
 	/*#Call >= 2
 	#Reservation >= 1
 	#Request >= 1
