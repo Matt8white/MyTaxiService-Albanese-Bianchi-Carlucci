@@ -13,9 +13,9 @@
 	fonttitle=\bfseries,
 	fontupper=\normalsize\sffamily,
 	colback=white,
-	colframe=red!75!black,
-	colbacktitle=red!75!black,
-	coltitle=white,
+	colframe=black,
+	colbacktitle=white,
+	coltitle=black,
 }}
 
 \newcounter{UseCaseCounter}
@@ -27,9 +27,9 @@
 	\refstepcounter{UseCaseCounter}
 	\begin{tcolorbox}[
 		tab2,
-		tabularx*={\arrayrulewidth0.5mm}{Y|X},
+		tabularx*={\arrayrulewidth0.25mm}{Y|X},
 		title=Use Case \arabic{UseCaseCounter},
-		boxrule=2pt
+		boxrule=1pt
 	]
 		Name & #1 \\ \hline
 		Description & #2 \\ \hline
@@ -41,24 +41,27 @@
 }
 
 \newcommand{\scenario}[3]{
+    \vfill
 	\refstepcounter{ScenarioCounter}
 	\label{scenario:#1}
 	\begin{tcolorbox}[
 		tab2,
 		title=Scenario \arabic{ScenarioCounter},
-		boxrule=2pt
+		boxrule=1pt
 	]
 		\textbf{#2}
 		\tcblower
 		#3
 	\end{tcolorbox}
+    \vspace{1.5cm}
+    \vfill
 }
 
 \newcommand{\mockup}[2]{
     \refstepcounter{MockupCounter}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5]{mockup_#1.jpg}
+        \includegraphics[scale=0.8]{mockup_#1.jpg}
         \caption*{Mockup \arabic{MockupCounter}: #2}
         \label{mockup:#1}
     \end{figure}
@@ -70,7 +73,7 @@
     \vfill
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5]{Sequence#1.png}
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Sequence#1.png}
         \caption*{Sequence Diagram \arabic{SequenceCounter}: #2}
         \label{sequence:#1}
     \end{figure}
