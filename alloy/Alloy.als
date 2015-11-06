@@ -170,8 +170,11 @@ fact equalZoneQueues {
 // if a ride is in PENDING status, no taxi must be allocated yet
 fact pendingRideNoAllocation {
 	all r : Ride | r.status = PENDING implies
-		one th : TaxiHandler | th.ride = r &&
-		       #th.allocate = 0	
+		( (no th: TaxiHandler | th.ride = r ) || (one th : TaxiHandler | th.ride = r &&
+		       #th.allocate = 0) ) 
+	and
+	all r : Ride | (r.status = INRIDE || r.status = ASSIGNED) implies
+		( one th : TaxiHandler | th.ride = r && #th.allocate = 1) 
 }
 
 
