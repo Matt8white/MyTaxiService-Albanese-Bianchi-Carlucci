@@ -27,7 +27,7 @@ sig Ride {
 } {
 	id > 0
 	startTime > 0
-	endTime > 0
+	endTime = none or endTime > 0
 	totalNrPeople > 0
 }
 
@@ -175,8 +175,8 @@ fact pendingRideNoAllocation {
 
 // if a ride is in COMPLETE status, then the corresponding taxiHandler must not exist anymore
 fact noTaxiHandlerForCompleteRides {
-	all r : Ride | r.status = COMPLETED <=>
-		no th : TaxiHandler | th.ride = r
+	all r : Ride | r.status = COMPLETED implies
+		(no th : TaxiHandler | th.ride = r)
 }
 
 // if a ride is in INRIDE status, then the taxi driver must be busy
@@ -353,22 +353,20 @@ run changeQueue for 5
 */
 
 pred show(){ 
-	#Address = 2
-	#Zone = 3
+	#Address = 1
+	#Zone = 1
 	#Ride = 1
 	#TaxiQueue = #Zone
 	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
 	#TaxiAllocationDaemon = 1
 	#Taxi >= #Zone + 1
-	//#{ r : Ride | r.status = INRIDE } >= 1
+	#{ r : Ride | r.status = INRIDE } >= 1
 	/*#Call >= 2
 	#Reservation >= 1
 	#Request >= 1
 	#Customer >= 6
-
-	
 	*/
 }	
 
-run show for 20
+run show for 15
 
