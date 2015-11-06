@@ -47,9 +47,6 @@ abstract sig Call {
 
 sig Reservation extends Call {
         isShareable: one Bool,
-        desideredDateTime: one Int
-} {
-	desideredDateTime > 0
 }
 
 sig Request extends Call {}
@@ -178,7 +175,7 @@ fact pendingRideNoAllocation {
 
 // if a ride is in COMPLETE status, then the corresponding taxiHandler must not exist anymore
 fact noTaxiHandlerForCompleteRides {
-	all r : Ride | r.status = COMPLETED implies
+	all r : Ride | r.status = COMPLETED <=>
 		no th : TaxiHandler | th.ride = r
 }
 
@@ -206,9 +203,9 @@ fact oneAcceptingTaxiForACall {
 
 // a driver must be in just a queue
 fact driverInOneQueueOnly {
-	no q1, q2 : TaxiQueue | 
+	(no q1, q2 : TaxiQueue | 
              q1 != q2 &&
-	   some t : Taxi | t in q1.taxis && t in q2.taxis 
+	   some t : Taxi | t in q1.taxis && t in q2.taxis) 
 }
 
 // there is at least a taxi available in each queue
@@ -300,8 +297,8 @@ assert noAllUnavailableTaxisInAQueue {
 	some t : Taxi | t in q.taxis && t.status = AVAILABLE
 }
 
-// WORKING!
-// check noAllUnavailableTaxisInAQueue for 15
+// WORKING
+//check noAllUnavailableTaxisInAQueue for 15
 
 // ######## A2 ########
 // for every ride with an allocated taxi, there must be an equal number of busy taxi driver
@@ -310,26 +307,67 @@ assert equalNumberAllocationsBusyDrivers {
 }
 
 // WORKING
-// check equalNumberAllocationsBusyDrivers for 25
+//check equalNumberAllocationsBusyDrivers for 15
 
+// ######## A3 ########
+// it there are more than call for a ride, then it must be a shared reservation
+assert sharedReservations {
+	all c1, c2: Call | (c1 != c2 && c1.ride = c2.ride implies 
+		(c1 in Reservation and c2 in Reservation and c1.isShareable = TRUE and c2.isShareable = TRUE) )
+}
+
+// WORKING
+//check sharedReservations for 15
+
+// ######## A4 ########
+// a taxi is allocated for a ride at a time
+assert oneRideForATaxi {
+	all t : Taxi | all th1, th2 : TaxiHandler | (th1 != th2 && t = th1.allocate implies t != th2.allocate) 
+}
+
+//WORKING
+// check oneRideForATaxi for 15
 
 //////////// PREDICATES ////////////////
+
+/*pred removeFromQueue( t: Taxi, q, q2: TaxiQueue ) {
+	t in q.taxis implies (q2.taxis = q.taxis - t)
+}
+
+//run removeFromQueue for 5
+
+pred addToQueue( t: Taxi, q, q2: TaxiQueue ) {
+	t not in q.taxis implies (q2.taxis = q.taxis + t)
+}
+
+//run addToQueue for 5
+
+pred changeQueue( t: Taxi, q, q2 : TaxiQueue ) {
+	some t : Taxi | some q, q2, q3, q4 : TaxiQueue | 
+		(q = q2 && q3 = q4 && q2 != q3 && t in q.taxis && t not in q3.taxis && removeFromQueue[t,q,q2] && addToQueue[t,q3,q4])
+	implies (t in q4.taxis and t not in q2.taxis)
+}
+
+run changeQueue for 5
+*/
+
 pred show(){ 
-	#Address >= 3
-	#Zone >= 3
-	#Ride >= 3
+	#Address = 2
+	#Zone = 3
+	#Ride = 1
+	#TaxiQueue = #Zone
+	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
+	#TaxiAllocationDaemon = 1
+	#Taxi >= #Zone + 1
+	//#{ r : Ride | r.status = INRIDE } >= 1
 	/*#Call >= 2
 	#Reservation >= 1
 	#Request >= 1
 	#Customer >= 6
-	#TaxiAllocationDaemon = 1
-	#TaxiHandler <= #Ride
-	#Taxi >= 10
-	#TaxiQueue = 4
-	#TaxiQueue = #Zone*/
+
+	
+	*/
 }	
 
-//////////// RUN ////////////////
-
-run show for 10
+run show for 20
 
