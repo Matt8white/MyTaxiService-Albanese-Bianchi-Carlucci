@@ -59,9 +59,9 @@ sig Customer {
         call: set Call
 }
 
-//sig TaxiAllocationDaemon {
-//	queues: set TaxiQueue
-//}
+sig TaxiAllocationDaemon {
+	queues: set TaxiQueue
+}
 
 sig TaxiHandler {
         ride: one Ride,
@@ -113,16 +113,43 @@ enum PaymentMethod {
 	POS
 }
 
-// note on dates: UNIX timestamps are used for convenience
+// note on dates: UNIX timestamps are used for convenience purposes
 
 //////////// FACTS ////////////////
+// at least a zone in the city
+fact atLeastAZone {
+	some Zone
+}
+
+// there is always an allocation daemon running
+fact taxiAllocationDaemonRunning {
+	one TaxiAllocationDaemon 
+}
+
+// bijection between taxiHandlers and rides
+fact bijectionTaxiHandlerRide {
+	(all th: TaxiHandler | one r : Ride | th.ride = r) && // each taxihandler has just a ride
+	(all r: Ride | one th: TaxiHandler | th.ride = r) // each ride belongs to just a taxihandler
+}
+
+
+// each TaxiHandler has just a reference to one of the queues of the TaxiAllocationDaemon
+fact consistentZoneQueues {
+	all th: TaxiHandler |
+		one tad : TaxiAllocationDaemon | 
+			th.taxiQueue in tad.queues
+}
+
+// number of zones = number of queues
+fact equalZoneQueues {
+	#{ Zone } =  #TaxiAllocationDaemon.queues
+}
 
 // if a ride is in PENDING status, no taxi must be allocated yet
 fact pendingRideNoAllocation {
 	all r : Ride | r.status = PENDING implies
 		one th : TaxiHandler | th.ride = r &&
-		       #th.allocate = 0
-		
+		       #th.allocate = 0	
 }
 
 // if a ride is in INRIDE status, then the taxi driver must be busy
@@ -158,8 +185,8 @@ fact driverInOneQueueOnly {
 fact atLeastOneTaxiAvailableInEveryQueue {
     all queue : TaxiQueue | 
 	some t : Taxi | 
-		t in queue.taxis &&
-		t.status = AVAILABLE
+		t in queue.taxis && 						// there are some taxis...
+		(some t2 : Taxi | t2 = t && t2.status = AVAILABLE)		// but at least one of them is available
 }
 
 // each ride is not duplicated
@@ -237,9 +264,21 @@ fact cashTaxi {
 
 //////////// ASSERTIONS ////////////////
 
+assert noAllUnavailableTaxisInAQueue {
+	// QUESTA DOVREBBE FALLIRE!!!!
+	some q : TaxiQueue | no t : Taxi | t in q.taxis && t.status = AVAILABLE
+}
+
+check noAllUnavailableTaxisInAQueue for 20
+
 //////////// PREDICATES ////////////////
 pred show(){ 
+	#TaxiAllocationDaemon = 1
 	#TaxiHandler >= 5
+	#Ride = #TaxiHandler
+	#Taxi = 100
+	#Zone = 5
+	#TaxiQueue = #Zone
 }
 
 //////////// RUN ////////////////
