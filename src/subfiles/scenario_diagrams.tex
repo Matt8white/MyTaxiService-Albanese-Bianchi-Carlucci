@@ -17,9 +17,9 @@
 
 \scenario{riccardo}{The amusement park lover}{Riccardo loves amusement parks and so he decides to organize a full day in the nearest one. He knows that the trains and busses will be pretty unusable; since he wants to spend as much as possible on his entertainment, he decides to reserve a taxi the night before by using the Sharing option. Luke and Christine decide to do the same too and find out that Riccardo had already reserved a vehicle for the same date and the same starting point. They accept to take the same taxi and equally divide the fees.}
 
-\scenario{max}{The taxi driver}{Max is a driver working for the public taxi service of his own city. During his daytime turn, his wife Marilyn calls from the city hospital saying that she is about to give birth to their child. During his frenetic race to the hospital a request comes from the system, but Max refuses to accept it by clicking on the “Decline Request” button. The system puts the driver in his zone queue tail. After that, Max realizes that he will be busy for a while so he decides to change his status to "unavailable".}
+\scenario{max}{The taxi driver}{Max is a driver working for the public taxi service of his own city. During his daytime turn, his wife Marilyn calls from the city hospital saying that she is about to give birth to their child. During his frenetic race to the hospital a request comes from the system, but Max refuses to accept it by clicking on the “Decline Request” button. The system puts the driver in his zone queue tail. After that, Max realizes that he will be busy for a while so he decides to change his status to ``unavailable".}
 
-\scenario{matthew}{Cancel a reservation}{Matthew is an engineering student who wanted to surprise his girlfriend, so he decided to reserve a taxi planning to show up in front of her house with a bouquet of roses. Unfortunately, few hours before the big event, her girlfriend broke up with him using a text message. With his heart broken, Matthew thinks that showing up at her place wouldn't be a good idea so he decides to go through his app in the "manage reservations'' section and cancel his reservation for that day.}
+\scenario{matthew}{Cancel a reservation}{Matthew is an engineering student who wanted to surprise his girlfriend, so he decided to reserve a taxi planning to show up in front of her house with a bouquet of roses. Unfortunately, few hours before the big event, her girlfriend broke up with him using a text message. With his heart broken, Matthew thinks that showing up at her place wouldn't be a good idea so he decides to go through his app in the ``manage reservations'' section and cancel his reservation for that day.}
 
 % --- TUTORIAL USECASE --- 
 % \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}
@@ -29,7 +29,6 @@
 \vfill
 \includegraphics[scale=0.5]{UseCase.png}
 \pagebreak
-
 % ---------- SIGN UP --------------------
 \usecase
 {Sign Up}
@@ -100,7 +99,7 @@
 	\item The customer fills in the mandatory information (starting point, destination, payment method, number of people and date-time)
 	\item The system registers the request and inserts it in the correct zone queue, according to the specified starting point.
 	\item The customer is informed that the operation did not fail thanks to a confirmation screen
-    \item TaxiHandler will evaluate it when needed (see ``Allocate a taxi'' use case)
+	\item TaxiHandler will evaluate it when needed (see ``Allocate a taxi'' use case)
 \end{enumerate}
 }
 {
@@ -115,12 +114,13 @@
 }
 { 
 \begin{itemize}
-\item The date and/or places are not valid
+	\item The date and/or places are not valid
 \end{itemize}
 }
 
 % SEQUENCE 
 \sequence{Reservation}{Reservation}
+\includegraphics[scale=0.5]{ReserveFlow.png}
 
 % ---------- REQUEST --------------------
 \usecase
@@ -149,14 +149,39 @@
 
 % ---------- ALLOCATE --------------------
 \usecase
+{Delete reservation}
+{Possibility of a customer to view and eventually delete one or more reservations made by him}
+{Customer, Taxi Handler}
+{
+\begin{enumerate}
+	\item The customer clicks on ``Manage reservations''.
+	\item The customer sees the entire list of his reservations (with details for each one) and may delete them.
+\end{enumerate}
+}
+{
+/
+}
+{ 
+\begin{itemize}
+	\item The deleted reservation occurs in less than 10 minutes from the delete action.
+\end{itemize}
+}
+
+% SEQUENCE 
+\pagebreak
+\sequence{DeleteReservation}{Delete a reservation}
+\includegraphics[scale=0.5]{TaxiFSM.png}
+\pagebreak
+% ---------- ALLOCATE --------------------
+\usecase
 {Allocate a taxi}
 {Selection and notification of a taxi driver to process a request or a reservation by the TaxiHandler}
 {Taxi Handler, Taxi Driver}
 {
 \begin{enumerate}
-	\item The TaxiHandler sends a notification to the first taxi driver who meets the requirements in the given zone queue
-	\item If a positive answer is given in 30 seconds the TaxiHandler provides to set the Driver as ``busy''
-	\item Otherwise the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1
+	\item The TaxiHandler sends a notification to the first taxi driver who meets the requirements in the given zone queue.
+	\item If a positive answer is given in 30 seconds the TaxiHandler provides to set the Driver as ``busy''.
+	\item Otherwise the driver is moved to the bottom of the queue. TaxiHandler restarts the seek from step 1.
 \end{enumerate}
 }
 {
