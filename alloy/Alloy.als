@@ -367,7 +367,7 @@ pred shareable {
 	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
 	#Zone = 2
 	#TaxiQueue = #Zone
-	#Taxi >= 6*/
+	#Taxi >= 6 */
 }
 
 run shareable for 15
