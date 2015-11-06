@@ -207,6 +207,11 @@ fact oneAcceptingTaxiForACall {
                                 t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2))
 }
 
+fact acceptingTaxiRelatedToAPendingRide {
+	all t : Taxi | t.status = ACCEPTING implies 
+		one th : TaxiHandler | th.ride.status = PENDING && t in th.taxiQueue.taxis
+}
+
 // a driver must be in just a queue
 fact driverInOneQueueOnly {
 	(no q1, q2 : TaxiQueue | 
