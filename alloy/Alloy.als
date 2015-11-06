@@ -341,7 +341,7 @@ assert correlationPendingAccepting {
 }
 
 //WORKING
-check correlationPendingAccepting for 15
+//check correlationPendingAccepting for 10
 
 
 //////////// PREDICATES ////////////////
@@ -368,20 +368,21 @@ run changeQueue for 5
 */
 
 pred show(){ 
+	#TaxiAllocationDaemon = 1
 	#Address = 3
 	#Zone = 2
 	#Ride = 5
 	#TaxiQueue = #Zone
 	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
-	#TaxiAllocationDaemon = 1
 	#Taxi >= #Zone + 1
 	#{ r : Ride | r.status = INRIDE } >= 1
-	#{ r : Ride | r.status = PENDING } >= 1
+	#{ r : Ride | r.status = PENDING } > #{ t : Taxi | t.status = ACCEPTING } // >= 1
 	#{ t : Taxi | t.status = ACCEPTING } >= 1
-	/*#Call >= 2
+	#Customer >= 2
+	/*#Call = #Customer
 	#Reservation >= 1
 	#Request >= 1
-	#Customer >= 6
+	
 	*/
 }	
 
