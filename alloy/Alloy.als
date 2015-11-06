@@ -56,7 +56,7 @@ sig Customer {
         name : one Stringa,
         email : one Stringa,
         mobilePhone : one Stringa,
-        call: set Call
+        calls: set Call
 }
 
 sig TaxiAllocationDaemon {
@@ -225,6 +225,13 @@ fact atLeastOneTaxiAvailableInEveryQueue {
 		t in queue.taxis && t.status = AVAILABLE		// but at least one of them is available
 }
 
+// each customer is not duplicated 
+fact noDuplicatedCustomers {
+   no c1, c2 : Customer | 
+	c1.id = c2.id && 
+	c1 != c2
+}
+
 // each ride is not duplicated
 fact noDuplicatedRides {
    no r1, r2 : Ride | 
@@ -370,13 +377,11 @@ pred show(){
 
 pred shareable {
 	#TaxiAllocationDaemon = 1
-	#Customer = 2
-	#Zone = 2
-	#TaxiQueue = #Zone
-	#Taxi >= #Zone
-	#{r : Reservation | r.isShareable = TRUE} = 2
+	#Customer >= 2
+	all c: Customer | some x : Call | x in c.calls
 }
 
-run shareable for 15
+// ok
+// run shareable for 10
 
 
