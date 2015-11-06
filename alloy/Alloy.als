@@ -7,6 +7,8 @@ sig Address {
         streetNr: one Int,
         gpsCoords: one Stringa,
         zone: one Zone
+} {
+	streetNr > 0
 }
 
 sig Zone {
@@ -143,6 +145,13 @@ fact consistentZoneQueues {
 			th.taxiQueue in tad.queues
 }
 
+// there are no queues outside the ones in the TaxiAllocationDaemon set
+fact noExternalQueues {
+	all q : TaxiQueue |
+		one tad : TaxiAllocationDaemon | 
+			q in tad.queues
+}
+
 // number of zones = number of queues
 fact equalZoneQueues {
 	#{ Zone } =  #TaxiAllocationDaemon.queues
@@ -266,24 +275,21 @@ fact cashTaxi {
 
 //////////// ASSERTIONS ////////////////
 
+// ######## A1 ########
 assert noAllUnavailableTaxisInAQueue {
     all q : TaxiQueue |
 	some t : Taxi | t in q.taxis && t.status = AVAILABLE
 }
 
-check noAllUnavailableTaxisInAQueue for 25
+// WORKING!
+// check noAllUnavailableTaxisInAQueue for 25
+
+// ######## A2 ########
+// new assertions coming along
 
 //////////// PREDICATES ////////////////
 pred show(){ 
-	#Address >= 1
-	#Zone >= #Address
-	#Ride = 3
-	#Call = 2
-	#Customer = 2
-	#TaxiAllocationDaemon = 1
-	#TaxiHandler = #Ride
-	#Taxi >= 10
-	#TaxiQueue = #Ride
+	// to be completed
 }
 
 //////////// RUN ////////////////
