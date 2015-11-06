@@ -3,6 +3,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{colortbl}
+\usepackage{caption}
 \tcbuselibrary{skins}
 
 \newcolumntype{Y}{>{\hsize=.5\hsize}X}
@@ -19,6 +20,8 @@
 
 \newcounter{UseCaseCounter}
 \newcounter{ScenarioCounter}
+\newcounter{MockupCounter}
+\newcounter{SequenceCounter}
 
 \newcommand{\usecase}[6]{
 	\refstepcounter{UseCaseCounter}
@@ -52,11 +55,25 @@
 }
 
 \newcommand{\mockup}[2]{
+    \refstepcounter{MockupCounter}
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.5]{mockup_#1.jpg}
-        \caption{#2}
+        \caption*{Mockup \arabic{MockupCounter}: #2}
         \label{mockup:#1}
     \end{figure}
+}
+
+\newcommand{\sequence}[2]{
+    \refstepcounter{SequenceCounter}
+    \pagebreak
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.5]{Sequence#1.png}
+        \caption*{Sequence Diagram \arabic{SequenceCounter}: #2}
+        \label{sequence:#1}
+    \end{figure}
+    \pagebreak
 }
 % \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}{Exception}
