@@ -136,8 +136,9 @@ fact unavailableTaxiDriversNoQueue {
 // if there is no taxiHandler pointing to a taxi driver, that driver must not be BUSY and ACCEPTING
 fact noBusyDriversWithoutTaxiHandlers {
 	all t : Taxi | 
-		(no th : TaxiHandler | th.allocate = t) implies (t.status != BUSY && t.status != ACCEPTING)
+		(no th : TaxiHandler | th.allocate = t) implies (t.status != BUSY)
 }
+
 
 
 // bijection between taxiHandlers and rides
@@ -198,9 +199,9 @@ fact noNegativeTimeRides {
 // if there's a PENDING call, there must not be 2 taxis in ACCEPTING status
 fact oneAcceptingTaxiForACall {
         all r : Ride | r.status = PENDING implies 
-                one th : TaxiHandler | th.ride = r && 
+                ( (no th: TaxiHandler | th.ride = r) or (one th : TaxiHandler | th.ride = r && 
                         no t1, t2: Taxi | t1 in th.taxiQueue.taxis && t2 in th.taxiQueue.taxis && 
-                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2
+                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2))
 }
 
 // a driver must be in just a queue
@@ -290,6 +291,9 @@ fact cashTaxi {
 	   CASH in t.paymentMethodsAccepted
 }
 
+fact oneRideForATaxi {
+	all t : Taxi | all th1, th2 : TaxiHandler | (th1 != th2 && t = th1.allocate implies t != th2.allocate) 
+}
 
 //////////// ASSERTIONS ////////////////
 
@@ -323,13 +327,14 @@ assert sharedReservations {
 //check sharedReservations for 15
 
 // ######## A4 ########
-// a taxi is allocated for a ride at a time
-assert oneRideForATaxi {
-	all t : Taxi | all th1, th2 : TaxiHandler | (th1 != th2 && t = th1.allocate implies t != th2.allocate) 
+// the number of rides in PENDING status is >= to the number of taxi drivers in ACCEPTING STATUS
+assert correlationPendingAccepting {
+	#{r : Ride | r.status = PENDING} >= #{ t : Taxi | t.status = ACCEPTING } 
 }
 
 //WORKING
-// check oneRideForATaxi for 15
+check correlationPendingAccepting for 15
+
 
 //////////// PREDICATES ////////////////
 
