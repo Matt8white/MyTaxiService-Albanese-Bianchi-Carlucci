@@ -128,3 +128,5 @@ sympy-plots-for-*.tex/
 
 # VIM
 .*.swp
+
+.DS_Store
