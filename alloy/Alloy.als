@@ -202,9 +202,7 @@ fact noNegativeTimeRides {
 // if there's a PENDING call, there must not be 2 taxis in ACCEPTING status
 fact oneAcceptingTaxiForACall {
         all r : Ride | r.status = PENDING implies 
-                ( (no th: TaxiHandler | th.ride = r) or (one th : TaxiHandler | th.ride = r && 
-                        no t1, t2: Taxi | t1 in th.taxiQueue.taxis && t2 in th.taxiQueue.taxis && 
-                                t1.status = ACCEPTING && t2.status = ACCEPTING && t1 != t2))
+                ( (no th: TaxiHandler | th.ride = r) or (one th : TaxiHandler | th.ride = r && some t : Taxi | t in th.taxiQueue.taxis && t.status = ACCEPTING) )
 }
 
 fact acceptingTaxiRelatedToAPendingRide {
