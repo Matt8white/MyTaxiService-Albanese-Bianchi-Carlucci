@@ -303,6 +303,10 @@ fact oneRideForATaxi {
 	all t : Taxi | all th1, th2 : TaxiHandler | (th1 != th2 && t = th1.allocate implies t != th2.allocate) 
 }
 
+fact pendingEqualAccepting {
+	#{r : Ride | r.status = PENDING} >= #{ t : Taxi | t.status = ACCEPTING } 
+}
+
 //////////// ASSERTIONS ////////////////
 
 // ######## A1 ########
@@ -336,36 +340,15 @@ assert sharedReservations {
 
 // ######## A4 ########
 // the number of rides in PENDING status is >= to the number of taxi drivers in ACCEPTING STATUS
-assert correlationPendingAccepting {
+/*assert correlationPendingAccepting {
 	#{r : Ride | r.status = PENDING} >= #{ t : Taxi | t.status = ACCEPTING } 
-}
+}*/
 
 //WORKING
 //check correlationPendingAccepting for 10
 
 
 //////////// PREDICATES ////////////////
-
-/*pred removeFromQueue( t: Taxi, q, q2: TaxiQueue ) {
-	t in q.taxis implies (q2.taxis = q.taxis - t)
-}
-
-//run removeFromQueue for 5
-
-pred addToQueue( t: Taxi, q, q2: TaxiQueue ) {
-	t not in q.taxis implies (q2.taxis = q.taxis + t)
-}
-
-//run addToQueue for 5
-
-pred changeQueue( t: Taxi, q, q2 : TaxiQueue ) {
-	some t : Taxi | some q, q2, q3, q4 : TaxiQueue | 
-		(q = q2 && q3 = q4 && q2 != q3 && t in q.taxis && t not in q3.taxis && removeFromQueue[t,q,q2] && addToQueue[t,q3,q4])
-	implies (t in q4.taxis and t not in q2.taxis)
-}
-
-run changeQueue for 5
-*/
 
 pred show(){ 
 	#TaxiAllocationDaemon = 1
@@ -376,14 +359,9 @@ pred show(){
 	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
 	#Taxi >= #Zone + 1
 	#{ r : Ride | r.status = INRIDE } >= 1
-	#{ r : Ride | r.status = PENDING } > #{ t : Taxi | t.status = ACCEPTING } // >= 1
+	#{ r : Ride | r.status = PENDING } = 2 
 	#{ t : Taxi | t.status = ACCEPTING } >= 1
-	#Customer >= 2
-	/*#Call = #Customer
-	#Reservation >= 1
-	#Request >= 1
-	
-	*/
+	#Customer >= 2	
 }	
 
 run show for 15
