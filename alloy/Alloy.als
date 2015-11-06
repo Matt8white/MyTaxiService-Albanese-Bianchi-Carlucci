@@ -315,7 +315,7 @@ assert noAllUnavailableTaxisInAQueue {
 }
 
 // WORKING
-//check noAllUnavailableTaxisInAQueue for 15
+//check noAllUnavailableTaxisInAQueue for 7
 
 // ######## A2 ########
 // for every ride with an allocated taxi, there must be an equal number of busy taxi driver
@@ -324,7 +324,7 @@ assert equalNumberAllocationsBusyDrivers {
 }
 
 // WORKING
-//check equalNumberAllocationsBusyDrivers for 15
+//check equalNumberAllocationsBusyDrivers for 7
 
 // ######## A3 ########
 // it there are more than call for a ride, then it must be a shared reservation
@@ -337,13 +337,6 @@ assert sharedReservations {
 //check sharedReservations for 15
 
 // ######## A4 ########
-// the number of rides in PENDING status is >= to the number of taxi drivers in ACCEPTING STATUS
-/*assert correlationPendingAccepting {
-	#{r : Ride | r.status = PENDING} >= #{ t : Taxi | t.status = ACCEPTING } 
-}*/
-
-//WORKING
-//check correlationPendingAccepting for 10
 
 
 //////////// PREDICATES ////////////////
@@ -362,5 +355,21 @@ pred show(){
 	#Customer >= 2	
 }	
 
-run show for 15
+//ok
+//run show for 15
+
+pred shareable {
+	/*#TaxiAllocationDaemon = 1
+	#Address = 3
+	#Ride = 5
+	#Reservation >= 2
+	#Customer >= 5
+	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
+	#Zone = 2
+	#TaxiQueue = #Zone
+	#Taxi >= 6*/
+}
+
+run shareable for 15
+
 
