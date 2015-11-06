@@ -337,6 +337,16 @@ assert sharedReservations {
 //check sharedReservations for 15
 
 // ######## A4 ########
+// if there is an endTime set for a ride, that must be after the start time
+assert timeConsistency {
+   all r : Ride | #{r.endTime} > 0 implies
+	r.startTime < r.endTime
+}
+
+// WORKING
+//check timeConsistency for 10
+
+// ######## A5 ########
 
 
 //////////// PREDICATES ////////////////
@@ -359,15 +369,12 @@ pred show(){
 //run show for 15
 
 pred shareable {
-	/*#TaxiAllocationDaemon = 1
-	#Address = 3
-	#Ride = 5
-	#Reservation >= 2
-	#Customer >= 5
-	#TaxiHandler = #{r : Ride | r.status != COMPLETED }
+	#TaxiAllocationDaemon = 1
+	#Customer = 2
 	#Zone = 2
 	#TaxiQueue = #Zone
-	#Taxi >= 6 */
+	#Taxi >= #Zone
+	#{r : Reservation | r.isShareable = TRUE} = 2
 }
 
 run shareable for 15
