@@ -27,8 +27,8 @@ class TaxiAllocationDaemon extends Thread {
         LinkedBlockingQueue<Ride> rides) {
 
         /** Move arguments to class variables */
-        this->taxis = taxis;
-        this->rides = rides;
+        this.taxis = taxis;
+        this.rides = rides;
     }
 
     /** Thread loop */
@@ -78,8 +78,8 @@ class TaxiHandler extends Thread {
     public TaxiHandler(LinkedList<Taxi> taxis, 
         Ride ride) {
 
-        this->ride = ride;
-        this->taxis = taxis;
+        this.ride = ride;
+        this.taxis = taxis;
     }
 
     /** Thread loop */
