@@ -1,27 +1,25 @@
 \pagebreak
 \section{Algorithm Design}
 
-\lstset{language=Java,numbersep=10pt}
-\begin{lstlisting}[frame=single]
-/** The taxi allocation daemon. 
-  *
-  * This thread receives new taxi requests and 
-  * allocates a TaxiHandler which will process 
-  * each request, according to the zone.
-  */
+\subsection{Taxi Allocation Daemon}
+In this chapter there are some of the useful algorithms used in this project.
+The first one is the taxi allocation daemon which receives 
+new taxi requests and allocates a TaxiHandler for each request.
+
+\lstset{
+language=Java,
+numbersep=10pt,
+numbers=left,
+frame=single,
+}
+\begin{lstlisting}[caption={Taxi allocation daemon}]
 class TaxiAllocationDaemon extends Thread {
     /** Available taxis */
     private Map<Zone, LinkedList<Taxi>> taxis;
 
-    /** A concurrent blocking queue 
-     *  containing new rides */
+    /** A blocking queue containing new rides */
     private LinkedBlockingQueue<Ride> rides;
 
-    /** The class constructor
-     *
-     * @param taxis Available taxis
-     * @param rides New rides
-     */
     public TaxiAllocationDaemon (Map<Zone, 
         LinkedList<Taxi>> taxis, 
         LinkedBlockingQueue<Ride> rides) {
@@ -31,68 +29,49 @@ class TaxiAllocationDaemon extends Thread {
         this.rides = rides;
     }
 
-    /** Thread loop */
-    @Override
     public void run() {
         System system = System.getInstance();
 
         /** Keep looping while system is running */
         while(system.isRunning()) {
-
-            /** Get the next ride. 
-             *  This is a blocking call!
-             */
+            /** Get the next ride.(Blocking call) */
             Ride ride = rides.take();
 
             /** Get the associated zone */
             Zone zone = ride.getZone();
 
             /** Create and launch a TaxiHandler */
-            new TaxiHandler(
-                taxis.get(zone), ride
-            ).start(); 
+            new TaxiHandler(taxis.get(zone), ride)
+                .start(); 
         }
     }
 }
-
 \end{lstlisting}
+\pagebreak
 
-\begin{lstlisting}[frame=single]
-/** The TaxiHandler.
- *
- * This class is needed to find a 
- * suitable taxi for the designated ride.
- */
+\subsection{TaxiHandler}
+This code is needed to find a suitable taxi for the designated ride.
+
+\begin{lstlisting}[caption={TaxiHandler}]
 class TaxiHandler extends Thread {
-    /** Taxi list */
     private LinkedList<Taxi> taxis;
-
-    /** The ride */
     private Ride ride;
 
-    /** The class constructor 
-     *
-     * @param taxis Taxi queue for the ride zone.
-     * @param ride The given ride
-     */
     public TaxiHandler(LinkedList<Taxi> taxis, 
         Ride ride) {
-
         this.ride = ride;
         this.taxis = taxis;
     }
 
-    /** Thread loop */
     @Override
     public void run() {
         /** Get the number of passengers */
-        int nrPassengers = ride.getNumberOfPassengers();
-
+        int nrPeople = ride.getNumberOfPassengers();
         Taxi designatedTaxi = null;
 
         /** Find a valid taxi */
         for(Taxi taxi : taxis) {
-            if(taxi.availableSeats() >= nrPassengers) {
+            if(taxi.availableSeats() >= nrPeople) {
                 designatedTaxi = taxi;
                 break;
             }
@@ -106,38 +85,19 @@ class TaxiHandler extends Thread {
         /** Bind the taxi with the ride */
         bindTaxi(taxi, ride);
         
-        /** This taxi is now busy. 
-         *  Remove that from the queue 
-         */
+        /** This taxi is now busy. */
         taxis.remove(taxi);
     }
 }
 \end{lstlisting}
+\pagebreak
 
-\begin{lstlisting}[frame=single]
-/** This method divides the total fee 
- * between the number of partecipants.
- * 
- * @param totalFee The total fee
- * @param nrPeople People who are joining the ride
- * @throws InvalidNumberOfPeopleException \
- *          There are no people joining the ride.
- */
-public void divideFees(double totalFee, int nrPeople) {
-    if(nrPeople < 1)
-        throw new InvalidNumberOfPeopleException();
 
-    return totalFee / nrPeople;
-}
-\end{lstlisting}
+\subsection{Process call algorithm}
+This algorithm is needed to process a call and add that in a suitable ride.
+It takes as input parameter the call and returns the associated ride.
 
-\begin{lstlisting}[frame=single]
-/** This method is needed to process a call 
- *  and add that in a suitable ride.
- *
- * @param call The input call to process 
- * @return A suitable ride
- */
+\begin{lstlisting}[caption={processCall()}]
 public Ride processCall(Call call) {
     /** Is this call is a shareable reservation? */
     if(call instanceof Reservation && 
@@ -172,5 +132,21 @@ public Ride processCall(Call call) {
          */
         return system.createNormalRide(call); 
     }
+}
+\end{lstlisting}
+\pagebreak
+\subsection{Divide fees}
+This is a quite simple algorithm used to divide the fee between 
+people who are joining the ride.
+
+Be careful, a check about $ nrPeople > 0 $ is needed in order to prevent
+a division by zero.
+
+\begin{lstlisting}[caption={Divide fees between partecipants}]
+public void divideFees(double totalFee, int nrPeople) {
+    if(nrPeople < 1)
+        throw new InvalidNumberOfPeopleException();
+
+    return totalFee / nrPeople;
 }
 \end{lstlisting}
