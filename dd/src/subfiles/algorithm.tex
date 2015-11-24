@@ -1,2 +1,176 @@
 \pagebreak
 \section{Algorithm Design}
+
+\lstset{language=Java,numbersep=10pt}
+\begin{lstlisting}[frame=single]
+/** The taxi allocation daemon. 
+  *
+  * This thread receives new taxi requests and 
+  * allocates a TaxiHandler which will process 
+  * each request, according to the zone.
+  */
+class TaxiAllocationDaemon extends Thread {
+    /** Available taxis */
+    private Map<Zone, LinkedList<Taxi>> taxis;
+
+    /** A concurrent blocking queue 
+     *  containing new rides */
+    private LinkedBlockingQueue<Ride> rides;
+
+    /** The class constructor
+     *
+     * @param taxis Available taxis
+     * @param rides New rides
+     */
+    public TaxiAllocationDaemon (Map<Zone, 
+        LinkedList<Taxi>> taxis, 
+        LinkedBlockingQueue<Ride> rides) {
+
+        /** Move arguments to class variables */
+        this->taxis = taxis;
+        this->rides = rides;
+    }
+
+    /** Thread loop */
+    @Override
+    public void run() {
+        System system = System.getInstance();
+
+        /** Keep looping while system is running */
+        while(system.isRunning()) {
+
+            /** Get the next ride. 
+             *  This is a blocking call!
+             */
+            Ride ride = rides.take();
+
+            /** Get the associated zone */
+            Zone zone = ride.getZone();
+
+            /** Create and launch a TaxiHandler */
+            new TaxiHandler(
+                taxis.get(zone), ride
+            ).start(); 
+        }
+    }
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single]
+/** The TaxiHandler.
+ *
+ * This class is needed to find a 
+ * suitable taxi for the designated ride.
+ */
+class TaxiHandler extends Thread {
+    /** Taxi list */
+    private LinkedList<Taxi> taxis;
+
+    /** The ride */
+    private Ride ride;
+
+    /** The class constructor 
+     *
+     * @param taxis Taxi queue for the ride zone.
+     * @param ride The given ride
+     */
+    public TaxiHandler(LinkedList<Taxi> taxis, 
+        Ride ride) {
+
+        this->ride = ride;
+        this->taxis = taxis;
+    }
+
+    /** Thread loop */
+    @Override
+    public void run() {
+        /** Get the number of passengers */
+        int nrPassengers = ride.getNumberOfPassengers();
+
+        Taxi designatedTaxi = null;
+
+        /** Find a valid taxi */
+        for(Taxi taxi : taxis) {
+            if(taxi.availableSeats() >= nrPassengers) {
+                designatedTaxi = taxi;
+                break;
+            }
+        }
+
+        /** No taxi available */
+        if(designatedTaxi == null) {
+            throw new AgainstAssumptionsException();
+        }
+
+        /** Bind the taxi with the ride */
+        bindTaxi(taxi, ride);
+        
+        /** This taxi is now busy. 
+         *  Remove that from the queue 
+         */
+        taxis.remove(taxi);
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single]
+/** This method divides the total fee 
+ * between the number of partecipants.
+ * 
+ * @param totalFee The total fee
+ * @param nrPeople People who are joining the ride
+ * @throws InvalidNumberOfPeopleException \
+ *          There are no people joining the ride.
+ */
+public void divideFees(double totalFee, int nrPeople) {
+    if(nrPeople < 1)
+        throw new InvalidNumberOfPeopleException();
+
+    return totalFee / nrPeople;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single]
+/** This method is needed to process a call 
+ *  and add that in a suitable ride.
+ *
+ * @param call The input call to process 
+ * @return A suitable ride
+ */
+public Ride processCall(Call call) {
+    /** Is this call is a shareable reservation? */
+    if(call instanceof Reservation && 
+        ((Reservation)call).isShareable() {
+
+        System system = System.getInstance();
+
+        /** Get call parameters, 
+         *  used to lookup active rides */
+        Address startPoint = call.getStartPoint();
+        Address endPoint = call.getEndPoint();
+        int nrPeople = call.getNrPeople();
+
+        /** Find a suitable ride */
+        Ride ride = system.lookupSharedRide(
+            startPoint, 
+            endPoint, 
+            nrPeople
+        );
+
+        /** There is a suitable shared ride. */
+        if(ride != null) {
+            ride.addCall(call);
+            return ride;
+        }
+        
+        /** Otherwise, create a new shared ride */
+        return system.createSharedRide(call);
+    } else {
+        /** This call is not shareable. 
+         *  Let's create a new normal ride
+         */
+        return system.createNormalRide(call); 
+    }
+}
+\end{lstlisting}
