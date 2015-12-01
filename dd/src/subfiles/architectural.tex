@@ -8,4 +8,27 @@ Starting from a very general depiction of the overall system, the document expla
 \subsection{Deployment view}
 \subsection{Runtime view}
 \subsection{Selected architectural styles and patterns}
+
+This section describes high level patterns we decided to use in this application.
+
+\paragraph{Deployment} A Four-tier architecture is used in this project.
+The whole infrastructure is divided in the following levels:
+\begin{enumerate}
+\item{Client tier, which is composed of web browsers and smartphones app}
+\item{Presentation tier, whose aim is to bring application server serivces to web browsers}
+\item{Business services, which is composed of session beans }
+\item{Data-Access tier, which is composed of entity beans and database}
+\end{enumerate}
+
+\paragraph{Communication} We choose to use a Service-oriented Architecture, 
+an architecture which provides application functionality as a set of services, 
+and applications that use those software services. 
+
+Services are engineered as \textbf{loosely coupled}, which means that each service
+is an implementation of some interfaces, which provide a communication schema with
+an application.
+Also, interfaces can be published and invoked.
+
+\paragraph{Structure} Component based? Object oriented? TODO
+
 \subsection{Other design decisions}
