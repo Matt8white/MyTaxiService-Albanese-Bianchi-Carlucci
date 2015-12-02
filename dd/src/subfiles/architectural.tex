@@ -91,6 +91,7 @@ The application server uses EntityBeans to map relations into Java objects, whic
 All public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
 % API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
 
+\newpage
 \paragraph{Customer Manager} % (fold)
 \label{par:customer_manager}
 The CustomerManager bean is responsible for operations on users, whether to create or handle one.
@@ -113,16 +114,58 @@ The CustomerManager bean is responsible for operations on users, whether to crea
     \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
     									&							&							& Password		& Password for this username \\\cmidrule{1-6}
      \multirow{2}{*}{showPreviousRides} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Rides' owner 			& List of rides \\
-    									&							&							& ThreshDate		& Check for rides after this date  \\\cmidrule{1-6}
-
+    									&							&							& ThreshDate		& Check for rides after this date  \\
     \bottomrule
 \end{tabular}}
 \end{table}
+% paragraph taxiresmanager (end)
 
+\paragraph{TaxiResManager} % (fold)
+\label{par:taxiresmanager}
+TaxiResManager is responsible for the management of any call (aka request or reserve).
+
+\begin{table}[hb]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{5}{*}{addCall} 			& 	\multirow{5}{*}{YES}		&	\multirow{5}{*}{Customer}	&	dateTime			&	When the call was made			& - \\
+    									&							&							& startPoint			& Starting point in associated ride \\
+    									&							&							& endPoint			& Ending point in associated ride \\
+    									&							&							& nrPeople			& How many seats are reserved \\
+    									&							&							& paymentMethod			& POS / Cash \\\cmidrule{1-6}
+
+    removeCall 			& 	YES		&	Customer	&	IDCall			&	Call ID in DB table			& - \\
+    									
+    \bottomrule
+\end{tabular}}
+\end{table}
 % paragraph customer_manager (end)
 
-% subsubsection web_service_jax_ws (end)
+\paragraph{TaxiDriverManager} % (fold)
+\label{par:taxidrivermanager}
+TaxiDriverManager is responsible for the management of a single taxi driver through his own app.
 
+\begin{table}[hb]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    setStatus 			& 	YES		&	Taxi Driver	&	Status			&	New status for this taxi			& - \\\cmidrule{1-6}
+
+    updatePosition			& 	YES		&	Taxi Driver	&	GPSpos			&	GPS coordinates			& - \\ 
+    									
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph taxidrivermanager (end)
+
+% subsubsection web_service_jax_ws (end)
+\newpage
 \subsection{Other design decisions}
 
 There are two aspects of myTaxiService we haven't discussed yet: communication 
