@@ -5,6 +5,9 @@
 Starting from a very general depiction of the overall system, the document explains in detail each component, through several class and component diagrams. In addition to this, a deployment view representing the physical implementation of myTaxiService and a description of the main patterns and styles used are provided. Please refer to each subsection for more details.
 
 \subsection{High level components and their interaction}
+% SCRIVI QUALCHE TROIATA QUI
+
+\subsection{Component view}
 The whole architecture can be described from two different points of view: 
 \begin{itemize}
 	\item \textbf{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
@@ -21,11 +24,7 @@ The whole architecture can be described from two different points of view:
 		\newpage
 		%\item ???
 	\end{itemize}
-	
 \end{itemize}
-
-\subsection{Component view}
-
 
 \subsection{Deployment view}
 \label{sec:deploy}
@@ -33,6 +32,8 @@ The whole architecture can be described from two different points of view:
 % tutta la menata sui java beans, richieste SOAP...
 
 \subsection{Runtime view}
+% SEQUENCE
+
 \subsection{Selected architectural styles and patterns}
 This section describes high level patterns we decided to use in myTaxiService.
 
@@ -72,6 +73,55 @@ The main benefits of this approach are that it is:
     \item{\textbf{Testable} because of the incapsulation, which improves testability.}
     \item{\textbf{Understandable} because it maps the application more closely to the real world.}
 \end{itemize}
+
+\subsection{Component interfaces}
+
+\subsubsection{Connection client - web server} % (fold)
+\label{ssub:https}
+The connection through the website to the service is guaranteed through standard HTTPS requests and are not described in detail here.
+% subsubsection https (end)
+
+\subsubsection{Connection application server - DB} % (fold)
+\label{ssub:connection_application_server_db}
+The application server uses EntityBeans to map relations into Java objects, which themselves refer to the underlying DB through JDBC calls. Since these connections are pretty standard (i.e. connection, query, handling results), they are not described in detail here.
+% subsubsection connection_application_server_db (end)
+
+\subsubsection{Web Service: JAX-WS} % (fold)
+\label{ssub:web_service_jax_ws}
+All public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
+% API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
+
+\paragraph{Customer Manager} % (fold)
+\label{par:customer_manager}
+The CustomerManager bean is responsible for operations on users, whether to create or handle one.
+\begin{table}[hb]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{2}{*}{signup} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Guest}	&	Username			&	Username for this customer			& - \\
+    									&							&							& Password			& Password for this customer \\\cmidrule{1-6}
+    \multirow{2}{*}{login} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Guest}	&	Username			&	Username chosen during signup 			& Access token \\
+    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
+    \multirow{2}{*}{confirmEmail} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& Boolean response \\
+    									&							&							& Mail		& Mail checked \\\cmidrule{1-6}
+	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
+    									&							&							& Password		& New password \\
+    									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
+    \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
+    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
+     \multirow{2}{*}{showPreviousRides} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Rides' owner 			& List of rides \\
+    									&							&							& ThreshDate		& Check for rides after this date  \\\cmidrule{1-6}
+
+    \bottomrule
+\end{tabular}}
+\end{table}
+
+% paragraph customer_manager (end)
+
+% subsubsection web_service_jax_ws (end)
 
 \subsection{Other design decisions}
 
