@@ -34,26 +34,43 @@ The whole architecture can be described from two different points of view:
 
 \subsection{Runtime view}
 \subsection{Selected architectural styles and patterns}
-This section describes high level patterns we decided to use in this application.
+This section describes high level patterns we decided to use in myTaxiService.
 
 \paragraph{Deployment} A four-tier architecture is used in this project.
-The whole infrastructure is divided in the following levels:
-\begin{enumerate}
-\item{Client tier, which is composed of web browsers and smartphones app}
-\item{Presentation tier, whose aim is to bring application server serivces to web browsers}
-\item{Business services, which is composed of session beans }
-\item{Data-Access tier, which is composed of entity beans and database}
-\end{enumerate}
+The whole infrastructure is divided in the following tiers:
+
+\begin{itemize}
+    \item{\textbf{Client tier} which is composed of web browsers and mobile app.}
+    \item{\textbf{Presentation tier} whose aim is to generate user interface and send it to clients.}
+    \item{\textbf{Logic tier} which coordinates the application: performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
+    \item{\textbf{Data tier} mainly made of entity beans and database. 
+    Here information is stored and retrieved.}
+\end{itemize}
+
+We choose to use this kind of architecture because it provides a model by which
+we can create a flexible and scalable system.
 
 \paragraph{Communication} We choose to use a Service-oriented Architecture, 
 an architecture which provides application functionality as a set of services, 
 and applications that use those software services. 
 
-Services are engineered as \textbf{loosely coupled}, which means that each service
-is an implementation of some interfaces, which provide a communication schema with
-an application.
-Also, interfaces can be published and invoked.
+Services are \textbf{loosely coupled} units of functionality that are self-contained, 
+Each service is an implementation of some interfaces, which provide a communication schema with
+each application. Also, interfaces can be published and invoked.
 
-\paragraph{Structure} Component based? Object oriented? TODO
+\paragraph{Structure} Here we choose to use the Object-Oriented Architectural Style.
+This is a design paradigm based on the division of responsibilities for a complex system
+into small and reusable parts called ``Objects''.
+They communicate with each other through interfaces, by sending and receiving messages
+or by calling methods in other objects.
+
+The main benefits of this approach are that it is:
+
+\begin{itemize}
+    \item{\textbf{Extensible} because there are a lot of structures which ensures that a change of implementation does not imply a change of interface.}
+    \item{\textbf{Reusable} if each object should be developed as a reusable small piece of code.}
+    \item{\textbf{Testable} because of the incapsulation, which improves testability.}
+    \item{\textbf{Understandable} because it maps the application more closely to the real world.}
+\end{itemize}
 
 \subsection{Other design decisions}
