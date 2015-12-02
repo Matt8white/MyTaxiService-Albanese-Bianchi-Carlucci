@@ -74,3 +74,19 @@ The main benefits of this approach are that it is:
 \end{itemize}
 
 \subsection{Other design decisions}
+
+There are two aspects of myTaxiService we haven't discussed yet: communication 
+with smartphones and geolocalization.
+
+\paragraph {Mobile communication}
+First, how can we send communication between application server and smartphones.
+There is a standard way to do this, which is the one we choose, \textit{Push Notification}.
+We decided to support both iOS and Android smartphones. In order to send push
+notifications to iOS smartphone, we have to use \textit{Apple Push Notification Service}.
+The same applies to Android world, Google has its own push service, called 
+\textit{Google Cloud Messaging}.
+
+\paragraph {Geolocalization}
+We decided to use Google Maps as geolocalization service because it is highly
+reliable, fast and extremely used in the world.
+Also, it offers powerful APIs which allow us to use it for a wide variety of use cases.
