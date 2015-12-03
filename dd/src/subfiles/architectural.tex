@@ -10,16 +10,16 @@ Starting from a very general depiction of the overall system, the document expla
 \subsection{Component view}
 The whole architecture can be described from two different points of view: 
 \begin{itemize}
-	\item \emph{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
-	\item \emph{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules). NUMERO MANCANTE main components make up myTaxiService:
+	\item \textbf{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
+	\item \textbf{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules). Three main components make up myTaxiService:
 	\begin{itemize}
-		\item \emph{Client}: here are grouped all classes which refer to a registered customer\footnote{This means that taxi drivers are not represented here}. In particular, a class reflecting the Client table in the DB and a ClientManager for basic operations (login, signup) are provided.
+		\item \textbf{Client}: here are grouped all classes which refer to a registered customer\footnote{This means that taxi drivers are not represented here}. In particular, a class reflecting the Client table in the DB and a ClientManager for basic operations (login, signup) are provided.
 		% TODO: IMAGE MISSING
 		\newpage
-		\item \emph{Taxi Res}: here are collected all classes relative to a request or a reservation into the system. Thus, a model for a generic Call is provided along with a TaxiResManager for I/O operations in the DB.
+		\item \textbf{Taxi Res}: here are collected all classes relative to a request or a reservation into the system. Thus, a model for a generic Call is provided along with a TaxiResManager for I/O operations in the DB.
 		% TODO: IMAGE MISSING
 		\newpage
-		\item \emph{Allocation}: here are represented the classes relative to allocating a taxi after a call has been previously made. Info about zones, rides and taxi drivers are given along with classes that physically manage the queue-handling process and notifications to drivers and customers.
+		\item \textbf{Allocation}: here are represented the classes relative to allocating a taxi after a call has been previously made. Info about zones, rides and taxi drivers are given along with classes that physically manage the queue-handling process and notifications to drivers and customers.
 		% TODO: IMAGE MISSING
 		\newpage
 		%\item ???
@@ -41,25 +41,25 @@ This section describes high level patterns we decided to use in myTaxiService.
 The whole infrastructure is divided in the following tiers:
 
 \begin{itemize}
-    \item{\emph{Client tier} which is composed of web browsers and mobile app.}
-    \item{\emph{Presentation tier} whose aim is to generate user interface and send it to clients.}
-    \item{\emph{Logic tier} which coordinates the application: performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
-    \item{\emph{Data tier} mainly made of entity beans and database. 
+    \item{\textbf{Client tier} which is composed of web browsers and mobile app.}
+    \item{\textbf{Presentation tier} whose aim is to generate user interface and send it to clients.}
+    \item{\textbf{Logic tier} which coordinates the application: performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
+    \item{\textbf{Data tier} mainly made of entity beans and database. 
     Here information is stored and retrieved.}
 \end{itemize}
 
 We choose to use this kind of architecture because it provides a model by which
 we can create a flexible and scalable system.
 
-\paragraph{Communication} We choose to use a \emph{Service-oriented Architecture}\cite{soa}, 
+\paragraph{Communication} We choose to use a Service-oriented Architecture, 
 an architecture which provides application functionality as a set of services, 
 and applications that use those software services. 
 
-Services are \emph{loosely coupled} units of functionality that are self-contained, 
+Services are \textit{loosely coupled} units of functionality that are self-contained, 
 Each service is an implementation of some interfaces, which provide a communication schema with
 each application. Also, interfaces can be published and invoked.
 
-\paragraph{Structure} Here we choose to use the \emph{Object-Oriented Architectural Style}\cite{ooa}.
+\paragraph{Structure} Here we choose to use the Object-Oriented Architectural Style.
 This is a design paradigm based on the division of responsibilities for a complex system
 into small and reusable parts called ``Objects''.
 They communicate with each other through interfaces, by sending and receiving messages
@@ -68,10 +68,10 @@ or by calling methods in other objects.
 The main benefits of this approach are that it is:
 
 \begin{itemize}
-    \item{\emph{Extensible} because there are a lot of structures which ensures that a change of implementation does not imply a change of interface.}
-    \item{\emph{Reusable} if each object should be developed as a reusable small piece of code.}
-    \item{\emph{Testable} because of the incapsulation, which improves testability.}
-    \item{\emph{Understandable} because it maps the application more closely to the real world.}
+    \item{\textbf{Extensible} because there are a lot of structures which ensures that a change of implementation does not imply a change of interface.}
+    \item{\textbf{Reusable} if each object should be developed as a reusable small piece of code.}
+    \item{\textbf{Testable} because of the incapsulation, which improves testability.}
+    \item{\textbf{Understandable} because it maps the application more closely to the real world.}
 \end{itemize}
 
 \subsection{Component interfaces}
@@ -92,22 +92,39 @@ All public methods are available through a Web service, which is handled by JAX-
 % API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
 
 \newpage
-\paragraph{Customer Manager} % (fold)
-\label{par:customer_manager}
-The CustomerManager bean is responsible for operations on users, whether to create or handle one.
-\begin{table}[hb]
+\paragraph{Guest Manager} % (fold)
+\label{par:guest_manager}
+The GuestManager bean is responsible for operations on unregistered users; it let customers register, sign in or confirm their email after signing up.
+\begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
 \begin{tabular}{llllll}
 \toprule
     \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
     \midrule
-    \multirow{2}{*}{signup} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Guest}	&	Username			&	Username for this customer			& - \\
-    									&							&							& Password			& Password for this customer \\\cmidrule{1-6}
+    \multirow{3}{*}{signup} 			& 	\multirow{3}{*}{NO}		&	\multirow{3}{*}{Guest}	&	Username			&	Username for this customer			& True if operation succedeed \\
+    									&							&							& Password			& Password for this customer \\
+    									&							&							& Mail			& Mail for this customer \\\cmidrule{1-6}
     \multirow{2}{*}{login} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Guest}	&	Username			&	Username chosen during signup 			& Access token \\
-    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
-    \multirow{2}{*}{confirmEmail} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& Boolean response \\
-    									&							&							& Mail		& Mail checked \\\cmidrule{1-6}
+    									&							&							& Password		& Hashed password for this user \\\cmidrule{1-6}
+    \multirow{2}{*}{confirmEmail} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Customer}	&	Token			&	Mail token sent during registration			& Boolean response \\
+    									&							&							& Mail		& Mail to be confirmed \\
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph guestmanager (end)
+
+\paragraph{Customer Manager} % (fold)
+\label{par:customer_manager}
+The CustomerManager bean is responsible for operations on users, whether to create or handle one.
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    
 	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
     									&							&							& Password		& New password \\
     									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
@@ -124,7 +141,7 @@ The CustomerManager bean is responsible for operations on users, whether to crea
 \label{par:taxiresmanager}
 TaxiResManager is responsible for the management of any call (aka request or reserve).
 
-\begin{table}[hb]
+\begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
 \begin{tabular}{llllll}
@@ -148,7 +165,7 @@ TaxiResManager is responsible for the management of any call (aka request or res
 \label{par:taxidrivermanager}
 TaxiDriverManager is responsible for the management of a single taxi driver through his own app.
 
-\begin{table}[hb]
+\begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
 \begin{tabular}{llllll}
@@ -164,12 +181,11 @@ TaxiDriverManager is responsible for the management of a single taxi driver thro
 \end{table}
 % paragraph taxidrivermanager (end)
 
-\newpage
 \paragraph{RideManager} % (fold)
 \label{par:ridemanager}
 RideManager is responsible for ???
 
-\begin{table}[hb]
+\begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
 \begin{tabular}{llllll}
@@ -202,7 +218,7 @@ RideManager is responsible for ???
 \label{par:taxiallocationdaemon}
 This is a Singleton JavaBean, responsible for allocating a taxi for each ride when necessary. It also holds all the Queues, divided by zone, for fast access.
 
-\begin{table}[hb]
+\begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
 \begin{tabular}{llllll}
@@ -232,12 +248,12 @@ with smartphones and geolocalization.
 \paragraph {Mobile communication}
 We need to send instant notifications to 
 user or taxi's mobile devices. There is a standard way to do this, 
-which is the one we have chosen, \emph{Push Notification}.
+which is the one we have chosen, \textit{Push Notification}.
 
 We decided to support both iOS and Android smartphones. In order to send push
-notifications to iOS smartphone, we have to use \emph{Apple Push Notification Service}\cite{apns}.
+notifications to iOS smartphone, we have to use \textit{Apple Push Notification Service}.
 The same applies to Android world, Google has its own push service, called 
-\emph{Google Cloud Messaging}\cite{gcm}.
+\textit{Google Cloud Messaging}.
 
 \paragraph {Geolocalization}
 We decided to use Google Maps as geolocalization service because it is highly
