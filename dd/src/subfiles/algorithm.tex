@@ -13,27 +13,29 @@ numbers=left,
 frame=single,
 }
 \begin{lstlisting}[caption={Taxi allocation daemon}]
-class TaxiAllocationDaemon extends Thread {
+@Startup
+@Singleton
+class TaxiAllocationDaemon {
     /** Available taxis */
     private Map<Zone, LinkedList<Taxi>> taxis;
 
     /** A blocking queue containing new rides */
     private LinkedBlockingQueue<Ride> rides;
 
-    public TaxiAllocationDaemon (Map<Zone, 
-        LinkedList<Taxi>> taxis, 
-        LinkedBlockingQueue<Ride> rides) {
+    /** ----- Class Methods ----- */
 
+    /** Class constructor */
+    public TaxiAllocationDaemon () { 
         /** Move arguments to class variables */
-        this.taxis = taxis;
-        this.rides = rides;
+        taxis = new HashMap<Zone, LinkedList<Taxi>>();
+        rides = new LinkedBlockingQueue<Ride>();
     }
 
-    public void run() {
-        System system = System.getInstance();
-
+    /** Main function */
+    @PostConstruct
+    public void run(){
         /** Keep looping while system is running */
-        while(system.isRunning()) {
+        while( true ) {
             /** Get the next ride.(Blocking call) */
             Ride ride = rides.take();
 
@@ -45,6 +47,29 @@ class TaxiAllocationDaemon extends Thread {
                 .start(); 
         }
     }
+
+    /** Add a taxi to the specified zone queue */
+    public void addTaxiToZoneQueue(
+        Taxi taxi, Zone zone) {
+        LinkedList<Taxi> list = taxis.get(zone);
+
+        list.add(taxi);
+    }
+
+    /** This method is called when a new ride
+     * is ready to be served */
+    private void handleNewRide(Ride ride) {
+        rides.add(ride);
+    }
+
+    /** This method is called every minute */
+    @Schedule(minute="*")
+    private void refreshRideQueue() {
+        // (...) 
+        if( newRideAvailable ) {
+            handleNewRide(ride);
+        }
+    }
 }
 \end{lstlisting}
 \pagebreak
@@ -54,7 +79,7 @@ This code is needed to find a suitable taxi for the designated ride.
 
 \begin{lstlisting}[caption={TaxiHandler}]
 class TaxiHandler extends Thread {
-    private LinkedList<Taxi> taxis;
+    private List<Taxi> taxis;
     private Ride ride;
 
     public TaxiHandler(LinkedList<Taxi> taxis, 
@@ -65,29 +90,54 @@ class TaxiHandler extends Thread {
 
     @Override
     public void run() {
+        selectTaxi();
+    }
+
+    private void selectTaxi() {
         /** Get the number of passengers */
         int nrPeople = ride.getNumberOfPassengers();
+        PaymentMethod method = ride.getPaymentMethod();
         Taxi designatedTaxi = null;
 
-        /** Find a valid taxi */
-        for(Taxi taxi : taxis) {
-            if(taxi.availableSeats() >= nrPeople) {
-                designatedTaxi = taxi;
-                break;
+        while( designatedTaxi == null ) {
+
+            /** Find a valid taxi */
+            for(Taxi taxi : taxis) {
+                if( taxi.availableSeats() >= nrPeople 
+                    && taxi.getPaymentMethods().
+                        contains(method) 
+                ){
+                    designatedTaxi = taxi;
+                    break;
+                }
+            }
+
+            /** No taxi available */
+            if(designatedTaxi == null) {
+                throw 
+                    new AgainstAssumptionsException();
+            }
+
+            if(!sendNotificationToTaxi(
+                designatedTaxi)) {
+
+                /** Re-enqueue taxi */
+                taxis.remove(taxi);
+                taxis.add(taxi);
+                
+                /** Choose another taxi */
+                designatedTaxi = null;
             }
         }
 
-        /** No taxi available */
-        if(designatedTaxi == null) {
-            throw new AgainstAssumptionsException();
-        }
-
         /** Bind the taxi with the ride */
-        bindTaxi(taxi, ride);
-        
+        bindTaxi(designatedTaxi, ride);
+
         /** This taxi is now busy. */
-        taxis.remove(taxi);
+        taxis.remove(designatedTaxi);
     }
+
+    // (...)
 }
 \end{lstlisting}
 \pagebreak
@@ -103,8 +153,6 @@ public Ride processCall(Call call) {
     if(call instanceof Reservation && 
         ((Reservation)call).isShareable() {
 
-        System system = System.getInstance();
-
         /** Get call parameters, 
          *  used to lookup active rides */
         Address startPoint = call.getStartPoint();
@@ -112,7 +160,7 @@ public Ride processCall(Call call) {
         int nrPeople = call.getNrPeople();
 
         /** Find a suitable ride */
-        Ride ride = system.lookupSharedRide(
+        Ride ride = lookupSharedRide(
             startPoint, 
             endPoint, 
             nrPeople
@@ -125,12 +173,12 @@ public Ride processCall(Call call) {
         }
         
         /** Otherwise, create a new shared ride */
-        return system.createSharedRide(call);
+        return createSharedRide(call);
     } else {
         /** This call is not shareable. 
          *  Let's create a new normal ride
          */
-        return system.createNormalRide(call); 
+        return createNormalRide(call); 
     }
 }
 \end{lstlisting}
