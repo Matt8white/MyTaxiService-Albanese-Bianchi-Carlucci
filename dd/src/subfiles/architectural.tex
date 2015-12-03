@@ -116,7 +116,7 @@ The GuestManager bean is responsible for operations on unregistered users; it le
 
 \paragraph{Customer Manager} % (fold)
 \label{par:customer_manager}
-The CustomerManager bean is responsible for operations on users, whether to create or handle one.
+The CustomerManager bean is responsible ????
 \begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
@@ -125,13 +125,14 @@ The CustomerManager bean is responsible for operations on users, whether to crea
     \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
     \midrule
     
-	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
-    									&							&							& Password		& New password \\
-    									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
-    \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
-    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
-     \multirow{2}{*}{showPreviousRides} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Rides' owner 			& List of rides \\
-    									&							&							& ThreshDate		& Check for rides after this date  \\
+%	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
+%    									&							&							& Password		& New password \\
+%    									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
+%    \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
+%    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
+     getPreviousRides 			& 	YES		&	Customer	&	Page			&	Page number of rides (10 rides per page)			& List of rides \\\cmidrule{1-6}
+     
+     logout 			& 	YES		&	-	&	-			&	-			& - \\
     \bottomrule
 \end{tabular}}
 \end{table}
