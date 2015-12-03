@@ -57,13 +57,15 @@ This component hold any information about taxis registered in the system and any
     \centering
     \includegraphics[width=0.9\textwidth]{UX1}
 \end{figure}
-% paragraph taxidriver (end)
 
 \newpage
 \subsubsection{DB} % (fold)
 \label{par:db}
-This is a logical component representing a layer between every other logic business and the DB.
-% TODO: COMPLETA METTENDO ANCHE SCHEMA ER
+This is a logical component representing a layer between every other logic business and the DB. In order to better represent the structure of the DB supporting this service, a ER diagram is provided. As already said, each interaction with the database is mediated through Entity Java Beans, better described in section \ref{sub:component_view}.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{ER}
+\end{figure}
 % paragraph db (end)
 
 \newpage
@@ -75,7 +77,54 @@ This is a logical component representing a layer between every other logic busin
 
 \newpage
 \subsection{Runtime view}
-% TODO: SEQUENCE + breve descrizione per ciascuno
+
+\newpage
+\subsubsection{Sign in} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{SequenceSignIn}
+\end{figure}
+
+\newpage
+\subsubsection{Sign up} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{SequenceSignUp}
+\end{figure}
+
+\newpage
+\subsubsection{Allocate a taxi} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{SequenceAllocateTaxi}
+\end{figure}
+
+\newpage
+\subsubsection{Request a taxi} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{SequenceRequestTaxi}
+\end{figure}
+
+\newpage
+\subsubsection{Reserve a taxi} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{SequenceReservation}
+\end{figure}
+
+\newpage
+\subsubsection{Delete reservation} % (fold)
+% xxx
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{DeleteReservation}
+\end{figure}
 
 \newpage
 \subsection{Selected architectural styles and patterns}
