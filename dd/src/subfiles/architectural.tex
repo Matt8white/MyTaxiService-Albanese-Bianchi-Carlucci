@@ -370,39 +370,6 @@ TaxiResManager is responsible for the management of any call (aka request or res
 \end{table}
 % paragraph customer_manager (end)
 
-% \paragraph{RideManager} % (fold)
-% \label{par:ridemanager}
-% RideManager is responsible for any action involving a ride: adding one when a call is added to the DB, modifying one when something changes (for example, a new client in a shareable ride), deleting one or setting a new status for it.
-
-% \begin{table}[h!]
-% \centering
-% \resizebox{1\textwidth}{!}{
-% \begin{tabular}{llllll}
-% \toprule
-%     \textbf{Method name}        &   \textbf{Token}  &   \textbf{User}   &   \textbf{Parameter Name}     & \textbf{Parameter Description}    & \textbf{Returns} \\
-%     \midrule
-%     \multirow{4}{*}{addRide}            &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       IDRide      &       Ride ID     & - \\
-%                                         &                           &                           & startTime         & When the ride starts \\
-%                                         &                           &                           & nrPeople          & Total number of people for this taxi \\
-%                                         &                           &                           & expectedFee           & Fee calculated in advance for each customer \\\cmidrule{1-6}
-
-%     removeRide          &   YES     &   System  &   IDRide          &   Ride ID in DB table         & - \\\cmidrule{1-6}
-
-%     \multirow{4}{*}{updateRide}             &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       RideID      &       Ride ID     & - \\
-%                                         &                           &                           & nrPeople      & New total number of people  \\
-%                                         &                           &                           & expectedFee       & New expected fee  \\
-%                                         &                           &                           & endTime       & When the ride ends (optional)  \\\cmidrule{1-6}
-
-%     \multirow{2}{*}{setStatus}          &   \multirow{2}{*}{YES}        &   \multirow{2}{*}{Systen} &   IDRide          &   Ride ID             & - \\
-%                                         &                           &                           & Status        & New status for this ride \\\cmidrule{1-6}
-    
-%     getRideInfo             &   YES     &   System  &   IDRide          &   Ride ID in DB table         & Ride Info \\
-
-%     \bottomrule
-% \end{tabular}}
-% \end{table}
-% % paragraph ridemanager (end)
-
 \paragraph{TaxiDriverManager} % (fold)
 \label{par:taxidrivermanager}
 TaxiDriverManager is responsible for the management of a single taxi driver through his own app.
@@ -425,27 +392,68 @@ TaxiDriverManager is responsible for the management of a single taxi driver thro
 \end{table}
 % paragraph taxidrivermanager (end)
 
-% \paragraph{TaxiAllocationDaemon} % (fold)
-% \label{par:taxiallocationdaemon}
-% This is a Singleton JavaBean, responsible for allocating a taxi for each ride when necessary. It also holds all the Queues, divided by zone, for fast access.
+\pagebreak
+\subsubsection{Internal classes} % (fold)
+\label{ssub:internal_classes}
+Here are described the classes that are somewhat important for the service but that are not available publicly.
+% subsection internal_classes (end)
 
-% \begin{table}[h!]
-% \centering
-% \resizebox{1\textwidth}{!}{
-% \begin{tabular}{llllll}
-% \toprule
-%     \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
-%     \midrule
-%     \multirow{2}{*}{createTaxiHandler} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{System}	&		IDRide		&		Ride ID		& - \\
-%     									&							&							& queue			& Queue for that zone \\\cmidrule{1-6}
+\paragraph{RideManager} % (fold)
+\label{par:ridemanager}
+RideManager is responsible for any action involving a ride: adding one when a call is added to the DB, modifying one when something changes (for example, a new client in a shareable ride), deleting one or setting a new status for it.
 
-%     deququeRide 			& 	YES		&	System	&	-			&	-			& Next ride to process \\\cmidrule{1-6}
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}        &   \textbf{Token}  &   \textbf{User}   &   \textbf{Parameter Name}     & \textbf{Parameter Description}    & \textbf{Returns} \\
+    \midrule
+    \multirow{4}{*}{addRide}            &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       IDRide      &       Ride ID     & - \\
+                                        &                           &                           & startTime         & When the ride starts \\
+                                        &                           &                           & nrPeople          & Total number of people for this taxi \\
+                                        &                           &                           & expectedFee           & Fee calculated in advance for each customer \\\cmidrule{1-6}
+
+    removeRide          &   YES     &   System  &   IDRide          &   Ride ID in DB table         & - \\\cmidrule{1-6}
+
+    \multirow{4}{*}{updateRide}             &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       RideID      &       Ride ID     & Boolean response \\
+                                        &                           &                           & nrPeople      & New total number of people  \\
+                                        &                           &                           & expectedFee       & New expected fee  \\
+                                        &                           &                           & endTime       & When the ride ends (optional)  \\\cmidrule{1-6}
+
+    \multirow{2}{*}{setStatus}          &   \multirow{2}{*}{YES}        &   \multirow{2}{*}{Systen} &   IDRide          &   Ride ID             & - \\
+                                        &                           &                           & Status        & New status for this ride \\\cmidrule{1-6}
     
-%     refreshRideQueue 			& 	YES		&	System	&	-			&	-			& - \\
+    getRideInfo             &   YES     &   System  &   IDRide          &   Ride ID in DB table         & Ride Info \\\cmidrule{1-6}
 
-%     \bottomrule
-% \end{tabular}}
-% \end{table}
+    getFee             &   YES     &   System  &   IDRide          &   Ride ID in DB table         & - \\
+
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph ridemanager (end)
+
+\paragraph{TaxiAllocationDaemon} % (fold)
+\label{par:taxiallocationdaemon}
+This is a Singleton JavaBean, responsible for allocating a taxi for each ride when necessary. It also holds all the Queues, divided by zone, for fast access.
+
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{2}{*}{addTaxiToZoneQueue} 			& 	\multirow{2}{*}{YES (Taxi Driver)}		&	\multirow{2}{*}{Taxi Driver}	&		taxi		&		The taxi to be added		& - \\
+    									&							&							& zone			& The zone where to add the taxi \\\cmidrule{1-6}
+
+    handleNewRide 			& 	NO		&	System	&	-			&	-			& - \\\cmidrule{1-6}
+    
+    refreshRideQueue 			& 	YES		&	System	&	-			&	-			& - \\
+
+    \bottomrule
+\end{tabular}}
+\end{table}
 
 % paragraph taxiallocationdaemon (end)
 
