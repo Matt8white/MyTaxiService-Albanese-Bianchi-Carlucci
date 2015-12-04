@@ -180,6 +180,7 @@ Since the actual representation of processes and threads running within myTaxiSe
 Nevertheless, in order to catch the behaviour of the overall system, here are presented the improved sequence diagrams, better explaining what happens \emph{inside the box}.
 
 \subsubsection{Sign in} % (fold)
+\label{ssec:signin}
 % xxx
 \begin{figure}[H]
     \centering
@@ -189,7 +190,8 @@ Nevertheless, in order to catch the behaviour of the overall system, here are pr
 \end{figure}
 
 \subsubsection{Sign up} % (fold)
-% xxx
+\label{ssec:signup}
+
 \begin{figure}[H]
     \centering
     \includegraphics[trim={0 7cm 0 0},width=\textwidth]{SequenceSignUp}
@@ -198,7 +200,8 @@ Nevertheless, in order to catch the behaviour of the overall system, here are pr
 \end{figure}
 
 \subsubsection{Allocate a taxi} % (fold)
-% xxx
+\label{ssec:allocate}
+
 \begin{figure}[H]
     \centering
     \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceAllocateTaxi}
@@ -207,7 +210,7 @@ Nevertheless, in order to catch the behaviour of the overall system, here are pr
 \end{figure}
 
 \subsubsection{Request a taxi} % (fold)
-% xxx
+\label{ssec:request}
 \begin{figure}[H]
     \centering
     \includegraphics[trim={2cm 10cm 2cm 0},width=\textwidth]{SequenceRequestTaxi}
@@ -216,15 +219,16 @@ Nevertheless, in order to catch the behaviour of the overall system, here are pr
 \end{figure}
 
 \subsubsection{Reserve a taxi} % (fold)
-% xxx
+\label{ssec:reserve}
 \begin{figure}[H]
     \centering
     \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceReservation}
     \caption{Sequence Diagram, Reserve a Taxi}
-    \label{fig:Reserve}
+    \label{fig:reserve}
 \end{figure}
 
 \subsubsection{Delete reservation} % (fold)
+\label{ssec:delete}
 \begin{figure}[H]
     \centering
     \includegraphics[trim={2cm 9cm 3cm 0},width=\textwidth]{DeleteReservation}
@@ -350,12 +354,11 @@ TaxiResManager is responsible for the management of any call (aka request or res
 \toprule
     \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
     \midrule
-    \multirow{7}{*}{addCall} 			& 	\multirow{7}{*}{YES}		&	\multirow{7}{*}{Customer}	&	dateTime			&	When the call was made			& - \\
+    \multirow{6}{*}{addCall} 			& 	\multirow{6}{*}{YES}		&	\multirow{6}{*}{Customer}	&	dateTime			&	When the call was made			& - \\
                                         &                           &                           & rideDateTime            & When the ride starts \\
     									&							&							& startPoint			& Starting point in associated ride \\
     									&							&							& endPoint			& Ending point in associated ride \\
     									&							&							& nrPeople			& How many seats are reserved \\
-                                        &                           &                           & ???            & NON MI RICORDO PIU!!! \\
     									&							&							& paymentMethod			& POS / Cash \\\cmidrule{1-6}
 
     showCalls          &   YES     &   Customer    &   -          &   -        & Array of calls by this customer \\\cmidrule{1-6}

@@ -1,26 +1,33 @@
+%!TEX root = ../dd.tex
 \pagebreak
 \section{Requirements traceability}
+
+\subsection{Functional requirements}
+All functional requirements expressed in section 2 in the Requirements Document have been analyzed in order to comprehend which components were necessary and how they had to relate one to the other. \\
+
+In the following table, each requirement is backed up by some model (Entity) and business logic classes already presented in section \ref{sub:component_view}. Please refer to each subsection for more information on each class. In addition to this, a sequence diagram is provided where possibile.
 
 \begin{table}[h!]
 \centering
 \resizebox{0.95\textwidth}{!}{
 \begin{tabular}{p{0.3\textwidth}|p{0.25\textwidth}|p{0.25\textwidth}|p{0.15\textwidth}}
 \toprule
-    \textbf{Functional requirement} & \textbf{Business Logic} & \textbf{Entity} & \textbf{Sequence diagram} \\
+    \textbf{Functional requirement} & \textbf{Business Logic} & \textbf{Entity} & \textbf{More info in section} \\
     \midrule
     
-    	\textbf{G1:} Allow users to sign up	&	GuestManager	&	Customer	&	SeqSignUp	\\\cmidrule{1-4}
-		\textbf{G2:} Allow users to log in	&	GuestManager	&	Customer	&	SeqLogIn	\\\cmidrule{1-4}
-		\textbf{G3:} Guarantee a fair management of any queue	&	TADaemon, TaxiHandler, DriverManager	&	Ride, Taxi	&	SeqAlloc	\\\cmidrule{1-4}
+    	\textbf{G1:} Allow users to sign up	&	GuestManager	&	Customer	&	\ref{ssec:signup}	\\\cmidrule{1-4}
+		\textbf{G2:} Allow users to log in	&	GuestManager	&	Customer	&	\ref{ssec:signin}	\\\cmidrule{1-4}
+		\textbf{G3:} Guarantee a fair management of any queue	&	TADaemon, TaxiHandler, DriverManager	&	Ride, Taxi	&	\ref{ssec:allocate}	\\\cmidrule{1-4}
 		\textbf{G4:} Allow taxi drivers to notify their availability	&	DriverManager	&	Taxi	&	-	\\\cmidrule{1-4}
-		%\textbf{G5:} Allow users to sign up	&	GuestManager	&	Customer	&	???	\\
-		\textbf{G6:} Public API	&	GuestManager	&	Customer	& yyy	\\\cmidrule{1-4}
-		\textbf{G7:} Allow customers to request a taxi	&	TaxiResManager	&	Call, Ride	&	SeqReque	\\\cmidrule{1-4}
-		% \textbf{G8:} Allow users to sign up	&	GuestManager	&	Customer	&	???	\\
-		\textbf{G9:} Allow users to reserve a taxi	&	TaxiResManager	&	Call, Ride	&	SeqResev	\\\cmidrule{1-4}
+		\st{\textbf{G5:} Guarantee presence of taxi drivers in every zone}	&	-	&	-	&	-	\\\cmidrule{1-4}
+		\textbf{G6:} Public API	&	GuestManager	&	Customer	& \ref{ssub:web_service_jax_ws}	\\\cmidrule{1-4}
+		\textbf{G7:} Allow customers to request a taxi	&	TaxiResManager	&	Call, Ride	&	\ref{ssec:request}	\\\cmidrule{1-4}
+		\textbf{G8:} Allow the system to allocate a taxi	&	\multicolumn{3}{c}{See G3}	\\
+		\textbf{G9:} Allow users to reserve a taxi	&	TaxiResManager	&	Call, Ride	&	\ref{ssec:reserve}	\\\cmidrule{1-4}
 		\textbf{G10:} Allow users to share a ride	&	\multicolumn{3}{c}{See G9}	\\\cmidrule{1-4}
-		\textbf{G11:} Allow reservation management	&	TaxiResManager	&	Ride, Call	&	SeqDelete	\\
+		\textbf{G11:} Allow reservation management	&	TaxiResManager	&	Ride, Call	&	\ref{ssec:delete}	\\
 
     \bottomrule
 \end{tabular}}
 \end{table}
+
