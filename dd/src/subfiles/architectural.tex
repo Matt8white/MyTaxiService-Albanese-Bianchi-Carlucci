@@ -71,6 +71,49 @@ This is a logical component representing a layer between every other logic busin
 \newpage
 \subsection{Deployment view}
 \label{sec:deploy}
+
+\paragraph{Servers} We choose to use three different physical servers as 
+\emph{Web server}, \emph{Application server} and \emph{Database server}. 
+
+Each of them is a \emph{Dell PowerEdge R220}\cite{r220}, a very common and 
+powerful rack server.
+Each server is running a Linux distribution called Debian
+\footnote{Debian is free and the ISO image is downloadable from its website, 
+\url{https://www.debian.org}}
+which is a very secure and customizable operating system, the right choice for our system. 
+
+All of this three server must be physically protected and the communication between
+every tier must be encrypted using \emph{Transport Layer Security} (TLS) protocol.
+
+\paragraph{Database server} This server will run the \emph{Database Management System}
+(DBMS).
+MySQL Community Edition is the designated software. It is highly reliable, free
+and widely used. When more processing power is needed, the DBMS will be 
+migrated to \emph{MySQL Cluster Edition}. Application server will be configured 
+to use this server as database backend.
+This server should communicate only with the application server using the standard
+MySQL protocol, wrapped into a TLS layer.
+
+\paragraph{Application server} GlassFish, one of the most used J2EE implementation
+will be installed in this server and configured to serve our application.
+Database communcation is made up using \emph{Java Persistence API} (JPA), which will wrap all
+database functionalities. This server will handle all the logic behind the system.
+GlassFish is a highly scaleable software server, if more computational power 
+is needed we will increase the number of the servers in this tier.
+Communication with the Web Tier and with the smartphone App is made up using 
+\emph{Simple Object Access Protocol} (SOAP).
+
+\paragraph{Web server} This server is responsible for the Web Interface.
+The whole web interface will be implemented using \emph{Java Server Faces} (JSF), while 
+the software web server will still be Glassfish Server.
+
+\paragraph{Clients}
+We currently support 2 different kind of clients: \emph{Smartphone users} and 
+\emph{Web Interface user}.
+The smartphone application directly connects to the Application Server via SOAP protocol
+while the Web interface will be accessible by connecting to our Web Server via
+a common Web browser.
+
 % TODO 1= diagramma deployment
 % 2 descrizione di ogni parte del deployment
 
