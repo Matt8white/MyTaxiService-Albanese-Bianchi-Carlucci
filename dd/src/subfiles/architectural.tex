@@ -10,8 +10,6 @@ of myTaxiService and a description of the main patterns and styles used are prov
 
 Please refer to each subsection for more details.
 
-\pagebreak
-
 \subsection{High level components and their interaction}
 The overall system is divided in 5 macrocomponents. 
 Please note that this is just a logical division (for example there are no 
@@ -36,7 +34,7 @@ For a detailed description of each component please refer to section \ref{sub:co
 The whole architecture can be described from two different points of view: 
 \begin{itemize}
 	\item \emph{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
-	\item \emph{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules).
+	\item \emph{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules). The following subsections will explain each component at a class-level point of view.
 \end{itemize}
 
 \subsubsection{Client} % (fold)
@@ -57,8 +55,8 @@ Whenever a guest/customer wants to do something strictly related to themselves
 \pagebreak
 \subsubsection{Taxi Reservation} % (fold)
 This component is responsible for two main objects in the entire system, Calls and Rides. 
-A call is either a request or a reservation made by a customer, whereas a Ride describes 
-the effective ride by a Taxi and can be associated with multiple calls. 
+A Call is either a request or a reservation made by a customer, whereas a Ride describes 
+the effective ride by a Taxi and can be associated with multiple Calls. 
 
 Whenever an action involves one of these classes, this is the component that must be used.
 \vfill
@@ -88,8 +86,9 @@ the ride queue to be processed by the DB and any TaxiHandler created by it.
 
 \pagebreak
 \subsubsection{Taxi Driver} % (fold)
-This component hold any information about taxis registered in the system and 
-any action related to them (for example, updating the position of a cab according to the GPS data).
+This component holds any information about taxis registered in the system and 
+any action related to them (for example, updating the position of a cab according to the GPS data). Whenever
+a taxi driver has to do something related to the system, he has to use classes from this component.
 \begin{figure}[H]
     \centering
     \includegraphics[trim={0 12cm 1cm 0},width=\textwidth]{CompClassTaxiDriver}
@@ -133,7 +132,7 @@ Each server is running a Linux distribution called Debian
 \url{https://www.debian.org}}
 which is a very secure and customizable operating system, the right choice for our system. 
 
-All of this three server must be physically protected and the communication between
+All of these three servers must be physically protected and the communication between
 every tier must be encrypted using \emph{Transport Layer Security} (TLS) protocol.
 
 \paragraph{Database server} This server will run the \emph{Database Management System}
@@ -147,11 +146,11 @@ MySQL protocol, wrapped into a TLS layer.
 
 \paragraph{Application server} GlassFish, one of the most used J2EE implementation
 will be installed in this server and configured to serve our application.
-Database communcation is made up using \emph{Java Persistence API} (JPA), which will wrap all
+Database communication is made possible by \emph{Java Persistence API} (JPA), which will wrap all
 database functionalities. This server will handle all the logic behind the system.
 GlassFish is a highly scaleable software server, if more computational power 
 is needed we will increase the number of the servers in this tier.
-Communication with the Web Tier and with the smartphone App is made up using 
+Communication with the Web Tier and with the smartphone App relies on 
 \emph{Simple Object Access Protocol} (SOAP).
 
 \paragraph{Web server} This server is responsible for the Web Interface.
@@ -160,7 +159,7 @@ the software web server will still be Glassfish Server.
 
 \paragraph{Clients}
 We currently support 2 different kind of clients: \emph{Smartphone users} and 
-\emph{Web Interface user}.
+\emph{Web Interface users}.
 The smartphone application directly connects to the Application Server via SOAP protocol
 while the Web interface will be accessible by connecting to our Web Server via
 a common Web browser.
@@ -246,7 +245,7 @@ The whole infrastructure is divided in the following tiers:
 \begin{itemize}
     \item{\textbf{Client tier} which is composed of web browsers and mobile app.}
     \item{\textbf{Presentation tier} whose aim is to generate user interface and send it to clients.}
-    \item{\textbf{Logic tier} which coordinates the application: performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
+    \item{\textbf{Logic tier} which coordinates the application: it performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
     \item{\textbf{Data tier} mainly made of entity beans and database. 
     Here information is stored and retrieved.}
 \end{itemize}
@@ -254,7 +253,7 @@ The whole infrastructure is divided in the following tiers:
 We choose to use this kind of architecture because it provides a model by which
 we can create a flexible and scalable system.
 
-\paragraph{Communication} We choose to use a Service-oriented Architecture, 
+\paragraph{Communication} We chose to use a \emph{Service-Oriented Architecture}, 
 an architecture which provides application functionality as a set of services, 
 and applications that use those software services. 
 
@@ -262,7 +261,7 @@ Services are \textit{loosely coupled} units of functionality that are self-conta
 Each service is an implementation of some interfaces, which provide a communication schema with
 each application. Also, interfaces can be published and invoked.
 
-\paragraph{Structure} Here we choose to use the Object-Oriented Architectural Style.
+\paragraph{Structure} Here we chose to use the Object-Oriented Architectural Style.
 This is a design paradigm based on the division of responsibilities for a complex system
 into small and reusable parts called ``Objects''.
 They communicate with each other through interfaces, by sending and receiving messages
@@ -293,13 +292,13 @@ The application server uses EntityBeans to map relations into Java objects, whic
 
 \subsubsection{Web Service: JAX-WS} % (fold)
 \label{ssub:web_service_jax_ws}
-All public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
+The following public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
 % API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
 
 \pagebreak
 \paragraph{Guest Manager} % (fold)
 \label{par:guest_manager}
-The GuestManager bean is responsible for operations on unregistered users; it let customers register, sign in or confirm their email after signing up.
+The GuestManager bean is responsible for operations on \emph{unregistered} users; it let customers register, sign in or confirm their email after signing up.
 \begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
@@ -321,7 +320,7 @@ The GuestManager bean is responsible for operations on unregistered users; it le
 
 \paragraph{Customer Manager} % (fold)
 \label{par:customer_manager}
-The CustomerManager bean is responsible ????
+The CustomerManager bean is responsible for operations on \emph{registered} users;
 \begin{table}[h!]
 \centering
 \resizebox{1\textwidth}{!}{
@@ -330,12 +329,14 @@ The CustomerManager bean is responsible ????
     \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
     \midrule
     
-%	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
-%    									&							&							& Password		& New password \\
-%    									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
-%    \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
-%    									&							&							& Password		& Password for this username \\\cmidrule{1-6}
-     getPreviousRides 			& 	YES		&	Customer	&	Page			&	Page number of rides (10 rides per page)			& List of rides \\\cmidrule{1-6}
+	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
+   									&							&							& Password		& New password \\
+   									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
+
+   \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
+   									&							&							& Password		& Password for this username \\\cmidrule{1-6}
+    
+    getPreviousRides 			& 	YES		&	Customer	&	Page			&	Page number of rides (10 rides per page)			& List of rides \\\cmidrule{1-6}
      
      logout 			& 	YES		&	-	&	-			&	-			& - \\
     \bottomrule
@@ -468,4 +469,5 @@ The same applies to Android world, Google has its own push service, called
 \paragraph {Geolocalization}
 We decided to use Google Maps as geolocalization service because it is highly
 reliable, fast and extremely used in the world.
-Also, it offers powerful APIs which allow us to use it for a wide variety of use cases.
+Also, it offers powerful APIs that will be used to calculate the best route
+among two or more points in the map (for example, when shared rides are involved).

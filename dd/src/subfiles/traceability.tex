@@ -2,7 +2,7 @@
 \pagebreak
 \section{Requirements traceability}
 
-\subsection{Functional requirements}
+\subsection*{Functional requirements}
 All functional requirements expressed in section 2 in the Requirements Document have been analyzed in order to comprehend which components were necessary and how they had to relate one to the other. \\
 
 In the following table, each requirement is backed up by some model (Entity) and business logic classes already presented in section \ref{sub:component_view}. Please refer to each subsection for more information on each class. In addition to this, a sequence diagram is provided where possibile.
@@ -22,7 +22,7 @@ In the following table, each requirement is backed up by some model (Entity) and
 		\st{\textbf{G5:} Guarantee presence of taxi drivers in every zone}	&	-	&	-	&	-	\\\cmidrule{1-4}
 		\textbf{G6:} Public API	&	GuestManager	&	Customer	& \ref{ssub:web_service_jax_ws}	\\\cmidrule{1-4}
 		\textbf{G7:} Allow customers to request a taxi	&	TaxiResManager	&	Call, Ride	&	\ref{ssec:request}	\\\cmidrule{1-4}
-		\textbf{G8:} Allow the system to allocate a taxi	&	\multicolumn{3}{c}{See G3}	\\
+		\textbf{G8:} Allow the system to allocate a taxi	&	\multicolumn{3}{c}{See G3}	\\\cmidrule{1-4}
 		\textbf{G9:} Allow users to reserve a taxi	&	TaxiResManager	&	Call, Ride	&	\ref{ssec:reserve}	\\\cmidrule{1-4}
 		\textbf{G10:} Allow users to share a ride	&	\multicolumn{3}{c}{See G9}	\\\cmidrule{1-4}
 		\textbf{G11:} Allow reservation management	&	TaxiResManager	&	Ride, Call	&	\ref{ssec:delete}	\\
@@ -32,13 +32,13 @@ In the following table, each requirement is backed up by some model (Entity) and
 \end{table}
 
 \newpage
-\subsection{User Interface}
+\subsection*{User Interface}
 Several mockups were already created and inserted into the RASD document; since no new mockups were added, please refer to section 1.5.1 in \cite{rasd}. However two UX diagrams have been created to describe in detail how a customer or a taxi driver should use his app. For more information, see section \ref{sec:ui}. 
 
-\subsection{Other interfaces}
+\subsection*{Other interfaces}
 The optimal route between two or more points is delegated to Google Maps API, as stated in section in section 1.5.3 in \cite{rasd}.
 
-\subsection{Changes and improvements}
+\subsection*{Changes and improvements}
 Some changes have been made for technical reasons or because they have become unnecessary during the creation of this document. In particular:
 
 \begin{itemize}
