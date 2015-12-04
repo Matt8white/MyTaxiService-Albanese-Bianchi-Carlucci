@@ -2,75 +2,126 @@
 \section{Architectural Design}
  
 \subsection{Overview}
-Starting from a very general depiction of the overall system, the document explains in detail each component, through several class and component diagrams. In addition to this, a deployment view representing the physical implementation of myTaxiService and a description of the main patterns and styles used are provided. Please refer to each subsection for more details.
+Starting from a very general depiction of the overall system, the document 
+explains in detail each component, through several class and component diagrams.
 
-\newpage
+In addition to this, a deployment view representing the physical implementation 
+of myTaxiService and a description of the main patterns and styles used are provided. 
+
+Please refer to each subsection for more details.
+
+\pagebreak
+
 \subsection{High level components and their interaction}
-The overall system is divided in 5 macrocomponents. Please note that this is just a logical division (for example there are no classes entirely dedicated to the DB, since multiple Entity JavaBeans are used throughout each component). The main interactions between the components are briefly illustrated: for a more complete description please refer to section \ref{sub:component_interfaces}. For a detailed description of each component please refer to section \ref{sub:component_view} instead.
+The overall system is divided in 5 macrocomponents. 
+Please note that this is just a logical division (for example there are no 
+classes entirely dedicated to the DB, since multiple Entity JavaBeans are used 
+throughout each component). 
 
+The main interactions between the components are briefly illustrated: for a 
+more complete description please refer to section \ref{sub:component_interfaces}. 
+For a detailed description of each component please refer to section \ref{sub:component_view} instead.
 
-    \includegraphics[width=0.9\textwidth]{HighLevelArch}
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={0 12cm 0 0},width=0.9\textwidth]{HighLevelArch}
+    \caption{High level architecture of the system}
+    \label{fig:hlarch}
+\end{figure}
 
-
-\newpage
+\pagebreak
 \subsection{Component view}
 \label{sub:component_view}
+
 The whole architecture can be described from two different points of view: 
 \begin{itemize}
-	\item \textbf{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
-	\item \textbf{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules).
+	\item \emph{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
+	\item \emph{Functionality}: each component represents a logical collection of correlated classes in the system (either representing data or business rules).
 \end{itemize}
 
-\newpage
 \subsubsection{Client} % (fold)
-Here are contained all classed related to a customer. In particular, two managers (one for guests and one for registered users) and an entity describing a Client are present. Whenever a guest/customer wants to do something strictly related to themselves (e.g. signing up, logging in..) he has to refer to this component.
-\begin{figure}[hb]
+Here are contained all classed related to a customer. In particular, two managers 
+(one for guests and one for registered users) and an entity describing a Client are present. 
+
+Whenever a guest/customer wants to do something strictly related to themselves 
+(e.g. signing up, logging in..) he has to refer to this component.
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{CompClassClient}
+    \includegraphics[trim={1cm 10cm 1cm 0},width=0.9\textwidth]{CompClassClient}
+    \caption{Component view, Client}
+    \label{fig:compclassclient}
 \end{figure}
 % paragraph client (end)
         
-\newpage
-\subsubsection{TaxiRes} % (fold)
-This component is responsible for two main objects in the entire system, Calls and Rides. A call is either a request or a reservation made by a customer, whereas a Ride describes the effective ride by a Taxi and can be associated with multiple calls. Whenever an action involves one of these classes, this is the component that must be used.
+\pagebreak
+\subsubsection{Taxi Reservation} % (fold)
+This component is responsible for two main objects in the entire system, Calls and Rides. 
+A call is either a request or a reservation made by a customer, whereas a Ride describes 
+the effective ride by a Taxi and can be associated with multiple calls. 
+
+Whenever an action involves one of these classes, this is the component that must be used.
 \vfill
-\begin{figure}[hb]
+\begin{figure}[H]
     \centering
-    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{CompClassTaxiRes}}% 
+    \includegraphics[trim={4cm 0 2cm 3cm}, width=\textwidth]{CompClassTaxiRes}
+    \caption{Component view, Taxi Reservation}
+    \label{fig:compclasstaxires}
 \end{figure}
 \vfill
 % paragraph taxires (end)
         
-\newpage
-\subsubsection{TaxiAllocation} % (fold)
-This is a central component for the service, since it is responsible for the actual allocation of a taxi for a certain ride. It holds a daemon always refreshing the ride queue to be processed by the DB and any TaxiHandler created by it.
-\begin{figure}[h!]
+\pagebreak
+\subsubsection{Taxi Allocation} % (fold)
+This is a central component for the service, since it is responsible for the actual 
+allocation of a taxi for a certain ride. It holds a daemon always refreshing 
+the ride queue to be processed by the DB and any TaxiHandler created by it.
+
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{CompClassTaxiAlloc}
+    \includegraphics[trim={1cm 8cm 1cm 0},width=\textwidth]{CompClassTaxiAlloc}
+    \caption{Component view, Taxi Allocation}
+    \label{fig:compclasstaxialloc}
 \end{figure}
 % paragraph taxiallocation (end)
 
-\newpage
-\subsubsection{TaxiDriver} % (fold)
-This component hold any information about taxis registered in the system and any action related to them (for example, updating the position of a cab according to the GPS data).
-\begin{figure}[hb]
+\pagebreak
+\subsubsection{Taxi Driver} % (fold)
+This component hold any information about taxis registered in the system and 
+any action related to them (for example, updating the position of a cab according to the GPS data).
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{CompClassTaxiDriver}
+    \includegraphics[trim={0 12cm 1cm 0},width=\textwidth]{CompClassTaxiDriver}
+    \caption{Component view, Taxi Driver}
+    \label{fig:compclasstaxidriver}
 \end{figure}
 
-\newpage
-\subsubsection{DB} % (fold)
+\pagebreak
+\subsubsection{Database} % (fold)
 \label{par:db}
-This is a logical component representing a layer between every other logic business and the DB. In order to better represent the structure of the DB supporting this service, a ER diagram is provided. As already said, each interaction with the database is mediated through Entity Java Beans, better described in section \ref{sub:component_view}.
+This is a logical component representing a layer between every other logic 
+business and the database. 
+In order to better represent the structure of the Database supporting this service, 
+a ER diagram is provided. 
+
+As already said, each interaction with the database is mediated through \emph{Entity Java Beans}, 
+better described in section \ref{sub:component_view}.
+
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{ER}
+    \includegraphics[trim={0.5cm 2cm 0.5cm 3cm},clip,width=\textwidth]{ER}
+    \caption{Entity Relationship Diagram}
+    \label{fig:er}
 \end{figure}
 % paragraph db (end)
 
-\newpage
+\pagebreak
 \subsection{Deployment view}
 \label{sec:deploy}
+In this section we'll talk about deployment. In Figure \ref{fig:deploy} 
+you can easily see the physical structure of the system. In the following
+paragraphs we'll explain in more detail relevant items.
 
 \paragraph{Servers} We choose to use three different physical servers as 
 \emph{Web server}, \emph{Application server} and \emph{Database server}. 
@@ -78,7 +129,7 @@ This is a logical component representing a layer between every other logic busin
 Each of them is a \emph{Dell PowerEdge R220}\cite{r220}, a very common and 
 powerful rack server.
 Each server is running a Linux distribution called Debian
-\footnote{Debian is free and the ISO image is downloadable from its website, 
+\footnote{Debian is a free operating system based on Linux and the ISO image is downloadable from its website, 
 \url{https://www.debian.org}}
 which is a very secure and customizable operating system, the right choice for our system. 
 
@@ -114,64 +165,74 @@ The smartphone application directly connects to the Application Server via SOAP 
 while the Web interface will be accessible by connecting to our Web Server via
 a common Web browser.
 
-% TODO 1= diagramma deployment
-% 2 descrizione di ogni parte del deployment
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.5\textwidth,angle=90]{Deployment}
+    \caption{Deployment Diagram}
+    \label{fig:deploy}
+\end{figure}
 
-\newpage
+\pagebreak
+
 \subsection{Runtime view}
 Since the actual representation of processes and threads running within myTaxiService would have been quite complex and difficult to explain, no runtime unit diagrams have been used. As shown in the algorithm section (\ref{sec:algorithm}), there is however something important on this point: TaxiAllocationDaemon and TaxiHandler work in a similar way to SocketManager and Socket. In fact, TaxiAllocationDaemon \emph{listens} to new rides through a repeated fetch operation on the DB and allocates a new TaxiHandler to manage one ride at a time.
 
 Nevertheless, in order to catch the behaviour of the overall system, here are presented the improved sequence diagrams, better explaining what happens \emph{inside the box}.
 
-\newpage
 \subsubsection{Sign in} % (fold)
 % xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{SequenceSignIn}
+    \includegraphics[trim={0 7cm 0 0},width=0.9\textwidth]{SequenceSignIn}
+    \caption{Sequence Diagram, Sign In}
+    \label{fig:signin}
 \end{figure}
 
-\newpage
 \subsubsection{Sign up} % (fold)
 % xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{SequenceSignUp}
+    \includegraphics[trim={0 7cm 0 0},width=\textwidth]{SequenceSignUp}
+    \caption{Sequence Diagram, Sign Up}
+    \label{fig:signup}
 \end{figure}
 
-\newpage
 \subsubsection{Allocate a taxi} % (fold)
 % xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{SequenceAllocateTaxi}
+    \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceAllocateTaxi}
+    \caption{Sequence Diagram, Allocate a Taxi}
+    \label{fig:allocate}
 \end{figure}
 
-\newpage
 \subsubsection{Request a taxi} % (fold)
 % xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{SequenceRequestTaxi}
+    \includegraphics[trim={2cm 10cm 2cm 0},width=\textwidth]{SequenceRequestTaxi}
+    \caption{Sequence Diagram, Request a Taxi}
+    \label{fig:request}
 \end{figure}
 
-\newpage
 \subsubsection{Reserve a taxi} % (fold)
 % xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{SequenceReservation}
+    \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceReservation}
+    \caption{Sequence Diagram, Reserve a Taxi}
+    \label{fig:Reserve}
 \end{figure}
 
-\newpage
 \subsubsection{Delete reservation} % (fold)
-% xxx
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{DeleteReservation}
+    \includegraphics[trim={2cm 9cm 3cm 0},width=\textwidth]{DeleteReservation}
+    \caption{Sequence Diagram, Delete reservation}
+    \label{fig:delete}
 \end{figure}
 
-\newpage
+\pagebreak
 \subsection{Selected architectural styles and patterns}
 This section describes high level patterns we decided to use in myTaxiService.
 
@@ -212,7 +273,7 @@ The main benefits of this approach are that it is:
     \item{\textbf{Understandable} because it maps the application more closely to the real world.}
 \end{itemize}
 
-\newpage
+\pagebreak
 \subsection{Component interfaces}
 \label{sub:component_interfaces}
 
@@ -231,7 +292,7 @@ The application server uses EntityBeans to map relations into Java objects, whic
 All public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
 % API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
 
-\newpage
+\pagebreak
 \paragraph{Guest Manager} % (fold)
 \label{par:guest_manager}
 The GuestManager bean is responsible for operations on unregistered users; it let customers register, sign in or confirm their email after signing up.
@@ -385,7 +446,7 @@ TaxiDriverManager is responsible for the management of a single taxi driver thro
 % paragraph taxiallocationdaemon (end)
 
 % subsubsection web_service_jax_ws (end)
-\newpage
+\pagebreak
 \subsection{Other design decisions}
 
 There are two aspects of myTaxiService we haven't discussed yet: communication 
