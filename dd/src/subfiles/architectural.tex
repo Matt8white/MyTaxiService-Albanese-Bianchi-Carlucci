@@ -10,7 +10,7 @@ The overall system is divided in 5 macrocomponents. Please note that this is jus
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{UX1}
+    \includegraphics[width=0.9\textwidth]{HighLevelArch}
 \end{figure}
 
 
@@ -26,19 +26,21 @@ The whole architecture can be described from two different points of view:
 \newpage
 \subsubsection{Client} % (fold)
 Here are contained all classed related to a customer. In particular, two managers (one for guests and one for registered users) and an entity describing a Client are present. Whenever a guest/customer wants to do something strictly related to themselves (e.g. signing up, logging in..) he has to refer to this component.
-\begin{figure}[h!]
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=0.9\textwidth]{UX1}
+    \includegraphics[width=0.9\textwidth]{CompClassClient}
 \end{figure}
 % paragraph client (end)
         
 \newpage
 \subsubsection{TaxiRes} % (fold)
 This component is responsible for two main objects in the entire system, Calls and Rides. A call is either a request or a reservation made by a customer, whereas a Ride describes the effective ride by a Taxi and can be associated with multiple calls. Whenever an action involves one of these classes, this is the component that must be used.
-\begin{figure}[h!]
+\vfill
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=0.9\textwidth]{UX1}
+    \makebox[\textwidth][c]{\includegraphics[width=1.2\textwidth]{CompClassTaxiRes}}% 
 \end{figure}
+\vfill
 % paragraph taxires (end)
         
 \newpage
@@ -46,16 +48,16 @@ This component is responsible for two main objects in the entire system, Calls a
 This is a central component for the service, since it is responsible for the actual allocation of a taxi for a certain ride. It holds a daemon always refreshing the ride queue to be processed by the DB and any TaxiHandler created by it.
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{UX1}
+    \includegraphics[width=0.9\textwidth]{CompClassTaxiAlloc}
 \end{figure}
 % paragraph taxiallocation (end)
 
 \newpage
 \subsubsection{TaxiDriver} % (fold)
 This component hold any information about taxis registered in the system and any action related to them (for example, updating the position of a cab according to the GPS data).
-\begin{figure}[h!]
+\begin{figure}[hb]
     \centering
-    \includegraphics[width=0.9\textwidth]{UX1}
+    \includegraphics[width=0.9\textwidth]{CompClassTaxiDriver}
 \end{figure}
 
 \newpage
@@ -74,9 +76,11 @@ This is a logical component representing a layer between every other logic busin
 % TODO 1= diagramma deployment
 % 2 descrizione di ogni parte del deployment
 
-
 \newpage
 \subsection{Runtime view}
+Since the actual representation of processes and threads running within myTaxiService would have been quite complex and difficult to explain, no runtime unit diagrams have been used. As shown in the algorithm section (\ref{sec:algorithm}), there is however something important on this point: TaxiAllocationDaemon and TaxiHandler work in a similar way to SocketManager and Socket. In fact, TaxiAllocationDaemon \emph{listens} to new rides through a repeated fetch operation on the DB and allocates a new TaxiHandler to manage one ride at a time.
+
+Nevertheless, in order to catch the behaviour of the overall system, here are presented the improved sequence diagrams, better explaining what happens \emph{inside the box}.
 
 \newpage
 \subsubsection{Sign in} % (fold)
