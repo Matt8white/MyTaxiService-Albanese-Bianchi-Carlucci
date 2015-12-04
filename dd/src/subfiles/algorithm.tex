@@ -200,14 +200,31 @@ which makes the assumption reasonable.
     \includegraphics[width=0.9\textwidth]{Fee}
 \end{figure}
 
-Be careful, a check about $ nrPeople > 0 $ is needed in order to prevent
-a division by zero.
+The actual fee is calculated in advance, when a ride is created or updated (for example, for sharing o for a different destination), according to the following formula:
 
-\begin{lstlisting}[caption={Divide fees between partecipants}]
-public void divideFees(double totalFee, int nrPeople) {
-    if(nrPeople < 1)
-        throw new InvalidNumberOfPeopleException();
+\begin{equation}
+    fee(h,km) = c(h) + km*d
+\end{equation}
 
-    return totalFee / nrPeople;
-}
-\end{lstlisting}
+where $c(h)$ represents a fixed, hour-dependent cost (night rides are more costly than day ones), whereas $d$ represents the \emph{total distance}, evaluated using Google Maps API (see \ref{sec:otherdesign}).
+
+It finally follows that:
+
+\begin{equation}
+    fee_i = \frac{fee}{n}
+\end{equation}
+
+where $n$ is the number of customers in that taxi.
+
+% AL TI PREGO LOL 
+% Be careful, a check about $ nrPeople > 0 $ is needed in order to prevent
+% a division by zero.
+
+% \begin{lstlisting}[caption={Divide fees between partecipants}]
+% public void divideFees(double totalFee, int nrPeople) {
+%     if(nrPeople < 1)
+%         throw new InvalidNumberOfPeopleException();
+
+%     return totalFee / nrPeople;
+% }
+% \end{lstlisting}
