@@ -40,7 +40,7 @@ an SSL factory(\code{SSLSocketFactory.java}) and some other generic helper class
     \code{Name} constant at Line 178 should be uppercase.
 }
 
-\issue[18]{Thorough comments} {
+\issue[18]{Comments} {
 The comment style is not uniform; some methods seem to be more explained, 
 both through JavaDoc (see later) and several inline comments, while others 
 do not have any comment for dozens of line:
@@ -143,8 +143,10 @@ Methods seem to be logically grouped, even if some are out of order:
     at line 687 and the line 688. 
 }
 
-\issue[18]{Thorough comments} {
-The JavaDoc comments explaining the method parameters are not up to date and seem to be misleading. No comments present in method, some may be useful to better explain the inner workings.
+\issue[18]{Comments} {
+The JavaDoc comments explaining the method parameters are not up to date 
+and seem to be misleading. No comments present in method, some may be useful 
+to better explain the inner workings.
 }
 
 \issue[19]{Commented out sections} {
@@ -177,17 +179,88 @@ which means they are all caught but handled in a very general way
 (see Point~42).
 }
 
-
 \subsection{preSetRunAsIdentity()}
+
+\issue[5]{Method names should be verbs} {
+    \code{Pre} is not a verb; the other words are with the first letter
+    capitalized so that part is ok.
+}
+
+\issue[18]{Comments} {
+JavaDoc is unclear, since it does not explain exactly when the function is 
+called. The code at line 722 inside is self-explainatory, but something is 
+not working regarding the principals (typed names) for a certain servlet, 
+as the comments in line 752--755 state.
+}
+\issue[33]{Declarations at the beginning of blocks} {
+Only one initialization in line 749, not on top of the block; however, 
+this is due to the fact a check is performed before this instruction.
+}
+
 \subsection{postSetRunAsIdentity()}
+
+\issue[5]{Method names should be verbs} {
+    \code{Post} is not a verb; the other words are with the first letter
+    capitalized so that part is ok.
+}
+
+\issue[13]{80 characters limit} {
+    A comment at line 843 starts after the 80th character.
+}
+
+\issue[18]{Comments} {
+    Comment at line 843 (\code{always null}) does not explain why it is so.
+}
+
+\issue[33]{Declarations at the beginning of blocks} {
+    Variables defined just before use, not on top of block.
+}
+
+\issue[34]{Parameters order} {
+    The parameters are not aligned with what explained in the JavaDoc above; 
+    however, the list of parameters is sound and presented in a reasonable 
+    order (username, password, certificate). 
+}
+
+
 \subsection{principalSetContainsOnlyAnonymousPrincipal()}
+\issue[1]{Meaningful names} {
+    Variable \code{rvalue} at line 868 has an unmeaningful name.
+}
+
+\issue[13]{80 characters limit}{
+    Line 867 and line 869 exceeds 80 character limit.
+}
+
+\issue[18]{Comments}{
+    No comments, but code is self-explanatory.
+}
+
+\issue[36]{Return values}{
+    As it might not seem, return value is coherently used during validation 
+    in line 1684, where the principalSet is analyzed.
+}
 \subsection{invokeWebSecurityManager()}
+
+\issue[13]{80 characters limit} {
+    Lines 989 and 1031 exceeds 80 characters.
+}
+
+\issue[14]{120 characters limit} {
+    Line 1031 exceeds 120 characters.
+}
+
+\issue[16]{Higher-level breaks} {
+    In lines 965, 966, 967, 1003 and 1026 there are two breaks which 
+    are not ``higher-level'' breaks.
+}
 
 \issue[44]{Brutish programming} {
 There are duplicate checks after line 1000. 
 Lines from 1000 to 1020 could be improved by putting every
 \code{\_logger.isLoggable(Level.FINE)} inside \code{\_logger.fine()}.
 }
+
 \subsection{hasUserDataPermission()}
 
 
