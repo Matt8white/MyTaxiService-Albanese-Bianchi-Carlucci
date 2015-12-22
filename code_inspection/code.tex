@@ -1,0 +1,38 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\newcommand{\code}[1]{\texttt{#1}}
+\begin{document}
+
+\title{Code inspection}
+
+
+\author{M. Albanese, M. Bianchi, A. Carlucci}
+
+\maketitle
+\tableofcontents{}
+
+\newpage{}
+
+
+\section{Description of classes}
+
+The RealmAdapter class provides authentication and authorization functionalities
+to access web resources. In particular, its role is to let users login,
+logout and to check users privileges.
+
+The class is contained in the package \code{com.sun.web.security} which contains
+HTTP wrappers (\code{HttpRequestWrapper.java} and \code{HttpResponseWrapper.java}), 
+helper login functions(\code{LoginProbeProvider.java} and \code{LoginStatsProvider.java}), 
+an SSL factory(\code{SSLSocketFactory.java}) and some other generic helper classes.
+
+\section{Functional roles of the assigned class}
+
+
+\section{List of issues}
+
+
+\section{Other issues}
+\end{document}
