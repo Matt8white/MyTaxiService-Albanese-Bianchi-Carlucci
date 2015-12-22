@@ -42,7 +42,7 @@ an SSL factory(\code{SSLSocketFactory.java}) and some other generic helper class
 
 \issue[18]{Thorough comments} {
 The comment style is not uniform; some methods seem to be more explained, 
-both through javadoc (see later) and several inline comments, while others 
+both through JavaDoc (see later) and several inline comments, while others 
 do not have any comment for dozens of line:
 \begin{itemize}
 \item \code{authenticate (lines 518--622)} 
@@ -126,6 +126,17 @@ Methods seem to be logically grouped, even if some are out of order:
 \end{itemize}
 }
 
+\issue[27]{Long methods} {
+    Here's a list of some quite long methods. 
+    They should be split using helper methods.
+    \begin{itemize} 
+        \item \code{validate} (lines from 1626)
+        \item \code{getHostAndPort} (lines from 1147)
+        \item \code{invokeWebSecurityManager} (lines from 965)
+        \item \code{authenticate} (lines from 518) 
+    \end{itemize}
+}
+
 \subsection{authenticate()} % (fold)
 \issue[13]{80 characters limit}{
     There are two lines that exceed the 80 character limit: the comment
@@ -133,7 +144,7 @@ Methods seem to be logically grouped, even if some are out of order:
 }
 
 \issue[18]{Thorough comments} {
-The Javadoc comments explaining the method parameters are not up to date and seem to be misleading. No comments present in method, some may be useful to better explain the inner workings.
+The JavaDoc comments explaining the method parameters are not up to date and seem to be misleading. No comments present in method, some may be useful to better explain the inner workings.
 }
 
 \issue[19]{Commented out sections} {
@@ -145,12 +156,38 @@ The Javadoc comments explaining the method parameters are not up to date and see
     erased according to its comment (at lines 1146 and 1691). 
 }
 
+\issue[34]{Parameters order} {
+    The parameters are not aligned with what explained in the JavaDoc above; 
+    however, the list of parameters is sound and presented in a reasonable order (username, password, certificate). 
+}
+
+\issue[38]{IndexOutOfBoundExceptions} {
+    There could be an overflow in line 684 but the exception is caught.
+}
+
+\issue[42]{Error messages} {
+Error messages are not detailed and do not provide any guidance to 
+how to solve problems (\code{web.login.failed} and \code{Exception} at
+line 701 and 704).
+}
+
+\issue[52]{Exception handling} {
+All code is wrapped in a try catch block; Exceptions are caught at a high level, 
+which means they are all caught but handled in a very general way 
+(see Point~42).
+}
 
 
 \subsection{preSetRunAsIdentity()}
 \subsection{postSetRunAsIdentity()}
 \subsection{principalSetContainsOnlyAnonymousPrincipal()}
 \subsection{invokeWebSecurityManager()}
+
+\issue[44]{Brutish programming} {
+There are duplicate checks after line 1000. 
+Lines from 1000 to 1020 could be improved by putting every
+\code{\_logger.isLoggable(Level.FINE)} inside \code{\_logger.fine()}.
+}
 \subsection{hasUserDataPermission()}
 
 
