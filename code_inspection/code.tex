@@ -1,9 +1,12 @@
-%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
+%% *** TODO ***
+%% cerca fig: e metti la rispettiva foto
 \documentclass[english]{article}
 \usepackage[T1]{fontenc}
 \usepackage{babel}
 \newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\issue}[3][?]{
+    \paragraph{#1. #2} \mbox{}\\ #3
+}
 \begin{document}
 
 \title{Code inspection}
@@ -32,7 +35,118 @@ an SSL factory(\code{SSLSocketFactory.java}) and some other generic helper class
 % TODO: Mitch (vedi url in cima a google docs)
 
 \section{List of issues}
+\subsection{Common issues} % (fold)
+\issue[7]{Constant declarations}{
+    \code{Name} constant at Line 178 should be uppercase.
+}
+
+\issue[18]{Thorough comments} {
+The comment style is not uniform; some methods seem to be more explained, 
+both through javadoc (see later) and several inline comments, while others 
+do not have any comment for dozens of line:
+\begin{itemize}
+\item \code{authenticate (lines 518--622)} 
+\item \code{authenticate (from line 676)} 
+\item \code{invokeWebSecurityManager (from line 965)} 
+\item \code{redirect (from line 1250)} 
+\item \code{preAuthenticateCheck (from line 1415)} 
+\item \code{validate (from line 1626)} 
+\end{itemize}
+}
+
+\issue[23]{JavaDoc} {
+    There are two wrong JavaDoc comments, shown in fig.~\ref{fig:jdoc}, 
+    involving two constructors (lines 275--337). \\
+    There are also a lot of methods without any JavaDoc comment.
+    \begin{itemize}
+    \item \code{WebBundleDescriptor}
+    \item \code{getWebSecurityManager}
+    \item \code{updateWebSecurityManager}
+    \item \code{hasRole} (line 438)
+    \item \code{doLogout} (line 489) 
+    \item \code{authenticate} (line 518)
+    \item \code{authenticate} (line 646)
+    \item \code{authenticate} (line 661)
+    \item \code{SecurityContext} (line 852)
+    \item \code{SecurityContext} (line 856)
+    \item \code{getPassword} (line 884) 
+    \item \code{getPrincipal} (line 888)
+    \item \code{getHostAndPort} (line 1147) 
+    \item \code{redirect} (line 1250)
+    \item \code{getCanonicalName} (line 1304) 
+    \item \code{getResourceName} (line 1308)
+    \item \code{setRealmName} (line 1343) 
+    \item \code{validate} (line 1626)
+    \item \code{shouldRegister} (line 1754) 
+    \item \code{mapEntryToBoolean} (line 1762)
+    \item \code{resetPolicyContext} (line 1790) 
+    \item \code{getSecurityContextForPrincipal} (line 1959)
+    \item \code{setCurrentSecurityContextWithWebPrincipal} (line 1977)
+    \item \code{setCurrentSecurityContext} (line 1983)
+    \item \code{initConfigHelper} (line 1988)
+    \item \code{postConstruct} (line 1995)
+    \end{itemize}
+    
+    Also, two inner classes: 
+    \code{AuthenticatorProxy} (line 1798) and 
+    \code{HttpMessageInfo} (1846) have no JavaDoc comment.
+}
+
+\issue[25]{Class declarations} {
+    Points \textbf{A}, \textbf{B}, \textbf{C} are OK; \\ \\
+    Point \textbf{D}: static variables are mainly grouped on top of 
+    the class, few are mixed with non-static variables and methods 
+    (249 \code{reentrancyStatus}, \code{CONF\_FILE\_NAME} and
+    \code{HTTP\_SERVER\_LAYER} in line 1578). \\ \\ 
+    Point \textbf{E}: instance variables are not 
+    defined in the order shown in the Code Inspection Assignment 
+    (see fig.\ref{fig:something}), but are logically related. \\
+    This means that some protected variables appear after private ones 
+    (for example see lines 188--200). \\ \\ 
+    Points \textbf{F} and \textbf{G}: As for the methods, constructors correctly appear before any 
+    other method.
+}
+
+\issue[26]{Method organization} {
+Methods seem to be logically grouped, even if some are out of order: 
+\begin{itemize}
+    \item Setting up WebSecurityManager (lines 368-400)
+    \item Role checking (lines 400--444)
+    \item Logout(lines 448--516) and Login (lines 518--714)
+    \item Run-as functions(lines 715--963)
+    \item Permission check functions (lines 965--1144)
+    \item Host and port management (lines 1145--1247)
+    \item Redirecting (lines 1250--1300)
+    \item Getters \& setters (lines 1300--1350)
+    \item Security constraints (lines 1356--1394)
+    \item Pre and post auth methods (lines 1415--1575)
+    \item Validation (lines 1626--1750)
+    \item Other getter functions (lines 1754--1793)
+    \item AuthProxy class (lines 1800--2000) 
+\end{itemize}
+}
+
 \subsection{authenticate()} % (fold)
+\issue[13]{80 characters limit}{
+    There are two lines that exceed the 80 character limit: the comment
+    at line 687 and the line 688. 
+}
+
+\issue[18]{Thorough comments} {
+The Javadoc comments explaining the method parameters are not up to date and seem to be misleading. No comments present in method, some may be useful to better explain the inner workings.
+}
+
+\issue[19]{Commented out sections} {
+    There is only one function commented out: \code{getExtension} at line 1316 \
+    (see figure~\ref{fig:issue19}).
+    According to the comment above, the function is no more useful and can 
+    be safely removed.  \\
+    However, some snippets are commented out for reference and must not be 
+    erased according to its comment (at lines 1146 and 1691). 
+}
+
+
+
 \subsection{preSetRunAsIdentity()}
 \subsection{postSetRunAsIdentity()}
 \subsection{principalSetContainsOnlyAnonymousPrincipal()}
