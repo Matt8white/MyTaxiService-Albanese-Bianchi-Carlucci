@@ -1,11 +1,12 @@
 %% *** TODO ***
 %% cerca fig: e metti la rispettiva foto
-\documentclass[english]{article}
+%% cerca bib: e completa
+\documentclass[a4paper, 11pt]{article}
 \usepackage[T1]{fontenc}
-\usepackage{babel}
+\usepackage[utf8]{inputenc}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\issue}[3][?]{
-    \paragraph{#1. #2} \mbox{}\\ #3
+    \paragraph{[#1] #2} \mbox{}\\ #3
 }
 \begin{document}
 
@@ -15,6 +16,7 @@
 \author{M. Albanese, M. Bianchi, A. Carlucci}
 
 \maketitle
+\newpage{}
 \tableofcontents{}
 
 \newpage{}
@@ -26,18 +28,31 @@ The RealmAdapter class provides authentication and authorization functionalities
 to access web resources. In particular, its role is to let users login,
 logout and to check users privileges.
 
-The class is contained in the package \code{com.sun.web.security} which contains
-HTTP wrappers (\code{HttpRequestWrapper.java} and \code{HttpResponseWrapper.java}), 
-helper login functions(\code{LoginProbeProvider.java} and \code{LoginStatsProvider.java}), 
-an SSL factory(\code{SSLSocketFactory.java}) and some other generic helper classes.
+The class is contained in the package \code{com.sun.web.security} which mainly
+contains:
+\paragraph{HTTP wrappers} \mbox{} \\  
+\code{HttpRequestWrapper.java} and \code{HttpResponseWrapper.java}.
+
+
+\paragraph{Helper login functions} \mbox{} \\ 
+\code{LoginProbeProvider.java} and \code{LoginStatsProvider.java}
+
+\paragraph{SSL Factory} \mbox{} \\ 
+\code{SSLSocketFactory.java} 
 
 \section{Functional roles of the assigned class}
 % TODO: Mitch (vedi url in cima a google docs)
 
 \section{List of issues}
+
+Here is a comprehensive list of all issues we have found according to the
+checklist reported in \cite{bib:something}.
+For the sake of clarity we decided to write down only relevant and 
+meaningful points and to omit the other ones.
+
 \subsection{Common issues} % (fold)
 \issue[7]{Constant declarations}{
-    \code{Name} constant at Line 178 should be uppercase.
+    \code{Name} constant in line 178 should be uppercase.
 }
 
 \issue[18]{Comments} {
@@ -88,16 +103,16 @@ do not have any comment for dozens of line:
     \end{itemize}
     
     Also, two inner classes: 
-    \code{AuthenticatorProxy} (line 1798) and 
+    \code{AuthenticatorProxy} (line 1798) and \\
     \code{HttpMessageInfo} (1846) have no JavaDoc comment.
 }
 
 \issue[25]{Class declarations} {
     Points \textbf{A}, \textbf{B}, \textbf{C} are OK; \\ \\
     Point \textbf{D}: static variables are mainly grouped on top of 
-    the class, few are mixed with non-static variables and methods 
-    (249 \code{reentrancyStatus}, \code{CONF\_FILE\_NAME} and
-    \code{HTTP\_SERVER\_LAYER} in line 1578). \\ \\ 
+    the class, few are mixed with non-static variables and methods, like \\
+    \code{reentrancyStatus} in line 249, \code{CONF\_FILE\_NAME} and
+    \code{HTTP\_SERVER\_LAYER} in line 1578. \\ \\ 
     Point \textbf{E}: instance variables are not 
     defined in the order shown in the Code Inspection Assignment 
     (see fig.\ref{fig:something}), but are logically related. \\
@@ -140,7 +155,7 @@ Methods seem to be logically grouped, even if some are out of order:
 \subsection{authenticate()} % (fold)
 \issue[13]{80 characters limit}{
     There are two lines that exceed the 80 character limit: the comment
-    at line 687 and the line 688. 
+    in line 687 and the line 688. 
 }
 
 \issue[18]{Comments} {
@@ -150,12 +165,12 @@ to better explain the inner workings.
 }
 
 \issue[19]{Commented out sections} {
-    There is only one function commented out: \code{getExtension} at line 1316 \
+    There is only one function commented out: \code{getExtension} in line 1316 \
     (see figure~\ref{fig:issue19}).
     According to the comment above, the function is no more useful and can 
     be safely removed.  \\
     However, some snippets are commented out for reference and must not be 
-    erased according to its comment (at lines 1146 and 1691). 
+    erased according to its comment (in lines 1146 and 1691). 
 }
 
 \issue[34]{Parameters order} {
@@ -188,7 +203,7 @@ which means they are all caught but handled in a very general way
 
 \issue[18]{Comments} {
 JavaDoc is unclear, since it does not explain exactly when the function is 
-called. The code at line 722 inside is self-explainatory, but something is 
+called. The code in line 722 inside is self-explainatory, but something is 
 not working regarding the principals (typed names) for a certain servlet, 
 as the comments in line 752--755 state.
 }
@@ -205,11 +220,11 @@ this is due to the fact a check is performed before this instruction.
 }
 
 \issue[13]{80 characters limit} {
-    A comment at line 843 starts after the 80th character.
+    A comment in line 843 starts after the 80th character.
 }
 
 \issue[18]{Comments} {
-    Comment at line 843 (\code{always null}) does not explain why it is so.
+    Comment in line 843 (\code{always null}) does not explain why it is so.
 }
 
 \issue[33]{Declarations at the beginning of blocks} {
@@ -225,11 +240,11 @@ this is due to the fact a check is performed before this instruction.
 
 \subsection{principalSetContainsOnlyAnonymousPrincipal()}
 \issue[1]{Meaningful names} {
-    Variable \code{rvalue} at line 868 has an unmeaningful name.
+    Variable \code{rvalue} in line 868 has an unmeaningful name.
 }
 
 \issue[13]{80 characters limit}{
-    Line 867 and line 869 exceeds 80 character limit.
+    Line 867 and line 869 exceed 80 character limit.
 }
 
 \issue[18]{Comments}{
@@ -251,19 +266,65 @@ this is due to the fact a check is performed before this instruction.
 }
 
 \issue[16]{Higher-level breaks} {
-    In lines 965, 966, 967, 1003 and 1026 there are two breaks which 
+    In lines 965, 966, 967, 1003 and 1026 there are breaks which 
     are not ``higher-level'' breaks.
+}
+
+\issue[18]{Comments} {
+    Few comments aside JavaDoc are present, but code is well-written 
+    and comprehensible.
+}
+
+\issue[36]{Return values} {
+The return value is used in two points where permission checking is needed: 
+line 932 (\code{hasResourcePermission}, which wraps this function) 
+and line 1432 (\code{preAuthenticateCheck}, to check if auth will actually 
+be necessary). It is used correctly in both cases.
 }
 
 \issue[44]{Brutish programming} {
 There are duplicate checks after line 1000. 
 Lines from 1000 to 1020 could be improved by putting every
-\code{\_logger.isLoggable(Level.FINE)} inside \code{\_logger.fine()}.
+\code{\_logger.isLoggable(Level.FINE)} inside \\ \code{\_logger.fine()}.
 }
 
 \subsection{hasUserDataPermission()}
+\issue[1]{Meaningful names} {
+    Class variable \code{rvalue} in line 1140 has an unmeaningful name.
+}
 
+\issue[13]{80 characters limit}{
+    Lines 1095, 1100, 1119, 1139 exceed 80 character limit.
+}
 
+\issue[14]{120 characters limit} {
+    Line 1095 exceeds 120 characters.
+}
+
+\issue[16]{Higher-level breaks} {
+In lines 1084, 1085, 1089, 1090 and 1139 there are breaks which are not
+``higher-level''  breaks. \\
+Also, the break in line 1139 is misplaced since a better positioning of it 
+would have also solved the 80 chars exceeding problem.
+}
+
+\issue[33]{Declarations at the beginning of blocks} {
+In general yes, except for initialization in line 1105, which is however done 
+just before use in the subsequent block.
+}
+
+\issue[42]{Error messages} {
+Error codes are delegated to HttpServletResponse, with a \code{BAD\_REQUEST}
+or \code{FORBIDDEN} argument indicating that the request was not well-formed 
+or not authorized (line 1119 and 1139 respectevely). \\ 
+A warning is issued too with an error message and an ID in the first case.
+}
+
+\issue[52]{Exception handling} {
+All IO exceptions are thrown out like the previous method. \\
+An \code{IllegalArgumentException} indicating a bad request is caught 
+and correctly handled.
+}
 
 % subsection authenticate (end)
 
