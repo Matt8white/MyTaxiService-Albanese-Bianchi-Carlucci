@@ -1,10 +1,14 @@
 %% *** TODO ***
-%% cerca fig: e metti la rispettiva foto
 %% cerca bib: e completa
 \documentclass[a4paper, 11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
+\hypersetup{
+    pdfborder={0 0 0}
+}
 
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\issue}[3][?]{
@@ -85,7 +89,7 @@ In more general terms, any entity that could be authenticated by an authenticati
 \section{List of issues}
 
 Here is a comprehensive list of all issues we have found according to the
-checklist reported in \cite{bib:something}.
+checklist reported in \cite{bib:assignment}.
 For the sake of clarity we decided to write down only relevant and 
 meaningful points and to omit the other ones.
 
@@ -107,6 +111,29 @@ do not have any comment for dozens of line:
 \item \code{validate (from line 1626)} 
 \end{itemize}
 }
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=\textwidth]{img/issue19.png}
+    \caption{Commented out code}
+    \label{fig:issue19}
+\end{figure}
+
+\issue[19]{Commented out sections} {
+    There is only one function commented out: \code{getExtension} in line 1316 \
+    (see figure~\ref{fig:issue19}).
+    According to the comment above, the function is no more useful and can 
+    be safely removed.  \\
+    However, some snippets are commented out for reference and must not be 
+    erased according to its comment (in lines 1146 and 1691). 
+}
+
+\begin{figure}[tb]
+    \centering
+    \includegraphics[width=\textwidth]{img/jdoc.png}
+    \caption{Errors in Javadoc in lines 275--337}
+    \label{fig:jdoc}
+\end{figure}
 
 \issue[23]{JavaDoc} {
     There are two wrong JavaDoc comments, shown in fig.~\ref{fig:jdoc}, 
@@ -146,6 +173,13 @@ do not have any comment for dozens of line:
     \code{HttpMessageInfo} (1846) have no JavaDoc comment.
 }
 
+\begin{figure}[htb]
+    \centering
+    \includegraphics[width=\textwidth]{img/instancevariables.png}
+    \caption{Protected and private variables are mixed}
+    \label{fig:instancevariables}
+\end{figure}
+
 \issue[25]{Class declarations} {
     Points \textbf{A}, \textbf{B}, \textbf{C} are OK; \\ \\
     Point \textbf{D}: static variables are mainly grouped on top of 
@@ -153,8 +187,8 @@ do not have any comment for dozens of line:
     \code{reentrancyStatus} in line 249, \code{CONF\_FILE\_NAME} and
     \code{HTTP\_SERVER\_LAYER} in line 1578. \\ \\ 
     Point \textbf{E}: instance variables are not 
-    defined in the order shown in the Code Inspection Assignment 
-    (see fig.\ref{fig:something}), but are logically related. \\
+    defined in the order shown in \cite{bib:assignment} 
+    (see fig.~\ref{fig:instancevariables}), but are logically related. \\
     This means that some protected variables appear after private ones 
     (for example see lines 188--200). \\ \\ 
     Points \textbf{F} and \textbf{G}: As for the methods, constructors correctly appear before any 
@@ -202,15 +236,6 @@ Methods seem to be logically grouped, even if some are out of order:
 The JavaDoc comments explaining the method parameters are not up to date 
 and seem to be misleading. No comments present in method, some may be useful 
 to better explain the inner workings.
-}
-
-\issue[19]{Commented out sections} {
-    There is only one function commented out: \code{getExtension} in line 1316 \
-    (see figure~\ref{fig:issue19}).
-    According to the comment above, the function is no more useful and can 
-    be safely removed.  \\
-    However, some snippets are commented out for reference and must not be 
-    erased according to its comment (in lines 1146 and 1691). 
 }
 
 \issue[34]{Parameters order} {
@@ -368,6 +393,27 @@ and correctly handled.
 
 % subsection authenticate (end)
 
+\newpage
 \section{Other issues}
 % TODO AL E MATTIA: Vedi in cima a Google Docs per elenco bug
+% -------> RICORDATEVI DI INSERIRE LE ORE ALLA FINE!!! :)
+
+\appendix
+
+\clearpage
+\addcontentsline{toc}{section}{References}
+
+\begin{thebibliography}{9}
+\bibitem{bib:assignment} Prof. Di Nitto.
+\emph{Assignment 3: Code Inspection}.
+
+\bibitem{bib:docurl} AA.VV.,
+\emph{Java EE 6 Official Documentation}.
+\url{https://docs.oracle.com/javaee/6/tutorial/doc/bnbxj.html}
+
+\bibitem{bib:javadoc} AA.VV.,
+\emph{GlassFish Appserver Parent Project 4.1.1 API - Javadoc}.
+\url{http://glassfish.pompel.me/}
+\end{thebibliography}
+
 \end{document}
