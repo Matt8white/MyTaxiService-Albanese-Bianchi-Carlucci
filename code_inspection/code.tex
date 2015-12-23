@@ -4,6 +4,8 @@
 \documentclass[a4paper, 11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\issue}[3][?]{
     \paragraph{[#1] #2} \mbox{}\\ #3
@@ -50,15 +52,35 @@ Java EE provides an elaborate security system to provide access to protected res
     \textbf{authentication} is a process that verifies the identity of a user, device, or other entity in a computer system, usually as a prerequisite to allowing access to resources in a system.
 \end{quotation}
 
+\subsection{Authentication}
 The whole set of protected resources is partitioned into security spaces called \textbf{realms}, characterized by security policies and allowed users/groups. There are two important predefined realms in Java EE:
 \begin{itemize}
     \item \code{file}: check inserted credentials with the ones contained in a \code{keyfile};
-    \item \code{certificate}: an \code{X.509} certificate is provided by the client through an HTTPS connection, which is verified on the server side.
+    \item \code{certificate}: an \code{X.509} certificate is provided by the client through an \code{HTTPS} connection, which is verified on the server side.
 \end{itemize}
 
-The class \code{RealmAdapter} wraps auth functionalities both via credentials and certificates by using several overloaded \code{authenticate()} functions. In particular, each \code{authenticate()} delegates to the one in line 676 (described in section~\ref{sub:auth}).
+The class \code{RealmAdapter} wraps auth functionalities both via credentials and certificates by using several overloaded \code{authenticate()} functions and logout functionalities through a \code{logout()} method. In particular, each \code{authenticate()} delegates to the one in line 676 (described in section~\ref{sub:auth}).
+
+\subsection{Users, groups and roles}
+\begin{figure}[tb]
+    \centering
+    \includegraphics[]{img/security.png}
+    \caption{Mapping between users and roles}
+    \label{fig:security}
+\end{figure}
+
+The actual recognition of customers on the server is OS-like: the ones defined in the system are called \textbf{users} and can either be humans or applications. Multiple users can belong to the same \textbf{group}, which is a useful subdivision when several people are involved (e.g. an e-commerce site could contain a \code{CUSTOMER} group defined). In a similar fashion, \textbf{roles} define a division of users; they differ in the \emph{scope}:
+\begin{quote}
+    A group is designated for the entire GlassFish Server, whereas a role is associated only with a specific application in the GlassFish Server.
+\end{quote}
+This implies however that roles must be mapped to a certain user or to one or more groups in the overall system in order to have consistent results (see Figure~\ref{fig:security}).
+Groups and roles have of course different permissions when accessing protected resources (this means that certain elements are accessible if and only if the request comes from a user from a specified group/role). The class provides useful methods for role verification (\code{hasRole()} methods).
 
 
+\subsection{Other concepts}
+
+
+\newpage
 \section{List of issues}
 
 Here is a comprehensive list of all issues we have found according to the
