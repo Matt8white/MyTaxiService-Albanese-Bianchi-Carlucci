@@ -42,6 +42,7 @@ contains:
 \paragraph{SSL Factory} \mbox{} \\ 
 \code{SSLSocketFactory.java} 
 
+\newpage
 \section{Functional roles of the assigned class}
 Java EE provides an elaborate security system to provide access to protected resources on the web server. According to official documentation (see~\cite{bib:docurl}):
 
@@ -49,8 +50,10 @@ Java EE provides an elaborate security system to provide access to protected res
     Java EE applications consist of components that can contain both protected and unprotected resources. Often, you need to protect resources to ensure that only authorized users have access. \emph{Authorization provides controlled access to protected resources}. \\
     Authorization is based on identification and authentication. \\
     \textbf{Identification} is a process that enables recognition of an entity by a system. \\
-    \textbf{authentication} is a process that verifies the identity of a user, device, or other entity in a computer system, usually as a prerequisite to allowing access to resources in a system.
+    \textbf{Authentication} is a process that verifies the identity of a user, device, or other entity in a computer system, usually as a prerequisite to allowing access to resources in a system.
 \end{quotation}
+
+The main function for this class is to provide code that guarantees what stated above; in other words, code for \emph{authentication} and \emph{logout}, \emph{authorization}, \emph{role checking}.
 
 \subsection{Authentication}
 The whole set of protected resources is partitioned into security spaces called \textbf{realms}, characterized by security policies and allowed users/groups. There are two important predefined realms in Java EE:
@@ -61,7 +64,7 @@ The whole set of protected resources is partitioned into security spaces called 
 
 The class \code{RealmAdapter} wraps auth functionalities both via credentials and certificates by using several overloaded \code{authenticate()} functions and logout functionalities through a \code{logout()} method. In particular, each \code{authenticate()} delegates to the one in line 676 (described in section~\ref{sub:auth}).
 
-\subsection{Users, groups and roles}
+\subsection{Users, groups, roles and principals}
 \begin{figure}[tb]
     \centering
     \includegraphics[]{img/security.png}
@@ -76,9 +79,7 @@ The actual recognition of customers on the server is OS-like: the ones defined i
 This implies however that roles must be mapped to a certain user or to one or more groups in the overall system in order to have consistent results (see Figure~\ref{fig:security}).
 Groups and roles have of course different permissions when accessing protected resources (this means that certain elements are accessible if and only if the request comes from a user from a specified group/role). The class provides useful methods for role verification (\code{hasRole()} methods).
 
-
-\subsection{Other concepts}
-
+In more general terms, any entity that could be authenticated by an authentication protocol is called \textbf{principal}. The class provides some useful methods regarding principals, such as \code{getPrincipal()} given a user name, the already cited \code{authenticate()} and \code{hasRole()} functions, \code{preSetRunAsIdentity()} and \code{postSetRunAsIdentity()}.
 
 \newpage
 \section{List of issues}
