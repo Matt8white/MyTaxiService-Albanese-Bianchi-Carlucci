@@ -24,7 +24,7 @@
 
 \section{Description of classes}
 
-The RealmAdapter class provides authentication and authorization functionalities
+The \code{RealmAdapter} class provides authentication and authorization functionalities
 to access web resources. In particular, its role is to let users login,
 logout and to check users privileges.
 
@@ -41,7 +41,23 @@ contains:
 \code{SSLSocketFactory.java} 
 
 \section{Functional roles of the assigned class}
-% TODO: Mitch (vedi url in cima a google docs)
+Java EE provides an elaborate security system to provide access to protected resources on the web server. According to official documentation (see~\cite{bib:docurl}):
+
+\begin{quotation}
+    Java EE applications consist of components that can contain both protected and unprotected resources. Often, you need to protect resources to ensure that only authorized users have access. \emph{Authorization provides controlled access to protected resources}. \\
+    Authorization is based on identification and authentication. \\
+    \textbf{Identification} is a process that enables recognition of an entity by a system. \\
+    \textbf{authentication} is a process that verifies the identity of a user, device, or other entity in a computer system, usually as a prerequisite to allowing access to resources in a system.
+\end{quotation}
+
+The whole set of protected resources is partitioned into security spaces called \textbf{realms}, characterized by security policies and allowed users/groups. There are two important predefined realms in Java EE:
+\begin{itemize}
+    \item \code{file}: check inserted credentials with the ones contained in a \code{keyfile};
+    \item \code{certificate}: an \code{X.509} certificate is provided by the client through an HTTPS connection, which is verified on the server side.
+\end{itemize}
+
+The class \code{RealmAdapter} wraps auth functionalities both via credentials and certificates by using several overloaded \code{authenticate()} functions. In particular, each \code{authenticate()} delegates to the one in line 676 (described in section~\ref{sub:auth}).
+
 
 \section{List of issues}
 
@@ -153,6 +169,7 @@ Methods seem to be logically grouped, even if some are out of order:
 }
 
 \subsection{authenticate()} % (fold)
+\label{sub:auth}
 \issue[13]{80 characters limit}{
     There are two lines that exceed the 80 character limit: the comment
     in line 687 and the line 688. 
