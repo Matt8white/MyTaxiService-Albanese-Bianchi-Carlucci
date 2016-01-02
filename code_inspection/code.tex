@@ -398,6 +398,22 @@ and correctly handled.
 % TODO AL E MATTIA: Vedi in cima a Google Docs per elenco bug
 % -------> RICORDATEVI DI INSERIRE LE ORE ALLA FINE!!! :)
 
+After a complete overhaul of the class in which our methods are placed, we have
+spotted these bugs which can affect the proper behaviour of the class. \\ \\
+According to the text comments in line 354, the method don't work properly 
+because its run will result in a classload failure.
+There is also a known bug (\texttt{no. 4757733}) which affects the security 
+context loading and saving. The issue can be shown in 
+method~\texttt{preSetRunAsIdentity} starting in line 734 and in
+method~\texttt{postSetRunAsIdentity} starting in line 827. \\ \\
+The object passed in the two functions seems not to be the same, according to 
+the JavaDoc comment in line 813, and this, in practical, forces the second 
+method to always set the \texttt{SecurityContext} to NULL. \\ \\
+Also, the comment in line 1124 says that there is a bug (\texttt{no. 4947698}) 
+in method~\texttt{hasUserDataPermission} (starting at line 1084), 
+but an analysis of the given portion of the code does not seem 
+to enlighten any issue.
+
 \appendix
 
 \clearpage
