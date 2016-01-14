@@ -8,16 +8,18 @@
     pdfborder={0 0 0}
 }
 
-\newcounter{tca}
+\newcounter{tc}
+
+\begin{document}
 
 \newcommand{\testx}[7]{
 	\stepcounter{tc}
-	\subsubsection{Test \value{tc}: #1} % (fold)
+	\subsection{Test \thetc: #1} % (fold)
 	
 	% subsubsection test_1 (end)
 	\begin{tabular}{l p{0.7\textwidth}}
     \hline
-    \textbf{Test Case Identifier} & \value{tc}\\
+    \textbf{Test Case Identifier} & \thetc\\
     \hline
     \textbf{Test Item(s)} & #2 $\rightarrow$ #3\\
     \hline
@@ -33,7 +35,6 @@
 
 }
 
-\begin{document}
 
 \title{Integration Test Plan Document}
 
