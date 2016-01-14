@@ -8,6 +8,31 @@
     pdfborder={0 0 0}
 }
 
+\newcounter{tca}
+
+\newcommand{\testx}[7]{
+	\stepcounter{tc}
+	\subsubsection{Test \value{tc}: #1} % (fold)
+	
+	% subsubsection test_1 (end)
+	\begin{tabular}{l p{0.7\textwidth}}
+    \hline
+    \textbf{Test Case Identifier} & \value{tc}\\
+    \hline
+    \textbf{Test Item(s)} & #2 $\rightarrow$ #3\\
+    \hline
+    \textbf{Input Specification} & #4\\
+    \hline
+    \textbf{Output Specification} & #5\\
+    \hline
+    \textbf{Environmental Needs} & #6\\
+    \hline
+    \textbf{Test Description} & #7\\
+    \hline
+	\end{tabular}
+
+}
+
 \begin{document}
 
 \title{Integration Test Plan Document}
@@ -141,13 +166,15 @@
 \subsubsection{Subsystem Integration Sequence} 
 \label{ssub:subsystem_integration_sequence}
 
-\subsection{Individual Steps and Test Description} 
+\section{Individual Steps and Test Description} 
 \label{sub:individual_steps_and_test_description}
 
-\subsection{Tools and Test Equipment Required} 
+\testx{NAME}{PRIMO COMPONENTE}{SECONDO COMPONENTE}{INPUT}{OUTPUT}{ENV. NEEDS}{TEST DESCRIPTION}
+
+\section{Tools and Test Equipment Required} 
 \label{sub:tools_and_test_equipment_required}
 
-\subsection{Program Stubs and Test Data Required} 
+\section{Program Stubs and Test Data Required} 
 \label{sub:program_stubs_and_test_data_required}
 
 
