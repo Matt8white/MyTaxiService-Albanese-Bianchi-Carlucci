@@ -39,11 +39,101 @@
 \subsection{Elements to be integrated} 
 \label{sub:elements_to_be_integrated}
 
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | p{0.35\textwidth} | p{0.3\textwidth} |}
+    \hline
+    \textbf{ID} & \textbf{Component} & \textbf{Subsystem} \\
+    \hline
+    1 & GuestManager & Client\\
+    \hline
+    2 & Customer & Client\\
+    \hline
+    3 & CustomerManager & Client\\
+    \hline
+    4 & Address & TaxiRes\\
+    \hline
+    5 & Call & TaxiRes\\
+    \hline
+    6 & Reservation & TaxiRes\\
+    \hline
+    7 & Request & TaxiRes\\
+    \hline
+    8 & Ride & TaxiRes\\
+    \hline
+    9 & TaxiResManager & TaxiRes\\
+    \hline
+    10 & RideManager & TaxiRes\\
+    \hline
+    11 & TaxiAllocationDaemon & TaxiAllocation\\
+    \hline
+    12 & Zone & TaxiAllocation\\
+    \hline
+    13 & TaxiHandler & TaxiAllocation\\
+    \hline
+    14 & Taxi & TaxiDriver\\
+    \hline
+    15 & TaxiDriverManager & TaxiDriver\\
+    \hline
+    \end{tabular}
+    \caption{List of all components to be integrated}
+    \label{tab:components-integration}
+\end{table}
+
 \subsection{Integration Testing Strategy} 
 \label{sub:integration_testing_strategy}
 
 \subsection{Sequence of Component/Function Integration} 
 \label{sub:sequence_of_component_function_integration}
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l | l | l |}
+    \hline
+    \textbf{Test ID} & \textbf{Component 1} & \textbf{Subsystem 1} & \textbf{Component 2} & \textbf{Subsystem 2} \\
+    \hline
+    1 & Taxi & TaxiDriver & DB & DB \\
+    \hline
+    2 & Zone & TaxiAllocation & DB & DB \\
+    \hline
+    3 & Ride & TaxiReservation & DB & DB \\
+    \hline
+    4 & Customer & Client & DB & DB \\
+    \hline
+    5 & Address & TaxiReservation & DB & DB \\
+    \hline
+    6 & Call & TaxiReservation & DB & DB \\
+    \hline
+    7 & Request & TaxiReservation & DB & DB \\
+    \hline
+    8 & Reservation & TaxiReservation & DB & DB \\
+    \hline
+    9 & TaxiDriverMgr & TaxiDriver & Taxi & TaxiDriver \\
+    \hline
+    10 & TaxiHandler & TaxiAllocation & Taxi & TaxiDriver \\
+    \hline
+    11 & TaxiHandler & TaxiAllocation & Ride & TaxiReservation \\
+    \hline
+    12 & RideManager & TaxiReservation & Ride & TaxiReservation \\
+    \hline
+    13 & CustomerManager & Client & Customer & Client \\
+    \hline
+    14 & GuestManager & Client & Customer & Client \\
+    \hline
+    15 & TaxiResManager & TaxiReservation & RideManager & TaxiReservation \\
+    \hline
+    16 & TaxiAllocationDaemon & TaxiAllocation & TaxiHandler & TaxiAllocation \\
+    \hline
+    17 & TaxiAllocationDaemon & TaxiAllocation & Zone & TaxiAllocation \\
+    \hline
+    18 & TaxiAllocationDaemon & TaxiAllocation & Ride & TaxiReservation \\
+    \hline
+    19 & TaxiResManager & TaxiReservation & Call & TaxiReservation \\
+    \hline
+    \end{tabular}
+    \caption{List of all components to be integrated}
+    \label{tab:components-integration}
+\end{table}
 
 \subsubsection{Software Integration Sequence} 
 \label{ssub:software_integration_sequence}
