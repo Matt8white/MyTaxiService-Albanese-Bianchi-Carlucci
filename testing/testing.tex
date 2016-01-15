@@ -54,20 +54,40 @@
 
 \subsection{Purpose} 
 \label{sub:purpose}
-The purpose of this document, Integration Test Plan Document (ITPD), is to describe how integration tests are to be performed. In particular, it describes the adopted methodologies, 
+The purpose of this document, the Integration Test Plan Document (ITPD), is to describe how integration tests are to be performed. The tests that will be described here will mainly focus on the flow of information between different modules rather than on the modules themselves.
+In particular, it describes the adopted methodologies, the sets of all tests to be performed, the tools that will be used during the whole process.
 
+\subsection{Scope} % (fold)
+\label{sub:scope}
+The system will be an optimization of a pre-existing, non-software solution for renting taxis already in use in the city. The new system will let users to rent or reserve a taxi through a mobile or a web application and will also let taxi drivers to take care of the users' requests in a more simple and effective way. In addition to a better user interface, the new system will focus on a smarter organization of the vehicles deployed in each city zone, resulting in a more efficient service for the citizens.
+
+% subsection scope (end)
 
 \subsection{List of definitions and abbreviations} 
 \label{sub:list_of_definitions_and_abbreviations}
+
+\begin{description}
+    \item[First] The first item
+    \item[Second] The first item 
+\end{description}
 
 \section{Integration Strategy} 
 \label{sec:integration_strategy}
 
 \subsection{Entry Criteria} 
 \label{sub:entry_criteria}
+Several entry criteria must be met before Integration Testing phase. 
+First of all, each component that will be integrated must be - of course - coded. After development phase, each module must successfully pass \textbf{unit testing}, which will guarantee .... TODO ...
 
 \subsection{Elements to be integrated} 
 \label{sub:elements_to_be_integrated}
+
+\begin{figure}[htb]
+    \centering
+    %\includegraphics[width=1.2\textwidth]{img/elements.pdf}
+    \label{fig:testplan}
+\end{figure}
+
 
 \begin{table}
     \centering
@@ -112,6 +132,9 @@ The purpose of this document, Integration Test Plan Document (ITPD), is to descr
 
 \subsection{Integration Testing Strategy} 
 \label{sub:integration_testing_strategy}
+The strategy that will be adopted is the so-called \textbf{bottom-up} approach. An incremental approach is fundamental, in order to prevent all shortcomings that are typical to Big Bang approach (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
+We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
+
 
 \subsection{Sequence of Component/Function Integration} 
 \label{sub:sequence_of_component_function_integration}
@@ -122,21 +145,21 @@ The purpose of this document, Integration Test Plan Document (ITPD), is to descr
     \hline
     \textbf{Test ID} & \textbf{Component 1} & \textbf{Subsystem 1} & \textbf{Component 2} & \textbf{Subsystem 2} \\
     \hline
-    1 & Taxi & TaxiDriver & DB & DB \\
+    1 & Taxi & TaxiDriver & DBMS & DBMS \\
     \hline
-    2 & Zone & TaxiAllocation & DB & DB \\
+    2 & Zone & TaxiAllocation & DBMS & DBMS \\
     \hline
-    3 & Ride & TaxiReservation & DB & DB \\
+    3 & Ride & TaxiReservation & DBMS & DBMS \\
     \hline
-    4 & Customer & Client & DB & DB \\
+    4 & Customer & Client & DBMS & DBMS \\
     \hline
-    5 & Address & TaxiReservation & DB & DB \\
+    5 & Address & TaxiReservation & DBMS & DBMS \\
     \hline
-    6 & Call & TaxiReservation & DB & DB \\
+    6 & Call & TaxiReservation & DBMS & DBMS \\
     \hline
-    7 & Request & TaxiReservation & DB & DB \\
+    7 & Request & TaxiReservation & DBMS & DBMS \\
     \hline
-    8 & Reservation & TaxiReservation & DB & DB \\
+    8 & Reservation & TaxiReservation & DBMS & DBMS \\
     \hline
     9 & TaxiDriverMgr & TaxiDriver & Taxi & TaxiDriver \\
     \hline
