@@ -12,6 +12,10 @@
 
 \begin{document}
 
+\newcommand{\code}[1]{
+    \texttt{#1}
+}
+
 \newcommand{\testx}[7]{
 	\stepcounter{tc}
 	\subsection{Test \thetc: #1} % (fold)
@@ -21,7 +25,7 @@
     \hline
     \textbf{Test Case Identifier} & \thetc\\
     \hline
-    \textbf{Test Item(s)} & #2 $\rightarrow$ #3\\
+    \textbf{Test Item(s)} & \code{#2} $\rightarrow$ \code{#3}\\
     \hline
     \textbf{Input Specification} & #4\\
     \hline
@@ -32,9 +36,7 @@
     \textbf{Test Description} & #7\\
     \hline
 	\end{tabular}
-
 }
-
 
 \title{Integration Test Plan Document}
 
@@ -47,11 +49,13 @@
 \newpage{}
 
 \section{Introduction}
-\subsection{Revision History} 
-\label{sub:revision_history}
+% \subsection{Revision History} 
+% \label{sub:revision_history}
 
-\subsection{Purpose and scope} 
-\label{sub:purpose_and_scope}
+\subsection{Purpose} 
+\label{sub:purpose}
+The purpose of this document, Integration Test Plan Document (ITPD), is to describe how integration tests are to be performed. In particular, it describes the adopted methodologies, 
+
 
 \subsection{List of definitions and abbreviations} 
 \label{sub:list_of_definitions_and_abbreviations}
@@ -170,7 +174,7 @@
 \section{Individual Steps and Test Description} 
 \label{sub:individual_steps_and_test_description}
 
-\testx{NAME}{PRIMO COMPONENTE}{SECONDO COMPONENTE}{INPUT}{OUTPUT}{ENV. NEEDS}{TEST DESCRIPTION}
+\testx{NAME}{TaxiDriver}{DBMS}{INPUT}{OUTPUT}{ENV. NEEDS}{TEST DESCRIPTION}
 
 \section{Tools and Test Equipment Required} 
 \label{sub:tools_and_test_equipment_required}
