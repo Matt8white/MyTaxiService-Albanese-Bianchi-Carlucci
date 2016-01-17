@@ -77,7 +77,10 @@ The system will be an optimization of a pre-existing, non-software solution for 
 \subsection{Entry Criteria} 
 \label{sub:entry_criteria}
 Several entry criteria must be met before Integration Testing phase. 
-First of all, each component that will be integrated must be - of course - coded. After development phase, each module must successfully pass \textbf{unit testing}, which will guarantee .... TODO ...
+The whole architecture must be designed according to the contents of the \textbf{Design Document}, to be written along with this one. 
+Following this phase, each component that will be integrated must be - of course - coded.
+After development phase, each module must successfully pass a thorough \textbf{unit testing}, which guarantees the absence of critical bugs in the codebase. As stated in Section~\ref{sub:tools_and_test_equipment_required}, JUnit will be the privileged tool for this phase.
+Along with unit testing, code inspection is done, via both manual and automated work; all these devices will lead to well-formed and robust modules, ready to be composed together.
 
 \subsection{Elements to be integrated} 
 \label{sub:elements_to_be_integrated}
@@ -134,7 +137,6 @@ First of all, each component that will be integrated must be - of course - coded
 \label{sub:integration_testing_strategy}
 The strategy that will be adopted is the so-called \textbf{bottom-up} approach. An incremental approach is fundamental, in order to prevent all shortcomings that are typical to Big Bang approach (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
 We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
-
 
 \subsection{Sequence of Component/Function Integration} 
 \label{sub:sequence_of_component_function_integration}
@@ -201,6 +203,17 @@ We decided to choose bottom-up over top-down because there are many components a
 
 \section{Tools and Test Equipment Required} 
 \label{sub:tools_and_test_equipment_required}
+
+\begin{description}
+    \item[jUnit:] a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once. 
+
+    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi}s or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness. 
+
+    These tools are used \emph{before} Integration Testing happens (described throughout this document).
+    
+    \item[Arquillian]
+\end{description}
+
 
 \section{Program Stubs and Test Data Required} 
 \label{sub:program_stubs_and_test_data_required}
