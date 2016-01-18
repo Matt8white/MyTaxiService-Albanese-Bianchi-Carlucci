@@ -1,8 +1,9 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[a4paper, 12pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{url}
 
 \hypersetup{
     pdfborder={0 0 0}
@@ -54,7 +55,9 @@
 
 \subsection{Purpose} 
 \label{sub:purpose}
-The purpose of this document, the Integration Test Plan Document (ITPD), is to describe how integration tests are to be performed. The tests that will be described here will mainly focus on the flow of information between different modules rather than on the modules themselves.
+The purpose of this document, the \textbf{Integration Test Plan Document} (ITPD), is to describe how integration tests are to be performed. 
+
+The tests that will be described here will mainly focus on the flow of information between different modules rather than on the modules themselves.
 In particular, it describes the adopted methodologies, the sets of all tests to be performed, the tools that will be used during the whole process.
 
 \subsection{Scope} % (fold)
@@ -63,23 +66,34 @@ The system will be an optimization of a pre-existing, non-software solution for 
 
 % subsection scope (end)
 
+\newpage
 \subsection{List of definitions and abbreviations} 
 \label{sub:list_of_definitions_and_abbreviations}
 
 \begin{description}
-    \item[First] The first item
-    \item[Second] The first item 
+    \item[JUnit] The tool used for unit testing. See Section~\ref{sub:tools_and_test_equipment_required} for more information.
+    \item[Mockito] A mocking framework used in conjuction with JUnit.
+    \item[Arquillian] The tool used for the actual integration testing. See Section~\ref{sub:tools_and_test_equipment_required} for more information.
+    \item[RASD] Requirements \& Analysis Specification Document
+    \item[DD] Design Document
+    \item[ITPD] Integration Test Plan Document
+    \item[DBMS] Database Management System
+    %\item[]
 \end{description}
 
+\newpage
 \section{Integration Strategy} 
 \label{sec:integration_strategy}
 
 \subsection{Entry Criteria} 
 \label{sub:entry_criteria}
 Several entry criteria must be met before Integration Testing phase. 
+
 The whole architecture must be designed according to the contents of the \textbf{Design Document}, to be written along with this one. 
 Following this phase, each component that will be integrated must be - of course - coded.
+
 After development phase, each module must successfully pass a thorough \textbf{unit testing}, which guarantees the absence of critical bugs in the codebase. As stated in Section~\ref{sub:tools_and_test_equipment_required}, JUnit will be the privileged tool for this phase.
+
 Along with unit testing, code inspection is done, via both manual and automated work; all these devices will lead to well-formed and robust modules, ready to be composed together.
 
 \subsection{Elements to be integrated} 
@@ -91,104 +105,20 @@ Along with unit testing, code inspection is done, via both manual and automated 
     \label{fig:testplan}
 \end{figure}
 
-
-\begin{table}
-    \centering
-    \begin{tabular}{| l | l | p{0.35\textwidth} | p{0.3\textwidth} |}
-    \hline
-    \textbf{ID} & \textbf{Component} & \textbf{Subsystem} \\
-    \hline
-    1 & GuestManager & Client\\
-    \hline
-    2 & Customer & Client\\
-    \hline
-    3 & CustomerManager & Client\\
-    \hline
-    4 & Address & TaxiRes\\
-    \hline
-    5 & Call & TaxiRes\\
-    \hline
-    6 & Reservation & TaxiRes\\
-    \hline
-    7 & Request & TaxiRes\\
-    \hline
-    8 & Ride & TaxiRes\\
-    \hline
-    9 & TaxiResManager & TaxiRes\\
-    \hline
-    10 & RideManager & TaxiRes\\
-    \hline
-    11 & TaxiAllocationDaemon & TaxiAllocation\\
-    \hline
-    12 & Zone & TaxiAllocation\\
-    \hline
-    13 & TaxiHandler & TaxiAllocation\\
-    \hline
-    14 & Taxi & TaxiDriver\\
-    \hline
-    15 & TaxiDriverManager & TaxiDriver\\
-    \hline
-    \end{tabular}
-    \caption{List of all components to be integrated}
-    \label{tab:components-integration}
-\end{table}
+\input{elementsTable.tex}
 
 \subsection{Integration Testing Strategy} 
 \label{sub:integration_testing_strategy}
-The strategy that will be adopted is the so-called \textbf{bottom-up} approach. An incremental approach is fundamental, in order to prevent all shortcomings that are typical to Big Bang approach (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
+The strategy that will be adopted is the so-called \textbf{bottom-up} approach. 
+
+An incremental approach is fundamental, in order to prevent all shortcomings that are typical to \emph{Big Bang approach} (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
+
 We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
 
 \subsection{Sequence of Component/Function Integration} 
 \label{sub:sequence_of_component_function_integration}
 
-\begin{table}
-    \centering
-    \begin{tabular}{| l | l | l | l | l |}
-    \hline
-    \textbf{Test ID} & \textbf{Component 1} & \textbf{Subsystem 1} & \textbf{Component 2} & \textbf{Subsystem 2} \\
-    \hline
-    1 & Taxi & TaxiDriver & DBMS & DBMS \\
-    \hline
-    2 & Zone & TaxiAllocation & DBMS & DBMS \\
-    \hline
-    3 & Ride & TaxiReservation & DBMS & DBMS \\
-    \hline
-    4 & Customer & Client & DBMS & DBMS \\
-    \hline
-    5 & Address & TaxiReservation & DBMS & DBMS \\
-    \hline
-    6 & Call & TaxiReservation & DBMS & DBMS \\
-    \hline
-    7 & Request & TaxiReservation & DBMS & DBMS \\
-    \hline
-    8 & Reservation & TaxiReservation & DBMS & DBMS \\
-    \hline
-    9 & TaxiDriverMgr & TaxiDriver & Taxi & TaxiDriver \\
-    \hline
-    10 & TaxiHandler & TaxiAllocation & Taxi & TaxiDriver \\
-    \hline
-    11 & TaxiHandler & TaxiAllocation & Ride & TaxiReservation \\
-    \hline
-    12 & RideManager & TaxiReservation & Ride & TaxiReservation \\
-    \hline
-    13 & CustomerManager & Client & Customer & Client \\
-    \hline
-    14 & GuestManager & Client & Customer & Client \\
-    \hline
-    15 & TaxiResManager & TaxiReservation & RideManager & TaxiReservation \\
-    \hline
-    16 & TaxiAllocationDaemon & TaxiAllocation & TaxiHandler & TaxiAllocation \\
-    \hline
-    17 & TaxiAllocationDaemon & TaxiAllocation & Zone & TaxiAllocation \\
-    \hline
-    18 & TaxiAllocationDaemon & TaxiAllocation & Ride & TaxiReservation \\
-    \hline
-    19 & TaxiResManager & TaxiReservation & Call & TaxiReservation \\
-    \hline
-    \end{tabular}
-    \caption{List of all components to be integrated}
-    \label{tab:components-integration}
-\end{table}
+\input{componentIntegrationTable}
 
 \subsubsection{Software Integration Sequence} 
 \label{ssub:software_integration_sequence}
@@ -196,11 +126,13 @@ We decided to choose bottom-up over top-down because there are many components a
 \subsubsection{Subsystem Integration Sequence} 
 \label{ssub:subsystem_integration_sequence}
 
+\newpage
 \section{Individual Steps and Test Description} 
 \label{sub:individual_steps_and_test_description}
 
 \testx{NAME}{TaxiDriver}{DBMS}{INPUT}{OUTPUT}{ENV. NEEDS}{TEST DESCRIPTION}
 
+\newpage
 \section{Tools and Test Equipment Required} 
 \label{sub:tools_and_test_equipment_required}
 
@@ -211,13 +143,12 @@ We decided to choose bottom-up over top-down because there are many components a
 
     These tools are used \emph{before} Integration Testing happens (described throughout this document).
     
-    \item[Arquillian]
+    \item[Arquillian] ??????????
 \end{description}
 
-
+\newpage
 \section{Program Stubs and Test Data Required} 
 \label{sub:program_stubs_and_test_data_required}
-
 
 \appendix
 
@@ -225,10 +156,25 @@ We decided to choose bottom-up over top-down because there are many components a
 \addcontentsline{toc}{section}{References}
 
 \begin{thebibliography}{9}
-\bibitem{bib:assignment} Prof. Di Nitto.
-\emph{????}.
-\end{thebibliography}
+\bibitem{bib:assignment} 
+    Prof. Di Nitto - \emph{Assignment 4 - Integration Test Plan}
 
+\bibitem{bib:spingrid}
+    AA.VV. - \emph{SpinGrid - Integration Test Plan Example}
+
+\bibitem{rasd}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Requirements Analysis and Specification Document}
+
+\bibitem{dd}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Design Document}
+
+\bibitem{Arquillian}
+        AA.VV. - \emph{Arquillian Reference Guide} {\small(\url{https://docs.jboss.org/author/display/ARQ/Reference+Guide?_sscc=t})}
+
+\bibitem{Mockito}
+        AA.VV. - \emph{Mockito Reference Guide} {\small(\url{http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html})}
+\end{thebibliography}
+    
 \vfill
 
 % \section*{Hours spent}
