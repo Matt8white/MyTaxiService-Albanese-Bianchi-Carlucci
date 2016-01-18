@@ -118,13 +118,50 @@ We decided to choose bottom-up over top-down because there are many components a
 \subsection{Sequence of Component/Function Integration} 
 \label{sub:sequence_of_component_function_integration}
 
-\input{componentIntegrationTable}
-
 \subsubsection{Software Integration Sequence} 
 \label{ssub:software_integration_sequence}
+\input{componentIntegrationTable}
 
 \subsubsection{Subsystem Integration Sequence} 
 \label{ssub:subsystem_integration_sequence}
+
+QUI SUI SUBSYSTEM
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \textbf{N.} & \textbf{Subsystem} & \textbf{Integrates with} \\
+        \hline
+        1 & Client & DBMS \\
+        2 & TaxiRes & DBMS \\
+        3 & TaxiAllocation & DBMS \\
+        4 & Client & TaxiReservation \\ 
+        5 & TaxiAllocation & TaxiReservation \\ 
+        6 & TaxiDriver & TaxiAllocation \\
+        7 & Mobile App & TaxiDriver \\
+        \hline
+    \end{tabular}
+    \caption{Integration order of the subsystems.}
+    \label{tab:subsystem-integration}
+\end{table}
+
+QUI ANDRA TESTO SUI TIER
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \textbf{N.} & \textbf{Subsystem} & \textbf{Integrates with} \\
+        \hline
+        1 & Core (Back-end) & DBMS \\
+        2 & Taxi Driver mobile application & Core \\
+        3 & Mobile UI & Core \\
+        4 & Web UI & Core \\
+        \hline
+    \end{tabular}
+    \caption{Integration order of the tier composing the whole architecture}
+    \label{tab:tier-integration}
+\end{table}
 
 \newpage
 \section{Individual Steps and Test Description} 
