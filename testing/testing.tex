@@ -101,7 +101,7 @@ Along with unit testing, code inspection is done, via both manual and automated 
 
 \begin{figure}[htb]
     \centering
-    %\includegraphics[width=1.2\textwidth]{img/elements.pdf}
+    \includegraphics[width=1.2\textwidth]{img/elements.pdf}
     \label{fig:testplan}
 \end{figure}
 
@@ -167,7 +167,11 @@ QUI ANDRA TESTO SUI TIER
 \section{Individual Steps and Test Description} 
 \label{sub:individual_steps_and_test_description}
 
-\testx{NAME}{TaxiDriver}{DBMS}{INPUT}{OUTPUT}{ENV. NEEDS}{TEST DESCRIPTION}
+\testx{Taxi: Access to DB}{Taxi}{DBMS}{Frequent queries on table Taxi}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+% == SEGUONO TUTTI QUELLI RELATIVI AL DB ==
+
+
 
 \newpage
 \section{Tools and Test Equipment Required} 
