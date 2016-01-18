@@ -167,11 +167,45 @@ QUI ANDRA TESTO SUI TIER
 \section{Individual Steps and Test Description} 
 \label{sub:individual_steps_and_test_description}
 
-\testx{Taxi: Access to DB}{Taxi}{DBMS}{Frequent queries on table Taxi}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+% === DB ===
+\testx{Taxi - Access to DB}{Taxi}{DBMS}{Frequent queries on table Taxi}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
 
-% == SEGUONO TUTTI QUELLI RELATIVI AL DB ==
+\testx{Zone - Access to DB}{Zone}{DBMS}{Frequent queries on table Zone}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
 
+\testx{Ride - Access to DB}{Ride}{DBMS}{Frequent queries on table Ride}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
 
+\testx{Customer - Access to DB}{Customer}{DBMS}{Frequent queries on table Customer}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+\testx{Address - Access to DB}{Address}{DBMS}{Frequent queries on table Address}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+\testx{Call - Access to DB}{Call}{DBMS}{Frequent queries on table Call}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+\testx{Request - Access to DB}{Request}{DBMS}{Frequent queries on table Request}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+\testx{Reservation - Access to DB}{Reservation}{DBMS}{Frequent queries on table Reservation}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
+
+% === OTHERS ===
+\testx{TaxiDriverManager - ???}{TaxiDriverManager}{Taxi}{??}{??}{??}{???}
+
+\testx{TaxiHandler - ???}{TaxiHandler}{Taxi}{??}{??}{??}{???}
+
+\testx{TaxiHandler - ???}{TaxiHandler}{TaxiHandler}{??}{??}{??}{???}
+
+\testx{RideManager - ???}{RideManager}{Ride}{??}{??}{??}{???}
+
+\testx{CustomerManager - ???}{CustomerManager}{Customer}{??}{??}{??}{???}
+
+\testx{GuestManager - ???}{GuestManager}{Customer}{??}{??}{??}{???}
+
+\testx{TaxiResManager - ???}{TaxiResManager}{RideManager}{??}{??}{??}{???}
+
+\testx{TaxiAllocationDaemon - ???}{TaxiAllocationDaemon}{TaxiHandler}{??}{??}{??}{???}
+
+\testx{TaxiAllocationDaemon - ???}{TaxiAllocationDaemon}{Zone}{??}{??}{??}{???}
+
+\testx{TaxiAllocationDaemon - ???}{TaxiAllocationDaemon}{Ride}{??}{??}{??}{???}
+
+\testx{TaxiResManager - ???}{TaxiResManager}{Call}{??}{??}{??}{???}
 
 \newpage
 \section{Tools and Test Equipment Required} 
