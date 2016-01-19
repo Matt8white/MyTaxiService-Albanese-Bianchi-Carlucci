@@ -226,6 +226,19 @@ Call to existRide()
 \newpage
 \section{Program Stubs and Test Data Required}
 \label{sub:program_stubs_and_test_data_required}
+In an undeveloped environment, following the criteria of "bottom-up" testing, we need to define and use drivers in order to have a complete environment in which we can test the developed parts.
+
+\begin{description}
+    \item[Test database:] The target environment must have a working and configured DBMS, in which test data and tables must reflect the entities and the relations described in the ER-diagram showed in the Design Document.
+
+    \item[API client:] It is also necessary to emulate a client application, not yet built, with an API-client which interacts with the server via HTTP requests.
+
+    \item[Drivers for the Java Entity Beans:]
+
+    \item[Mock web tier:] 
+
+    \item[Mock e-mail sender and receiver:]
+\end{description}
 
 \appendix
 
