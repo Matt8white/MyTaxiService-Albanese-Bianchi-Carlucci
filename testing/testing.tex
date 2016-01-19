@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{tabularx}
 \usepackage{url}
 
 \hypersetup{
@@ -115,17 +116,24 @@ An incremental approach is fundamental, in order to prevent all shortcomings tha
 
 We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
 
+\newpage
 \subsection{Sequence of Component/Function Integration}
 \label{sub:sequence_of_component_function_integration}
+As the system consists of several different parts interrelated one to the other, we decided to plan integration testing under two different points of view, in accordance to what was written in \cite[p.~4]{bib:dd}.
+
+In particular, Section~\ref{ssub:software_integration_sequence} will explain how the main software components will be integrated, as they were defined in \cite{bib:dd} in the \emph{High Level Components} section, whilst the following section will explain how integration will take part on a upper level by considering subsystems only.
 
 \subsubsection{Software Integration Sequence}
 \label{ssub:software_integration_sequence}
 \input{componentIntegrationTable}
+First of all, all transactions with the DB must be operative in order to proceed with all other integrations: for this reason, all modules interacting with the DBMS are tested first.
 
-\subsubsection{Subsystem Integration Sequence}
-\label{ssub:subsystem_integration_sequence}
+After that, \code{Client} and \code{TaxiReservation} are tested, so that \code{Client} is completely functional.\footnote{As written in \cite{bib:dd}, \code{Client} contains the data and the logic for managing registered users and guests. \code{TaxiReservation} is needed for the retrieval of all calls done by a specified user}
 
-QUI SUI SUBSYSTEM
+Since the allocation depends on at least a call, the integration between \code{TaxiAllocation} and \code{TaxiReservation} is done next, followed by the integration between \code{TaxiDriver} (which contains all logic for updating a specified taxi) and \code{TaxiAllocation} (which contains the code for explicitly reserving a taxi).
+
+Eventually the core is complete; the last integration test is done on the mobile app of each taxi driver and the \code{TaxiDriver} component (for example, to check if the \code{updatePosition()} method is working fine).
+
 \begin{table}
     \centering
     \begin{tabular}{| l | l | l |}
@@ -141,11 +149,14 @@ QUI SUI SUBSYSTEM
         7 & Mobile App & TaxiDriver \\
         \hline
     \end{tabular}
-    \caption{Integration order of the subsystems.}
-    \label{tab:subsystem-integration}
+    \caption{Integration order of the components}
+    \label{tab:component-integration}
 \end{table}
 
-QUI ANDRA TESTO SUI TIER
+\subsubsection{Subsystem Integration Sequence}
+\label{ssub:subsystem_integration_sequence}
+
+Four main subsystems make up the whole architecture, listed in Table~\ref{tab:subsystem-integration}. All components described in \cite{bib:dd} make up the Core subsystem, which contains the main logic of the service; as stated in the previous section, the first important integration to be done is the one with the \code{DBMS}. When the core system is ready, the mobile application for a taxi driver must be tested in conjunction with the main service. Finally, the UI must be integrated with the business tier. 
 
 \begin{table}
     \centering
@@ -154,13 +165,13 @@ QUI ANDRA TESTO SUI TIER
         \textbf{N.} & \textbf{Subsystem} & \textbf{Integrates with} \\
         \hline
         1 & Core (Back-end) & DBMS \\
-        2 & Taxi Driver mobile application & Core \\
+        2 & Taxi Driver mobile application (logic and UI) & Core \\
         3 & Mobile UI & Core \\
         4 & Web UI & Core \\
         \hline
     \end{tabular}
-    \caption{Integration order of the tier composing the whole architecture}
-    \label{tab:tier-integration}
+    \caption{Integration order of the subsystems composing the whole architecture}
+    \label{tab:subsystem-integration}
 \end{table}
 
 \newpage
@@ -244,16 +255,16 @@ Arquillian strives to make integration testing no more complicated than basic un
 \bibitem{bib:spingrid}
     AA.VV. - \emph{SpinGrid - Integration Test Plan Example}
 
-\bibitem{rasd}
+\bibitem{bib:rasd}
         Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Requirements Analysis and Specification Document}
 
-\bibitem{dd}
+\bibitem{bib:dd}
         Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Design Document}
 
-\bibitem{Arquillian}
+\bibitem{bib:arquillian}
         AA.VV. - \emph{Arquillian Reference Guide} {\small(\url{https://docs.jboss.org/author/display/ARQ/Reference+Guide?_sscc=t})}
 
-\bibitem{Mockito}
+\bibitem{bib:mockito}
         AA.VV. - \emph{Mockito Reference Guide} {\small(\url{http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html})}
 \end{thebibliography}
 
