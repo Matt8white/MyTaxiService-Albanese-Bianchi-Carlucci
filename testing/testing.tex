@@ -20,7 +20,7 @@
 \newcommand{\testx}[7]{
 	\stepcounter{tc}
 	\subsection{Test \thetc: #1} % (fold)
-	
+
 	% subsubsection test_1 (end)
 	\begin{tabular}{l p{0.7\textwidth}}
     \hline
@@ -50,12 +50,12 @@
 \newpage{}
 
 \section{Introduction}
-% \subsection{Revision History} 
+% \subsection{Revision History}
 % \label{sub:revision_history}
 
-\subsection{Purpose} 
+\subsection{Purpose}
 \label{sub:purpose}
-The purpose of this document, the \textbf{Integration Test Plan Document} (ITPD), is to describe how integration tests are to be performed. 
+The purpose of this document, the \textbf{Integration Test Plan Document} (ITPD), is to describe how integration tests are to be performed.
 
 The tests that will be described here will mainly focus on the flow of information between different modules rather than on the modules themselves.
 In particular, it describes the adopted methodologies, the sets of all tests to be performed, the tools that will be used during the whole process.
@@ -67,7 +67,7 @@ The system will be an optimization of a pre-existing, non-software solution for 
 % subsection scope (end)
 
 \newpage
-\subsection{List of definitions and abbreviations} 
+\subsection{List of definitions and abbreviations}
 \label{sub:list_of_definitions_and_abbreviations}
 
 \begin{description}
@@ -82,21 +82,21 @@ The system will be an optimization of a pre-existing, non-software solution for 
 \end{description}
 
 \newpage
-\section{Integration Strategy} 
+\section{Integration Strategy}
 \label{sec:integration_strategy}
 
-\subsection{Entry Criteria} 
+\subsection{Entry Criteria}
 \label{sub:entry_criteria}
-Several entry criteria must be met before Integration Testing phase. 
+Several entry criteria must be met before Integration Testing phase.
 
-The whole architecture must be designed according to the contents of the \textbf{Design Document}, to be written along with this one. 
+The whole architecture must be designed according to the contents of the \textbf{Design Document}, to be written along with this one.
 Following this phase, each component that will be integrated must be - of course - coded.
 
 After development phase, each module must successfully pass a thorough \textbf{unit testing}, which guarantees the absence of critical bugs in the codebase. As stated in Section~\ref{sub:tools_and_test_equipment_required}, JUnit will be the privileged tool for this phase.
 
 Along with unit testing, code inspection is done, via both manual and automated work; all these devices will lead to well-formed and robust modules, ready to be composed together.
 
-\subsection{Elements to be integrated} 
+\subsection{Elements to be integrated}
 \label{sub:elements_to_be_integrated}
 
 \begin{figure}[htb]
@@ -107,22 +107,22 @@ Along with unit testing, code inspection is done, via both manual and automated 
 
 \input{elementsTable.tex}
 
-\subsection{Integration Testing Strategy} 
+\subsection{Integration Testing Strategy}
 \label{sub:integration_testing_strategy}
-The strategy that will be adopted is the so-called \textbf{bottom-up} approach. 
+The strategy that will be adopted is the so-called \textbf{bottom-up} approach.
 
 An incremental approach is fundamental, in order to prevent all shortcomings that are typical to \emph{Big Bang approach} (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
 
 We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
 
-\subsection{Sequence of Component/Function Integration} 
+\subsection{Sequence of Component/Function Integration}
 \label{sub:sequence_of_component_function_integration}
 
-\subsubsection{Software Integration Sequence} 
+\subsubsection{Software Integration Sequence}
 \label{ssub:software_integration_sequence}
 \input{componentIntegrationTable}
 
-\subsubsection{Subsystem Integration Sequence} 
+\subsubsection{Subsystem Integration Sequence}
 \label{ssub:subsystem_integration_sequence}
 
 QUI SUI SUBSYSTEM
@@ -135,8 +135,8 @@ QUI SUI SUBSYSTEM
         1 & Client & DBMS \\
         2 & TaxiRes & DBMS \\
         3 & TaxiAllocation & DBMS \\
-        4 & Client & TaxiReservation \\ 
-        5 & TaxiAllocation & TaxiReservation \\ 
+        4 & Client & TaxiReservation \\
+        5 & TaxiAllocation & TaxiReservation \\
         6 & TaxiDriver & TaxiAllocation \\
         7 & Mobile App & TaxiDriver \\
         \hline
@@ -164,7 +164,7 @@ QUI ANDRA TESTO SUI TIER
 \end{table}
 
 \newpage
-\section{Individual Steps and Test Description} 
+\section{Individual Steps and Test Description}
 \label{sub:individual_steps_and_test_description}
 
 % === DB ===
@@ -185,13 +185,13 @@ QUI ANDRA TESTO SUI TIER
 \testx{Reservation - Access to DB}{Reservation}{DBMS}{Frequent queries on table Reservation}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
 
 % === OTHERS ===
-\testx{TaxiDriverManager - ???}{TaxiDriverManager}{Taxi}{??}{??}{??}{???}
+\testx{TaxiDriverManager - Update Taxi entity}{TaxiDriverManager}{Taxi}{Update information on position and status of the taxi}{Taxi has modified data}{Working Glassfish Server}{The purpose of this test is to verify that all the information are correctly updated on the server}
 
-\testx{TaxiHandler - ???}{TaxiHandler}{Taxi}{??}{??}{??}{???}
+\testx{TaxiHandler - Taxi assignment to a ride}{TaxiHandler}{Taxi}{New ride available}{Ride assigned to taxi}{Working Glassfish Server}{Verify that a new ride is properly assigned to a taxi in the correct zone}
 
-\testx{TaxiHandler - ???}{TaxiHandler}{TaxiHandler}{??}{??}{??}{???}
+\testx{TaxiHandler - Ride completion with a taxi}{TaxiHandler}{Ride}{New ride on schedule}{Taxi assigned to the specified ride}{Working Glassfish Server}{Verify that a taxi is correctly assigned to the ride}
 
-\testx{RideManager - ???}{RideManager}{Ride}{??}{??}{??}{???}
+\testx{RideManager - Operations on rides}{RideManager}{Ride}{??}{??}{??}{???}
 
 \testx{CustomerManager - ???}{CustomerManager}{Customer}{??}{??}{??}{???}
 
@@ -208,21 +208,21 @@ QUI ANDRA TESTO SUI TIER
 \testx{TaxiResManager - ???}{TaxiResManager}{Call}{??}{??}{??}{???}
 
 \newpage
-\section{Tools and Test Equipment Required} 
+\section{Tools and Test Equipment Required}
 \label{sub:tools_and_test_equipment_required}
 
 \begin{description}
-    \item[jUnit:] a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once. 
+    \item[jUnit:] a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once.
 
-    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi}s or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness. 
+    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi}s or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness.
 
     These tools are used \emph{before} Integration Testing happens (described throughout this document).
-    
+
     \item[Arquillian] ??????????
 \end{description}
 
 \newpage
-\section{Program Stubs and Test Data Required} 
+\section{Program Stubs and Test Data Required}
 \label{sub:program_stubs_and_test_data_required}
 
 \appendix
@@ -231,7 +231,7 @@ QUI ANDRA TESTO SUI TIER
 \addcontentsline{toc}{section}{References}
 
 \begin{thebibliography}{9}
-\bibitem{bib:assignment} 
+\bibitem{bib:assignment}
     Prof. Di Nitto - \emph{Assignment 4 - Integration Test Plan}
 
 \bibitem{bib:spingrid}
@@ -249,7 +249,7 @@ QUI ANDRA TESTO SUI TIER
 \bibitem{Mockito}
         AA.VV. - \emph{Mockito Reference Guide} {\small(\url{http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html})}
 \end{thebibliography}
-    
+
 \vfill
 
 % \section*{Hours spent}
