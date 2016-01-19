@@ -214,13 +214,18 @@ Call to existRide()
 \label{sub:tools_and_test_equipment_required}
 
 \begin{description}
-    \item[jUnit:] a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once.
+    \item[JUnit] JUnit is a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once.
 
-    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi}s or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness.
+    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi} or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness.
 
     These tools are used \emph{before} Integration Testing happens (described throughout this document).
 
-    \item[Arquillian] ??????????
+    \item[Arquillian] Arquillian is an integration testing framework for business objects that are executed inside a container or that interact with the container as a client. \\
+\\
+Arquillian combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\ 
+Arquillian strives to make integration testing no more complicated than basic unit testing, so we decided to use Arquillian as our integration testing framework for its semplicity.
+
+
 \end{description}
 
 \newpage
