@@ -191,13 +191,15 @@ QUI ANDRA TESTO SUI TIER
 
 \testx{TaxiHandler - Ride completion with a taxi}{TaxiHandler}{Ride}{New ride on schedule}{Taxi assigned to the specified ride}{Working Glassfish Server}{Verify that a taxi is correctly assigned to the ride}
 
-\testx{RideManager - Operations on rides}{RideManager}{Ride}{??}{??}{??}{???}
+\testx{RideManager - Operations on rides}{RideManager}{Ride}{ Some ride specification needs to be changed. }{ The corresponding ride is changed. }{ Working Glassfish server, Working Database server }{ Verify that RideManager is working correctly }
 
-\testx{CustomerManager - ???}{CustomerManager}{Customer}{??}{??}{??}{???}
+\testx{CustomerManager - Customer Services}{CustomerManager}{Customer}{There are some pending operations initiated by users.}{For each operation, every involved user entity must be updated correctly, according to the specified operation.}{Working Glassfish Server, Working Database server}{Verify that CustomerManager is working properly.}
 
-\testx{GuestManager - ???}{GuestManager}{Customer}{??}{??}{??}{???}
+\testx{GuestManager - Guest Services}{GuestManager}{Customer}{There are some pending operations initiated by customers.}{ Every operation must be executed correctly, according to the user level (unregistered!)}{Working Glassfish Server, Working Database server}{Assert that every guest operation is working properly.}
 
-\testx{TaxiResManager - ???}{TaxiResManager}{RideManager}{??}{??}{??}{???}
+\testx{TaxiResManager - Check existing rides}{TaxiResManager}{RideManager}{
+Call to existRide()
+}{Return value must be chosen according to the existance of this ride}{Working Glassfish Server, Working Database server}{Check that RideManager will give back valid results.}
 
 \testx{TaxiAllocationDaemon - ???}{TaxiAllocationDaemon}{TaxiHandler}{??}{??}{??}{???}
 
