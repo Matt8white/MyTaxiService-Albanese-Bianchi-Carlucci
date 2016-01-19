@@ -201,13 +201,13 @@ QUI ANDRA TESTO SUI TIER
 Call to existRide()
 }{Return value must be chosen according to the existance of this ride}{Working Glassfish Server, Working Database server}{Check that RideManager will give back valid results.}
 
-\testx{TaxiAllocationDaemon - Creation of a handler for an incoming ride}{TaxiAllocationDaemon}{TaxiHandler}{Ride to be handled}{Association between a ride and a taxi}{Working Glassfish Server}{Verify that an handler is created for every incoming ride}
+\testx{TaxiAllocationDaemon - Creation of a handler for an incoming ride}{TaxiAllocationDaemon}{TaxiHandler}{Ride to be handled}{Association between a ride and a taxi}{Working Glassfish Server, Working Database server}{Verify that an handler is created for every incoming ride}
 
-\testx{TaxiAllocationDaemon - Avialable taxis in zones}{TaxiAllocationDaemon}{Zone}{Queue related to a zone}{Number of available taxi for a zone}{Working Glassfish Server}{The purpose of the test is to check that the number of available taxi in every zone is equal to each corresponding zone queue}
+\testx{TaxiAllocationDaemon - Avialable taxis in zones}{TaxiAllocationDaemon}{Zone}{Queue related to a zone}{Number of available taxi for a zone}{Working Glassfish Server, Working Database server}{The purpose of the test is to check that the number of available taxi in every zone is equal to each corresponding zone queue}
 
-\testx{TaxiAllocationDaemon - Retrieve ride information}{TaxiAllocationDaemon}{Ride}{Ride on schedule}{Ride used in the creation of  new TaxiHandler}{Working Glassfish Server}{The purpose is to check that the proper information are correctly retrived and used for the creation of a new TaxiHandler}
+\testx{TaxiAllocationDaemon - Retrieve ride information}{TaxiAllocationDaemon}{Ride}{Ride on schedule}{Ride used in the creation of  new TaxiHandler}{Working Glassfish Server, Working Database server}{The purpose is to check that the proper information are correctly retrived and used for the creation of a new TaxiHandler}
 
-\testx{TaxiResManager - Creation of a call}{TaxiResManager}{Call}{Information provided by the user}{New Call entity}{Working Glassfish Server}{Verify that a new call is correctly added}
+\testx{TaxiResManager - Creation of a call}{TaxiResManager}{Call}{Information provided by the user}{New Call entity}{Working Glassfish Server, Working Database server}{Verify that a new call is correctly added}
 
 \newpage
 \section{Tools and Test Equipment Required}
