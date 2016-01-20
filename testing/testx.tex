@@ -79,7 +79,8 @@
 {Update information on position and status of the taxi.}
 {Taxi has modified data.}
 {Working Glassfish Server, Working Database Server.}
-{The purpose of this test is to verify that all the information are correctly updated on the server.}
+{The purpose of this test is to verify that all the information are correctly
+updated on the server.}
 
 \testx
 {TaxiHandler - Taxi assignment to a ride}
@@ -88,7 +89,7 @@
 {There is a new ride available.}
 {This ride is assigned to taxi and the corresponding taxist is notified.}
 {Working Glassfish Server, Working Database Server.}
-{The aim of this test is to verify that a new ride is properly assigned to 
+{The aim of this test is to verify that a new ride is properly assigned to
 a taxi in the correct zone and to ensure that the correct taxist is nofied.}
 
 \testx
@@ -116,7 +117,7 @@ information about a \code{Ride} properly.}
 {CustomerManager}
 {Customer}
 {There are some pending edit operations initiated by users.}
-{For each operation, every involved user entity must be updated correctly, 
+{For each operation, every involved user entity must be updated correctly,
 according to the specified operation.}
 {Working Glassfish Server, Working Database server.}
 {Verify that CustomerManager is working properly.}
@@ -126,7 +127,8 @@ according to the specified operation.}
 {GuestManager}
 {Customer}
 {There are some pending operations initiated by customers.}
-{Every operation must be executed correctly, according to the user level (unregistered!).}
+{Every operation must be executed correctly, according to the user level
+(unregistered!).}
 {Working Glassfish Server, Working Database server.}
 {Assert that every guest operation is working properly.}
 
@@ -146,16 +148,17 @@ according to the specified operation.}
 {Ride to be handled.}
 {Association between a ride and a taxi.}
 {Working Glassfish Server, Working Database server.}
-{Verify that an handler is created for every incoming ride.}
+{The aim of the test is to check that an handler is created for every incoming
+ride.}
 
 \testx
-{TaxiAllocationDaemon - Avialable taxis in zones}
+{TaxiAllocationDaemon - Available taxis in zones}
 {TaxiAllocationDaemon}
 {Zone}
 {Queue related to a zone.}
-{Number of available taxi for a zone.}
+{Number of available taxis for a zone.}
 {Working Glassfish Server, Working Database server.}
-{The purpose of the test is to check that the number of available taxi in every
+{The purpose of the test is to check that the number of available taxis in every
 zone is equal to each corresponding zone queue.}
 
 \testx
@@ -175,4 +178,5 @@ used for the creation of a new TaxiHandler.}
 {Information provided by the user.}
 {New Call entity.}
 {Working Glassfish Server, Working Database server.}
-{Verify that a new call is correctly added to the database with the correct information.}
+{Verify that a new call object is correctly created, and then added to the database
+through Java Entity Beans, with the correct information.}
