@@ -101,6 +101,12 @@ Along with unit testing, \textbf{code inspection} is done, via both manual and a
 \subsection{Elements to be integrated}
 \label{sub:elements_to_be_integrated}
 
+The list of all elements to be integrated is reported in Table~\ref{tab:components}. As you may see, this closely parallels what was written in \cite{bib:dd}. For more information on the order of the integration tests, see Section~\ref{ssub:software_integration_sequence}; for more information about the tests themselves, see Section~\ref{sub:individual_steps_and_test_description}.
+
+\input{elementsTable.tex}
+
+\subsection{Integration Testing Strategy}
+\label{sub:integration_testing_strategy}
 \begin{figure}[htb]
     \centering
     \includegraphics[width=1.2\textwidth]{img/elements.pdf}
@@ -108,12 +114,6 @@ Along with unit testing, \textbf{code inspection} is done, via both manual and a
     \caption{The elements to be integrated; the number refer to the tests described in Section~\ref{sub:individual_steps_and_test_description}}
 \end{figure}
 
-The list of all elements to be integrated is reported in Table~\ref{tab:components}. As you may see, this closely parallels what was written in \cite{bib:dd}. For more information on the order of the integration tests, see Section~\ref{ssub:software_integration_sequence}; for more information about the tests themselves, see Section~\ref{sub:individual_steps_and_test_description}.
-
-\input{elementsTable.tex}
-
-\subsection{Integration Testing Strategy}
-\label{sub:integration_testing_strategy}
 The strategy that will be adopted is the so-called \textbf{bottom-up} approach.
 
 An incremental approach is fundamental, in order to prevent all shortcomings that are typical to \emph{Big Bang approach} (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
@@ -175,7 +175,7 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
         4 & Web UI & Core \\
         \hline
     \end{tabular}
-    \caption{Integration order of the subsystems composing the whole architecture}
+    \caption{Integration order of the subsystems}
     \label{tab:subsystem-integration}
 \end{table}
 
