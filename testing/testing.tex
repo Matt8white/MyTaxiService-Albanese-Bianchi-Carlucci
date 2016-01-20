@@ -80,6 +80,9 @@ The system will be an optimization of a pre-existing, non-software solution for 
     \item[DD] Design Document
     \item[ITPD] Integration Test Plan Document
     \item[DBMS] Database Management System
+    \item[GPS] Global Positioning System
+    \item[API] Application Programming Interface
+    \item[UI] User Interface
     %\item[]
 \end{description}
 
@@ -200,6 +203,14 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
 Arquillian combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\
 Arquillian strives to make integration testing no more complicated than basic unit testing, so we decided to use Arquillian as our integration testing framework for its semplicity.
 
+    \item[Cellular Phones] As described in \cite{bib:rasd}, the mobile application will be available for customers using Android and iOS. This implies that at least two cellular phones, one for each OS, have to be used for testing. In particular:
+    \begin{itemize}
+        \item Android phones must be updated to at least Android JellyBean
+        \item iOS phones must be updated to v.9
+        \item Each phone must have a working Internet connection and a GPS system enabled
+    \end{itemize}
+
+    \item[PCs] At least a personal computer must be used to ensure accessibility through the web app; in order to accomplish this, several browsers are used (mainly Google Chrome, Mozilla Firefox, Internet Explorer and Edge)
 
 \end{description}
 
@@ -220,8 +231,6 @@ In an undeveloped environment, following the criteria of \textbf{bottom-up appro
     \item[Test e-mail confirmation:] An email sender/receiver is needed in order to test and automate the email confirmation process when a user signs up for the service.
 
     \item[Fake GPS data:] In order to test position handling for taxis, a set of random GPS data are generated, both inside and outside the city.
-
-
 \end{description}
 
 \appendix
@@ -251,11 +260,7 @@ In an undeveloped environment, following the criteria of \textbf{bottom-up appro
 
 \vfill
 
-% \section*{Hours spent}
-% \begin{figure}[htb]
-%     \centering
-%     \includegraphics[width=1.2\textwidth]{img/hours.pdf}
-%     \label{fig:hours}
-% \end{figure}
+\section*{Hours spent}
+Each member has spent 10 hours while writing this document.
 
 \end{document}
