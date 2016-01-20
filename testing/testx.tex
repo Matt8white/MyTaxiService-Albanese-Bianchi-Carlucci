@@ -116,30 +116,35 @@ information about a \code{Ride} properly.}
 {CustomerManager - Customer Services}
 {CustomerManager}
 {Customer}
-{There are some pending edit operations initiated by users.}
-{For each operation, every involved user entity must be updated correctly,
+{There are some pending operations initiated by users, which aim is to change
+\code{User} entities.}
+{For each operation, every involved \code{User} entity must be updated correctly,
 according to the specified operation.}
 {Working Glassfish Server, Working Database server.}
-{Verify that CustomerManager is working properly.}
+{With this test, we can ensure that CustomerManager is working properly.}
 
 \testx
 {GuestManager - Guest Services}
 {GuestManager}
 {Customer}
-{There are some pending operations initiated by customers.}
-{Every operation must be executed correctly, according to the user level
+{There are some pending operations initiated by unauthenticated users.}
+{Every operation must be executed correctly, \emph{according to the user level}
 (unregistered!).}
 {Working Glassfish Server, Working Database server.}
-{Assert that every guest operation is working properly.}
+{This test will check that every \code{Guest} operation is working properly
+and that guests could do actions \emph{if and only if} those actions are allowed
+to be done by guests.}
 
 \testx
 {TaxiResManager - Check existing rides}
 {TaxiResManager}
 {RideManager}
-{Call to existRide().}
-{Return value must be chosen according to the existance of this ride.}
+{Call to existRide() method.}
+{Return value must be chosen according to the existance of this \code{Ride}.}
 {Working Glassfish Server, Working Database server.}
-{Check that RideManager will give back valid results.}
+{Check that \code{RideManager} gives back valid results. For example, if
+the \code{Ride} exists, the output should be \code{True}. Otherwise,
+\code{False} will be the expected result.}
 
 \testx
 {TaxiAllocationDaemon - Creation of a handler for an incoming ride}
