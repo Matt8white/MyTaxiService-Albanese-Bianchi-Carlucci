@@ -157,7 +157,7 @@ Eventually the core is complete; the last integration test is done on the mobile
 \subsubsection{Subsystem Integration Sequence}
 \label{ssub:subsystem_integration_sequence}
 
-Four main subsystems make up the whole architecture, listed in Table~\ref{tab:subsystem-integration}. All components described in \cite{bib:dd} make up the Core subsystem, which contains the main logic of the service; as stated in the previous section, the first important integration to be done is the one with the \code{DBMS}. When the core system is ready, the mobile application for a taxi driver must be tested in conjunction with the main service. Finally, the UI must be integrated with the business tier. 
+Four main subsystems make up the whole architecture, listed in Table~\ref{tab:subsystem-integration}. All components described in \cite{bib:dd} make up the Core subsystem, which contains the main logic of the service; as stated in the previous section, the first important integration to be done is the one with the \code{DBMS}. When the core system is ready, the mobile application for a taxi driver must be tested in conjunction with the main service. Finally, the UI must be integrated with the business tier.
 
 \begin{table}
     \centering
@@ -199,11 +199,11 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
 % === OTHERS ===
 \testx{TaxiDriverManager - Update Taxi entity}{TaxiDriverManager}{Taxi}{Update information on position and status of the taxi}{Taxi has modified data}{Working Glassfish Server}{The purpose of this test is to verify that all the information are correctly updated on the server}
 
-\testx{TaxiHandler - Taxi assignment to a ride}{TaxiHandler}{Taxi}{New ride available}{Ride assigned to taxi}{Working Glassfish Server}{Verify that a new ride is properly assigned to a taxi in the correct zone}
+\testx{TaxiHandler - Taxi assignment to a ride}{TaxiHandler}{Taxi}{New ride available}{Ride assigned to taxi}{Working Glassfish Server}{The purpose is to verify that a new ride is properly assigned to a taxi in the correct zone}
 
-\testx{TaxiHandler - Ride completion with a taxi}{TaxiHandler}{Ride}{New ride on schedule}{Taxi assigned to the specified ride}{Working Glassfish Server}{Verify that a taxi is correctly assigned to the ride}
+\testx{TaxiHandler - Ride completion with a taxi}{TaxiHandler}{Ride}{New ride on schedule}{Taxi assigned to the specified ride}{Working Glassfish Server}{We want to verify that a taxi is correctly assigned to the ride}
 
-\testx{RideManager - Operations on rides}{RideManager}{Ride}{ Some ride specification needs to be changed. }{ The corresponding ride is changed. }{ Working Glassfish server, Working Database server }{ Verify that RideManager is working correctly }
+\testx{RideManager - Operations on rides}{RideManager}{Ride}{ Some ride specification needs to be changed. }{ The corresponding ride is changed. }{ Working Glassfish server, Working Database server }{The purpose of the test is to verify that RideManager changes the indicated information about a ride properly }
 
 \testx{CustomerManager - Customer Services}{CustomerManager}{Customer}{There are some pending operations initiated by users.}{For each operation, every involved user entity must be updated correctly, according to the specified operation.}{Working Glassfish Server, Working Database server}{Verify that CustomerManager is working properly.}
 
@@ -219,7 +219,7 @@ Call to existRide()
 
 \testx{TaxiAllocationDaemon - Retrieve ride information}{TaxiAllocationDaemon}{Ride}{Ride on schedule}{Ride used in the creation of  new TaxiHandler}{Working Glassfish Server, Working Database server}{The purpose is to check that the proper information are correctly retrived and used for the creation of a new TaxiHandler}
 
-\testx{TaxiResManager - Creation of a call}{TaxiResManager}{Call}{Information provided by the user}{New Call entity}{Working Glassfish Server, Working Database server}{Verify that a new call is correctly added}
+\testx{TaxiResManager - Creation of a call}{TaxiResManager}{Call}{Information provided by the user}{New Call entity}{Working Glassfish Server, Working Database server}{Verify that a new call is correctly added to the database with the correct information}
 
 \newpage
 \section{Tools and Test Equipment Required}
@@ -234,7 +234,7 @@ Call to existRide()
 
     \item[Arquillian] Arquillian is an integration testing framework for business objects that are executed inside a container or that interact with the container as a client. \\
 \\
-Arquillian combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\ 
+Arquillian combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\
 Arquillian strives to make integration testing no more complicated than basic unit testing, so we decided to use Arquillian as our integration testing framework for its semplicity.
 
 
@@ -248,13 +248,13 @@ In an undeveloped environment, following the criteria of "bottom-up" testing, we
 \begin{description}
     \item[Test database:] The target environment must have a working and configured DBMS, in which test data and tables must reflect the entities and the relations described in the ER-diagram showed in the Design Document.
 
+    \item[Test Server:] A working server is needed in order to properly host the Application server to be tested
+
+    \item[Drivers for JavaEE:] Drivers used to test the proper behaviour of the Java Entity Beans while the Application server is not fully implemented.
+
     \item[API client:] It is also necessary to emulate a client application, not yet built, with an API-client which interacts with the server via HTTP requests.
 
-    \item[Drivers for the Java Entity Beans:]
-
-    \item[Mock web tier:] 
-
-    \item[Mock e-mail sender and receiver:]
+    \item[Test e-mail confirmation:] An email sender/receiver is needed in order to test and automate the email confirmation process when a user signs up for the service.
 \end{description}
 
 \appendix
