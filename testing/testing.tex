@@ -101,13 +101,14 @@ Along with unit testing, \textbf{code inspection} is done, via both manual and a
 \subsection{Elements to be integrated}
 \label{sub:elements_to_be_integrated}
 
-% ELEMENTS TODO
-
 \begin{figure}[htb]
     \centering
     \includegraphics[width=1.2\textwidth]{img/elements.pdf}
     \label{fig:testplan}
+    \caption{The elements to be integrated; the number refer to the tests described in Section~\ref{sub:individual_steps_and_test_description}}
 \end{figure}
+
+The list of all elements to be integrated is reported in Table~\ref{tab:components}. As you may see, this closely parallels what was written in \cite{bib:dd}. For more information on the order of the integration tests, see Section~\ref{ssub:software_integration_sequence}; for more information about the tests themselves, see Section~\ref{sub:individual_steps_and_test_description}.
 
 \input{elementsTable.tex}
 
@@ -128,6 +129,7 @@ In particular, Section~\ref{ssub:software_integration_sequence} will explain how
 
 \subsubsection{Software Integration Sequence}
 \label{ssub:software_integration_sequence}
+
 \input{componentIntegrationTable}
 First of all, all transactions with the DB must be operative in order to proceed with all other integrations: for this reason, all modules interacting with the DBMS are tested first.
 
@@ -245,18 +247,22 @@ Arquillian strives to make integration testing no more complicated than basic un
 \newpage
 \section{Program Stubs and Test Data Required}
 \label{sub:program_stubs_and_test_data_required}
-In an undeveloped environment, following the criteria of "bottom-up" testing, we need to define and use drivers in order to have a complete environment in which we can test the developed parts.
+In an undeveloped environment, following the criteria of \textbf{bottom-up approach}, we need to define and use \emph{drivers} in order to have a complete environment in which we can test the developed parts.
 
 \begin{description}
-    \item[Test database:] The target environment must have a working and configured DBMS, in which test data and tables must reflect the entities and the relations described in the ER-diagram showed in the Design Document.
+    \item[Test Server:] A working Glassfish test server is needed in order to properly host the Application server. 
 
-    \item[Test Server:] A working server is needed in order to properly host the Application server to be tested
+    \item[Test database:] The target environment must have a working and configured \code{DBMS}, in which test data and tables must reflect the entities and the relations described in the ER-diagram showed in the Design Document. This mock DB should contain random valid and invalid data about \code{Taxi}, \code{Zone}, \code{Ride}, \code{Customer}, \code{Address}, \code{Call}
 
-    \item[Drivers for JavaEE:] Drivers used to test the proper behaviour of the Java Entity Beans while the Application server is not fully implemented.
+    \item[Drivers for JavaEE:] Drivers used to test the proper behaviour of the Java Entity Beans while the Application server is not fully implemented. These are placeholders for all Managers in the application (\code{RideManager}, \code{CustomerManager}\ldots) and can be eliminated as the upper-level modules are ready. 
 
-    \item[API client:] It is also necessary to emulate a client application, not yet built, with an API-client which interacts with the server via HTTP requests.
+    \item[API client:] It is also necessary to emulate a client application  with an API-client which interacts with the server via HTTP requests.
 
     \item[Test e-mail confirmation:] An email sender/receiver is needed in order to test and automate the email confirmation process when a user signs up for the service.
+
+    \item[Fake GPS data:] In order to test position handling for taxis, a set of random GPS data are generated, both inside and outside the city.
+
+
 \end{description}
 
 \appendix
