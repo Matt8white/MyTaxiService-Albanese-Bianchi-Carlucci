@@ -183,48 +183,7 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
 \section{Individual Steps and Test Description}
 \label{sub:individual_steps_and_test_description}
 
-% === DB ===
-\testx{Taxi - Access to DB}{Taxi}{DBMS}{Frequent queries on table Taxi}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Zone - Access to DB}{Zone}{DBMS}{Frequent queries on table Zone}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Ride - Access to DB}{Ride}{DBMS}{Frequent queries on table Ride}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Customer - Access to DB}{Customer}{DBMS}{Frequent queries on table Customer}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Address - Access to DB}{Address}{DBMS}{Frequent queries on table Address}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Call - Access to DB}{Call}{DBMS}{Frequent queries on table Call}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Request - Access to DB}{Request}{DBMS}{Frequent queries on table Request}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-\testx{Reservation - Access to DB}{Reservation}{DBMS}{Frequent queries on table Reservation}{The corresponding tuples to the query}{DB working}{Verify that all entities in the DB are correctly mapped through JavaBeans}
-
-% === OTHERS ===
-\testx{TaxiDriverManager - Update Taxi entity}{TaxiDriverManager}{Taxi}{Update information on position and status of the taxi}{Taxi has modified data}{Working Glassfish Server}{The purpose of this test is to verify that all the information are correctly updated on the server}
-
-\testx{TaxiHandler - Taxi assignment to a ride}{TaxiHandler}{Taxi}{New ride available}{Ride assigned to taxi}{Working Glassfish Server}{The purpose is to verify that a new ride is properly assigned to a taxi in the correct zone}
-
-\testx{TaxiHandler - Ride completion with a taxi}{TaxiHandler}{Ride}{New ride on schedule}{Taxi assigned to the specified ride}{Working Glassfish Server}{We want to verify that a taxi is correctly assigned to the ride}
-
-\testx{RideManager - Operations on rides}{RideManager}{Ride}{ Some ride specification needs to be changed. }{ The corresponding ride is changed. }{ Working Glassfish server, Working Database server }{The purpose of the test is to verify that RideManager changes the indicated information about a ride properly }
-
-\testx{CustomerManager - Customer Services}{CustomerManager}{Customer}{There are some pending operations initiated by users.}{For each operation, every involved user entity must be updated correctly, according to the specified operation.}{Working Glassfish Server, Working Database server}{Verify that CustomerManager is working properly.}
-
-\testx{GuestManager - Guest Services}{GuestManager}{Customer}{There are some pending operations initiated by customers.}{ Every operation must be executed correctly, according to the user level (unregistered!)}{Working Glassfish Server, Working Database server}{Assert that every guest operation is working properly.}
-
-\testx{TaxiResManager - Check existing rides}{TaxiResManager}{RideManager}{
-Call to existRide()
-}{Return value must be chosen according to the existance of this ride}{Working Glassfish Server, Working Database server}{Check that RideManager will give back valid results.}
-
-\testx{TaxiAllocationDaemon - Creation of a handler for an incoming ride}{TaxiAllocationDaemon}{TaxiHandler}{Ride to be handled}{Association between a ride and a taxi}{Working Glassfish Server, Working Database server}{Verify that an handler is created for every incoming ride}
-
-\testx{TaxiAllocationDaemon - Avialable taxis in zones}{TaxiAllocationDaemon}{Zone}{Queue related to a zone}{Number of available taxi for a zone}{Working Glassfish Server, Working Database server}{The purpose of the test is to check that the number of available taxi in every zone is equal to each corresponding zone queue}
-
-\testx{TaxiAllocationDaemon - Retrieve ride information}{TaxiAllocationDaemon}{Ride}{Ride on schedule}{Ride used in the creation of  new TaxiHandler}{Working Glassfish Server, Working Database server}{The purpose is to check that the proper information are correctly retrived and used for the creation of a new TaxiHandler}
-
-\testx{TaxiResManager - Creation of a call}{TaxiResManager}{Call}{Information provided by the user}{New Call entity}{Working Glassfish Server, Working Database server}{Verify that a new call is correctly added to the database with the correct information}
-
+\input{testx.tex}
 \newpage
 \section{Tools and Test Equipment Required}
 \label{sub:tools_and_test_equipment_required}
