@@ -90,7 +90,7 @@ updated on the server.}
 {This ride is assigned to taxi and the corresponding taxist is notified.}
 {Working Glassfish Server, Working Database Server.}
 {The aim of this test is to verify that a new ride is properly assigned to
-a taxi in the correct zone and to ensure that the correct taxist is nofied.}
+a taxi in the correct zone and to ensure that the correct taxi driver is notified. This means that the taxi must be temporarily dequeued and set to BUSY status.}
 
 \testx
 {TaxiHandler - Ride completion with a taxi}
@@ -110,14 +110,14 @@ when a request needs to be handled.}
 {The corresponding \code{Ride} is correctly updated.}
 {Working Glassfish server, Working Database server.}
 {The purpose of the test is to verify that RideManager updates the correct
-information about a \code{Ride} properly.}
+information about a \code{Ride} properly. This means that all other rides must be unaffected by the update.}
 
 \testx
 {CustomerManager - Customer Services}
 {CustomerManager}
 {Customer}
 {There are some pending operations initiated by users, which aim is to change
-\code{User} entities.}
+\code{User} entities. In particular, the following operartions must be tested: editing a profile, deleting one or logging out.}
 {For each operation, every involved \code{User} entity must be updated correctly,
 according to the specified operation.}
 {Working Glassfish Server, Working Database server.}
@@ -129,11 +129,10 @@ according to the specified operation.}
 {Customer}
 {There are some pending operations initiated by unauthenticated users.}
 {Every operation must be executed correctly, \emph{according to the user level}
-(unregistered!).}
+(unregistered!). This includes logging in, signing up and confirm his own mail (by using a mock mail sender - see Section~\ref{sub:tools_and_test_equipment_required})}
 {Working Glassfish Server, Working Database server.}
 {This test will check that every \code{Guest} operation is working properly
-and that guests could do actions \emph{if and only if} those actions are allowed
-to be done by guests.}
+and that guests could do actions \emph{if and only if} those actions are allowed to be done by guests.}
 
 \testx
 {TaxiResManager - Check existing rides}
@@ -154,7 +153,7 @@ the \code{Ride} exists, the output should be \code{True}. Otherwise,
 {Association between a ride and a taxi.}
 {Working Glassfish Server, Working Database server.}
 {The aim of the test is to check that an handler is created for every incoming
-ride.}
+ride. This should test that TaxiAllocationDaemon allocates only one ride to a single TaxiHandler.}
 
 \testx
 {TaxiAllocationDaemon - Available taxis in zones}
@@ -164,17 +163,17 @@ ride.}
 {Number of available taxis for a zone.}
 {Working Glassfish Server, Working Database server.}
 {The purpose of the test is to check that the number of available taxis in every
-zone is equal to each corresponding zone queue.}
+zone is equal to each corresponding zone queue. This is done to guarantee consistency on results between different components.}
 
 \testx
 {TaxiAllocationDaemon - Retrieve ride information}
 {TaxiAllocationDaemon}
 {Ride}
 {Ride on schedule.}
-{Ride used in the creation of  new TaxiHandler.}
+{Ride used in the creation of new TaxiHandler.}
 {Working Glassfish Server, Working Database server.}
 {The purpose is to check that the proper information are correctly retrived and
-used for the creation of a new TaxiHandler.}
+used for the creation of a new TaxiHandler. The rides inside TaxiAllocationDaemon are the ones got by a periodic refresh on the DB (by using \code{refreshRideQueue()}).}
 
 \testx
 {TaxiResManager - Creation of a call}
@@ -183,5 +182,4 @@ used for the creation of a new TaxiHandler.}
 {Information provided by the user.}
 {New Call entity.}
 {Working Glassfish Server, Working Database server.}
-{Verify that a new call object is correctly created, and then added to the database
-through Java Entity Beans, with the correct information.}
+{Verify that a new call object is correctly created, and then added to the database through Java Entity Beans with the correct information.}
