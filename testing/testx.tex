@@ -1,3 +1,6 @@
+\subsection{Component Tests} % (fold)
+\label{sub:component_tests}
+
 % === DB ===
 \testx
 {Taxi - Access to DB}
@@ -183,3 +186,42 @@ used for the creation of a new TaxiHandler. The rides inside TaxiAllocationDaemo
 {New Call entity.}
 {Working Glassfish Server, Working Database server.}
 {Verify that a new call object is correctly created, and then added to the database through Java Entity Beans with the correct information.}
+
+\subsection{Subsystem Tests} % (fold)
+\label{sub:subsystem_tests}
+
+\testx
+{Application Server - Main functionalities with DB}
+{Core (back-end)}
+{DBMS}
+{Standard query by the application server on the DB}
+{Correct tuples, based on the actual component that made the request}
+{Working Glassfish Server, Working Database server.}
+{Several components in the application server use DB for their functionalities, by either inserting, updating or deleting information. For more information, see the first tests in section Section~\ref{sub:component_tests}}
+
+\testx
+{Taxi Driver Mobile Application - Integration with the application server}
+{Taxi Driver Mobile Application}
+{Core (back-end)}
+{A request for a ride by the system}
+{A notification by the driver that he accepted / refused}
+{Working Glassfish Server, Working Database server, mobile phone with GPS enabled}
+{When a new Ride has to be assigned, TaxiHandler starts to send push notifications to taxi drivers in its queue, as specified in \cite[p.~22]{bib:dd}. The driver must take a decision, which is sent to back to the server}
+
+\testx
+{UI - Webapp}
+{UI}
+{Core (back-end)}
+{UI for the web app}
+{Results on the application server}
+{Working Glassfish Server, Working Database server, PC}
+{All principal functionalities must be tested through the web application. It must be guaranteed that the UI is easily displayed on all common browsers on different resolutions, respecting the laws about accessibility and privacy.}
+
+\testx
+{UI - Mobile app}
+{UI}
+{Core (back-end)}
+{UI for the mobile app}
+{Results on the application server}
+{Working Glassfish Server, Working Database server, Mobile Phone}
+{All principal functionalities must be tested through the mobile application. It must be guaranteed that the UI is easily displayed on all supported operating systems and being responsive.}

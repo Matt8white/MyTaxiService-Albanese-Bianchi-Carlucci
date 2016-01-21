@@ -21,7 +21,7 @@
 
 \newcommand{\testx}[7]{
 	\stepcounter{tc}
-	\subsection{Test \thetc: #1} % (fold)
+	\subsubsection{Test \thetc: #1} % (fold)
 
 	% subsubsection test_1 (end)
 	\begin{tabular}{l p{0.7\textwidth}}
@@ -184,6 +184,7 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
 \section{Individual Steps and Test Description}
 \label{sub:individual_steps_and_test_description}
 
+% subsection component_tests (end)
 \input{testx.tex}
 
 \newpage
@@ -199,7 +200,7 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
 
     \item[Arquillian] Arquillian is an integration testing framework for business objects that are executed inside a container or that interact with the container as a client. \\
 \\
-Arquillian combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\
+It combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\
 Arquillian strives to make integration testing no more complicated than basic unit testing, so we decided to use Arquillian as our integration testing framework for its semplicity.
 
     \item[Cellular Phones] As described in \cite{bib:rasd}, the mobile application will be available for customers using Android and iOS. This implies that at least two cellular phones, one for each OS, have to be used for testing. In particular:
