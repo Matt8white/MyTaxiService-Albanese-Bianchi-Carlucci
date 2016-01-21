@@ -99,6 +99,14 @@ After development phase, each module must successfully pass a thorough \textbf{u
 
 Along with unit testing, \textbf{code inspection} is done, via both manual and automated work; all these devices will lead to well-formed and robust modules, ready to be composed together.
 
+In addition to this, the following must have been produced:
+\begin{itemize}
+    \item A thorough Javadoc documentation covering public methods
+    \item The Requirements Analysis and Specification Document (RASD) \cite{bib:rasd}
+    \item The Design Document (DD) \cite{bib:dd}
+    \item Code Inspection Document (CID) \cite{bib:cid}
+\end{itemize}
+
 \subsection{Elements to be integrated}
 \label{sub:elements_to_be_integrated}
 
@@ -108,13 +116,6 @@ The list of all elements to be integrated is reported in Table~\ref{tab:componen
 
 \subsection{Integration Testing Strategy}
 \label{sub:integration_testing_strategy}
-\begin{figure}[htb]
-    \centering
-    \includegraphics[width=1.2\textwidth]{img/elements.pdf}
-    \label{fig:testplan}
-    \caption{The elements to be integrated; the number refer to the tests described in Section~\ref{sub:individual_steps_and_test_description}}
-\end{figure}
-
 The strategy that will be adopted is the so-called \textbf{bottom-up} approach.
 
 An incremental approach is fundamental, in order to prevent all shortcomings that are typical to \emph{Big Bang approach} (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
@@ -179,6 +180,13 @@ Four main subsystems make up the whole architecture, listed in Table~\ref{tab:su
     \caption{Integration order of the subsystems}
     \label{tab:subsystem-integration}
 \end{table}
+
+\begin{figure}[h!tb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/elements.pdf}
+    \label{fig:testplan}
+    \caption{The elements to be integrated; the number refer to the tests described in Section~\ref{sub:individual_steps_and_test_description}}
+\end{figure}
 
 \newpage
 \section{Individual Steps and Test Description}
@@ -250,6 +258,9 @@ In an undeveloped environment, following the criteria of \textbf{bottom-up appro
 
 \bibitem{bib:dd}
         Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Design Document}
+
+\bibitem{bib:cid}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Code Inspection Document}
 
 \bibitem{bib:arquillian}
         AA.VV. - \emph{Arquillian Reference Guide} {\small(\url{https://docs.jboss.org/author/display/ARQ/Reference+Guide?_sscc=t})}
