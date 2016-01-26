@@ -25,12 +25,76 @@ Finally, starting from the total amount of FP, we estimated the project size in 
 
 \subsection{Internal Logic Files} % (fold)
 \label{sub:ilf}
+The application must handle information about the following entities:
+
+\begin{table}[h]
+    \label{tab:ilf}
+    \centering
+
+    \begin{tabular}{l|cccc}
+    \hline
+
+    \hline
+    \textbf{File} & \textbf{Record Elements} & \textbf{Data Elements} & \textbf{Counting Weight} & \textbf{FPs} \\
+    \hline
+        Customer    &   6+     &   51+     &   High    &   15 \\
+        Ride    &   6+     &   51+     &   High    &   15 \\
+        Call    &   6+     &   51+     &   High    &   15 \\
+        Taxi Driver & 6+    &   51+     &   High    &   15 \\
+        Address    &   2--5     &   51+     &   High    &   15 \\
+        Zone    &   2--5     &   1--19     &   Low    &   7 \\
+    \hline
+        \textbf{TOT}    &   &   &   & 82 \\
+    \hline
+        
+    \end{tabular}
+\end{table}
 
 \subsection{External Interface File} % (fold)
-\label{sub:elf}
+\label{sub:eif}
+The application must store these information from the external environment:
+
+\begin{table}[h]
+    \label{tab:eif}
+    \centering
+
+    \begin{tabular}{l|cccc}
+    \hline
+
+    \hline
+    \textbf{File} & \textbf{Record Elements} & \textbf{Data Elements} & \textbf{Counting Weight} & \textbf{FPs} \\
+    \hline
+        Maps    &   6+     &   51+     &   High    &   15 \\
+        %PaymentInfo    &   2--5    &   51+     &   High    &   15 \\
+    \hline
+        \textbf{TOT}    &   &   &   & 15 \\ %30 \\
+    \hline
+        
+    \end{tabular}
+\end{table}
+
 
 \subsection{External Input} % (fold)
 \label{sub:ei}
+
+% \begin{table}[h]
+%     \label{tab:ei}
+%     \centering
+
+%     \begin{tabular}{l|cccc}
+%     \hline
+
+%     \hline
+%     \textbf{Operation} & \textbf{File Types} & \textbf{Data Elements} & \textbf{Counting Weight} & \textbf{FPs} \\
+%     %\hline
+%         %Maps    &   6+     &   51+     &   High    &   ?? \\
+        
+%     %\hline
+%     %    \textbf{TOT}    &   &   &   & 15 %30 \\
+%     \hline
+        
+%     \end{tabular}
+% \end{table}
 
 \subsection{External Inquiry} % (fold)
 \label{sub:eiq}
