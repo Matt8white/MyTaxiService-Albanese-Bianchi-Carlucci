@@ -2,10 +2,39 @@
 \section{COCOMO: effort \& cost estimation}
 \subsection{Overview} % (fold)
 \label{sub:cocomo_overview}
-% http://www.qsm.com/resources/function-point-languages-table
+The COCOMO II Cost Estimation Model is a complex estimation technique used 
+by thousands of software engineers. It's used to estimate the effort cost
+The core of COCOMO II is the use of the Effort Equation to estimate the number
+of Person/Month required to develop a project.
+
+We have used this file as reference: \\ 
+\url{http://csse.usc.edu/csse/research/COCOMOII/cocomo2000.0/CII_modelman2000.0.pdf}
 
 \subsection{Scale Drivers} % (fold)
 \label{sub:scale_drivers}
+% TODO tabella scale drivers
+
+\paragraph{PREC} Precedentedness. \\ 
+This driver reflects the previous experience that the developers have in this 
+field. Actually, this is our first experience, so we think the best value for
+our team is \emph{LOW}.
+
+\paragraph{FLEX} Development flexibility. \\
+This driver will change due to our flexibility degree in the development.
+Our schedule is quite strict, so we choose \emph{LOW} for this project.
+
+\paragraph{RESL} Risk resolution. \\
+% TODO Supercazzolare anche qua
+It reflects the extension of the risk analysis. We choose 'generally'
+because reasons.
+
+\paragraph{TEAM} Team cohesion. \\
+This value is correlated to how well the development team know each other. 
+In this case we are a very cooperative team, so \emph{VERY HIGH} value is
+our choice.
+
+\paragraph{PMAT} Process maturity. \\
+TODO ANCHE QUA, BOH
 
 \subsection{Cost Drivers} % (fold)
 \label{sub:cost_drivers}
