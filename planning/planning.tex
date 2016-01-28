@@ -13,9 +13,13 @@
     pdfborder={0 0 0}
 }
 
-\newcommand{\riskrow}[3]{
-    \hline
-    #1 & #2 & #3\\
+\newcommand{\risk}[4]{
+    \item \textbf{Risk:} #1
+    \begin{itemize}
+        \item \textbf{Probability:} #2
+        \item \textbf{Damage:} #3
+        \item \textbf{How to deal with it:} #4
+    \end{itemize}
 }
 
 \begin{document}

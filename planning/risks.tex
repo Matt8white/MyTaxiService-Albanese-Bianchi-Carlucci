@@ -9,46 +9,24 @@ Risks have to considered in a complete project planning, owing their uncertain a
 
 \subsection{Project Risks}
 
-\begin{table}
-    \centering
-\begin{tabular}[h!tbp]{p{0.485\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
-    \hline
-    \textbf{Risk} & \textbf{Probability} & \textbf{Damage}\\
-    \riskrow{No estimations/schedules have been made before this project. A lack of experience in this area can lead to serious errors in evaluating development time}{High}{Critical}
-    \riskrow{Due to several overlapping tasks the team is involved into, the project is very likely to suffer from schedule delays}{High}{Critical}
-    \riskrow{A sudden growth in requirements can lead to a rush to meeting deadlines, jeopardizing the overall quality}{Medium}{Critical}
-    \riskrow{Communication issues can sometimes be crucial, especially when dealing with task divisions.}{Medium}{Medium}
-    \hline
-\end{tabular}
-\end{table}
+\begin{itemize}
+    \risk{No estimations/schedules have been made before this project. A lack of experience in this area can lead to serious errors in evaluating development time}{High}{Critical}{BOH}
+    \risk{Due to several overlapping tasks the team is involved into, the project is very likely to suffer from schedule delays}{High}{Critical}{BOH}
+    \risk{A sudden growth in requirements can lead to a rush to meeting deadlines, jeopardizing the overall quality}{Medium}{Critical}{BOH}
+    \risk{Communication issues can sometimes be crucial, especially when dealing with task divisions.}{Medium}{Medium}{BOH}
+\end{itemize}
 
 \subsection{Technical Risks}
 
-\begin{table}
-    \centering
-\begin{tabular}[h!tbp]{p{0.485\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
-    \hline
-    \textbf{Risk} & \textbf{Probability} & \textbf{Damage}\\
-    
-    \riskrow{A lack of previous experience in developing with Java EE can almost surely slow down the entire team, which has to study these new technologies first}{High}{Critical}
-    \riskrow{}{}{}
-    \hline
-\end{tabular}
-\end{table}
+\begin{itemize}
+  \risk{A lack of previous experience in developing with Java EE can almost surely slow down the entire team, which has to study these new technologies first}{High}{Critical}{BOH}
+\end{itemize}
 
 
 \subsection{Business Risks}
 
-\begin{table}
-    \centering
-\begin{tabular}[h!tbp]{p{0.485\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
-    \hline
-    \textbf{Risk} & \textbf{Probability} & \textbf{Damage}\\
-    
-    \riskrow{Testing devices \& infrastructure (PCs, several mobile phones, server rent) need to be purchased and configured. This is going to increase costs, that may be not sustainable if the company is too small.}{High}{Catastrophic}
-    \hline
-\end{tabular}
-\end{table}
+\begin{itemize}
+\risk{Testing devices \& infrastructure (PCs, several mobile phones, server rent) need to be purchased and configured. This is going to increase costs, that may be not sustainable if the company is too small.}{High}{Catastrophic}{BOH}
+\end{itemize}
 
-\subsection{Recovery Actions}
 \subsection{Summary}
