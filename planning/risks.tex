@@ -20,22 +20,24 @@ Risks have to considered in a complete project planning, owing their uncertain a
 \subsection{Technical Risks}
 
 \begin{itemize}
-  \risk{A lack of previous experience in developing with Java EE can almost surely slow down the entire team, which has to study these new technologies first}{High}{Critical}{BOH}
+  \risk{A lack of previous experience in developing with Java EE can almost surely slow down the entire team, which has to study these new technologies first}{High}{Critical}{This has to be account in the first stages of planning and inserted in the project scheduling.}
   \risk{If the servers happen to be unreliable or in the case of more users than expected, a significant downtime can seriously damage the whole project}{Medium}{Critical}{A scalable design of the overall architecture is essential, both in software and in hardware choices.}
 
-  % troppi accessi
-  % problemi di sicurezza 
-  % unit testing e integration testing
+  \risk{The application may be susceptible to security issues if not well-designed.}{Medium}{Critical}{All modern standards in computer security guidelines must be followed, especially when dealing with the user input, which has to be correctly verified and processed.}
+
+  \risk{Testing may difficult (for example, if several mocks are necessary) or highlight problems which are hard to solve, especially when doing integration testing or ---even worse---validation.}{Medium}{Critical}{All components must be unit tested as soon as possible, to eliminate serious bugs when they first appear; integration testing must be done according to the specifications contained in \cite{bib:itpd}. A periodic check of requirements contained in \cite{bib:rasd} is also required.}
+
 \end{itemize}
 
 
 \subsection{Business Risks}
 
 \begin{itemize}
-    \risk{Testing devices \& infrastructure (PCs, several mobile phones, server rent) need to be purchased and configured. This is going to increase costs, that may be not sustainable if the company is too small.}{High}{Catastrophic}{BOH}
-    % problemi finanziari
-    % cambiano le leggi che regolano il servizio taxi
-    % l'azienda viene acquisita
-\end{itemize}
+    \risk{Testing devices \& infrastructure (PCs, several mobile phones, server rent) need to be purchased and configured. This is going to increase costs, that may be not sustainable if the company is too small.}{High}{Catastrophic}{Testing tools are to be clearly defined in \cite{bib:rasd}, in order to avoid worthless spendings.}
 
-\subsection{Summary}
+    \risk{The company may find itself in serious financial trouble.}{Low}{Catastrophic}{A feasibility study together with the RASD must highlight the impossibility of starting a whole new project.}
+    
+    \risk{myTaxiService may violate some (future) laws related to taxi management.}{Low}{Critical}{A periodic check must be done in order to avoid legal consequences. In the case of drastic changes, the whole team must work in order to adapt to the new regulations as soon as possible.}
+    
+    \risk{Another bigger company could acquire this company.}{Low}{Marginal}{No preventive solutions are available. Note that this is not necessarily a negative thing.}
+\end{itemize}
