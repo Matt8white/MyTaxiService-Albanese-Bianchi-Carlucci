@@ -36,15 +36,30 @@
 \newcommand{\ssc}[2][c]{%
   \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
-\newcommand{\runcost}[7]{
+\newcommand{\runcost}[8]{
 \paragraph{\tempa} \tempb \\
-
-\begin{table}\centering \hspace*{-2cm} \small
+#8 \\ 
+\begin{table}[h]\centering \hspace*{-1.5cm} \small
 \begin{tabular}{| p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} |} \hline
-\ssc{\\\textbf{\tempa}\\\textbf{Descriptors}} & \tempc & \tempd & \tempe & \tempf & \tempg & #1\\ \hline
-\ssc{Rating\\Levels}  & Very Low & Low & Nominal & High & Very High & Extra High \\ \hline
-\ssc{Effort\\Multipliers} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline 
+\ssc{\\ \textbf{\tempa} \\ \textbf{Descriptors} } & \tempc & \tempd & \tempe & \tempf & \tempg & #1\\ \hline
+\ssc{ \textbf{Rating} \\ \textbf{Levels} }  & \textbf{Very Low} & \textbf{Low} & \textbf{Nominal} & \textbf{High} & \textbf{Very High} & \textbf{Extra High} \\ \hline
+\ssc{ \textbf{Effort}\\ \textbf{Multipliers}} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline 
 \end{tabular}
+\caption{\tempa~Descriptors}
+\label{cost:#1}
+\end{table}
+}
+
+\newcommand{\scost}[9]{
+\paragraph{#1} #2 \\
+#9 \\ 
+\begin{table}[h]\centering \hspace*{-1.5cm} \small
+\begin{tabular}{| p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} |} \hline
+    \ssc{ \textbf{Rating} \\ \textbf{Levels} }  & \textbf{Very Low} & \textbf{Low} & \textbf{Nominal} & \textbf{High} & \textbf{Very High} & \textbf{Extra High} \\ \hline
+\ssc{ \textbf{Effort} \\ \textbf{Multipliers} } & #3 & #4 & #5 & #6 & #7 & #8 \\ \hline 
+\end{tabular}
+\caption{#1~Cost Driver}
+\label{cost:#1}
 \end{table}
 }
 
