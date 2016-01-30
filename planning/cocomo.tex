@@ -3,9 +3,10 @@
 \subsection{Overview} % (fold)
 \label{sub:cocomo_overview}
 The COCOMO II Cost Estimation Model is a complex estimation technique used 
-by thousands of software engineers. It's used to estimate the effort cost
+by thousands of software engineers all over the world. \\
+It's used to estimate the effort cost of a software engineering project.
 The core of COCOMO II is the use of the Effort Equation to estimate the number
-of Person/Month required to develop a project.
+of Person/Month required to develop a complex project.
 
 We have used this file as reference: \\ 
 \url{http://csse.usc.edu/csse/research/COCOMOII/cocomo2000.0/CII_modelman2000.0.pdf}
@@ -24,9 +25,9 @@ This driver will change due to our flexibility degree in the development.
 Our schedule is quite strict, so we choose \emph{LOW} for this project.
 
 \paragraph{RESL} Risk resolution. \\
-% TODO Supercazzolare anche qua
+% TODO!!
 It reflects the extension of the risk analysis. We choose 'generally'
-because reasons.
+because reasons. % <- TODO
 
 \paragraph{TEAM} Team cohesion. \\
 This value is correlated to how well the development team know each other. 
@@ -34,10 +35,46 @@ In this case we are a very cooperative team, so \emph{VERY HIGH} value is
 our choice.
 
 \paragraph{PMAT} Process maturity. \\
-TODO ANCHE QUA, BOH
+% TODO!!
+Here there is the weighted average of ``Yes'' answers to CMM Maturity Questionnaire.
+Let's Try with High, Level 3
+
+Here is a sum of archieved results.
+
+\begin{tabular}{ p{5cm} | c | c }
+    Scale Driver            & Factor             &  Value   \\ \hline
+    Precedentedness         & \texttt{LOW}       &  4.96    \\
+    Development Flexibility & \texttt{LOW}       &  4.05    \\
+    Risk Resolution         & \texttt{HIGH}      &  2.83    \\
+    Team Cohesion           & \texttt{VERY HIGH} &  1.10    \\
+    Proces Maturity         & \texttt{HIGH}      &  3.12    \\ \hline
+    Total                   &                    & 16.06  
+\end{tabular}
 
 \subsection{Cost Drivers} % (fold)
 \label{sub:cost_drivers}
+
+\cost{RELY}{Required Software Reliability}
+{Slight inconvenience}{Easily recoverable losses}{Easily recoverable losses}
+{High financial loss}{Risk to human life}{}
+{0.82}{0.92}{1.00}{1.10}{1.26}{n/a}
+\paragraph{Database Size}
+\paragraph{Product Complexity}
+\paragraph{Required Reusability}
+\paragraph{Documentation match to life-cycle needs}
+\paragraph{Execution Time Constraint}
+\paragraph{Main Storage Constraint}
+\paragraph{Platform Volatility}
+\paragraph{Analyst Capability}
+\paragraph{Programmer Capability}
+\paragraph{Application Experience}
+\paragraph{Platform Experience}
+\paragraph{Platform Experience}
+\paragraph{Language and Tool Experience}
+\paragraph{Personnell Continuity}
+\paragraph{Usage of Software Tools}
+\paragraph{Multisite Development}
+\paragraph{Required development schedule}
 
 % subsection cost_drivers (end)
 % subsection scale_drivers (end)

@@ -22,6 +22,33 @@
     \end{itemize}
 }
 
+\newcommand{\cost}[7] {
+    \def\tempa{#1}
+    \def\tempb{#2}
+    \def\tempc{#3}
+    \def\tempd{#4}
+    \def\tempe{#5}
+    \def\tempf{#6}
+    \def\tempg{#7}
+    \runcost
+}
+
+\newcommand{\ssc}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+\newcommand{\runcost}[7]{
+\paragraph{\tempa} \tempb \\
+
+\begin{table}\centering \hspace*{-2cm} \small
+\begin{tabular}{| p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} |} \hline
+\ssc{\\\textbf{\tempa}\\\textbf{Descriptors}} & \tempc & \tempd & \tempe & \tempf & \tempg & #1\\ \hline
+\ssc{Rating\\Levels}  & Very Low & Low & Nominal & High & Very High & Extra High \\ \hline
+\ssc{Effort\\Multipliers} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline 
+\end{tabular}
+\end{table}
+}
+
+
 \begin{document}
 
 \title{Project Plan}
