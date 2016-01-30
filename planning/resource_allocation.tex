@@ -2,6 +2,137 @@
 \section{Resource Allocation}
 % RICHIAMA CONTATORE TASK
 
-This section is meant to show the way our available resources are allocated to the project. Every task is divided three macroareas, each of them is assigned every member, in this way the time needed to complete a task is a bit more but we also increase the overall awareness of every member about the task itself, reducing the possibility to create a misunderstanding.
-At the end of every task, the whole team is asked to revision the document before the submission, the day before the deadline.
- 
+This section is meant to show the way our available resources are allocated to the project. Every assigned task is divided in three macroareas and each one of them is assigned to a member of the team.
+As you can notice, every member works on all the tasks; in this way the time needed to complete a task is a bit more but we also increase the overall awareness of every member about the project itself, reducing the possibility to create misunderstandings.
+At the end of every task, the whole team is asked to revision the document before the submission, the week before the deadline.
+
+Regarding the implementation and the integration testing, each member of the team is asked to focus on a tier of the application, as soon as the Design Document is complete, starting in parallel with other task and then focusing on the implementation itself.
+After one functionality is complete, the testing related will be carried on by another member of the team, in order to make the unit test more accurate.
+
+Please refer to \autoref{tab:schedule}, \autoref{fig:gantt} for a better understanding of the division of the work.
+
+The division of work between team members is shown in tables \ref{tab:rasd-res-alloc}, \ref{tab:dd-res-alloc}, \ref{tab:itpd-res-alloc}, \ref{tab:plan-res-alloc}, \ref{tab:pres-res-alloc}, \ref{tab:impl-res-alloc}, \ref{tab:int-test-res-alloc}.
+
+\begin{table}
+    \centering
+    \begin{small}
+    \begin{tabular}{| l | l | l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{4}{c|}{\textbf{2015-10-15 to 2015-11-06}} \\
+        \cline{2-5}
+        & $1_{st}$ week & $2_{nd}$ week & $3_{rd} $ week & $4_{th}$ week\\
+        \hline
+        Michele     & Introduction  & Alloy          & Alloy       & Revision    \\
+        Mattia      & Scenarios     & Use Cases      & Diagrams    & Revision    \\
+        Alain       & Requirements  & Requirements   & Interfaces  & Revision    \\
+        \hline
+    \end{tabular}
+    \end{small}
+    \caption{Resource allocation for RASD.}
+    \label{tab:rasd-res-alloc}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{small}
+    \begin{tabular}{| l | l | l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{4}{c|}{\textbf{2015-11-11 to 2015-12-04}} \\
+        \cline{2-5}
+        & $1_{st}$ week & $2_{nd}$ week & $3_{rd} $ week & $4_{th}$ week\\
+        \hline
+        Michele        & Introduction      & Component view     & Component View & Revision   \\
+        Mattia         & Runtime view      & Runtime view       & Component interfaces & Revision   \\
+        Alain          & Deployment view   & Algorithm Design   & Algorithm Design & Revision  \\
+        \hline
+    \end{tabular}
+    \end{small}
+    \caption{Resource allocation for DD.}
+    \label{tab:dd-res-alloc}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{2}{c|}{\textbf{2016-01-07 to 2016-01-21}} \\
+        \cline{2-3}
+        & $1_{st}$ week & $2_{nd}$ week \\
+        \hline
+        Michele        & Introduction        & Integration strategy       \\
+        Mattia         & Test description    & Stubs and test data    \\
+        Alain          & Test description    & Revision    \\
+        \hline
+    \end{tabular}
+    \caption{Resource allocation for ITPD.}
+    \label{tab:itpd-res-alloc}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{2}{c|}{\textbf{2016-01-21 to 2016-02-02}} \\
+        \cline{2-3}
+        & $1_{st}$ week & $2_{nd}$ week \\
+        \hline
+        Michele        & Function Points       & Risks      \\
+        Mattia         & Task and schedule     & Resource allocation    \\
+        Alain          & Cocomo II             & Revision    \\
+        \hline
+    \end{tabular}
+    \caption{Resource allocation for Planning.}
+    \label{tab:plan-res-alloc}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{2}{c|}{\textbf{2016-02-02 to 2016-02-12}} \\
+        \cline{2-3}
+        & $1_{st}$ week & $2_{nd}$ week \\
+        \hline
+        Michele         &     & Slide    \\
+        Mattia          &     & Slide    \\
+        Alain           &     & Slide    \\
+        \hline
+    \end{tabular}
+    \caption{Resource allocation for Presentation.}
+    \label{tab:pres-res-alloc}
+\end{table}
+
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{4}{c|}{\textbf{2015-12-05 to DA VEDERE}} \\
+        \cline{2-5}
+        & $1_{st}$ month & $2_{nd}$ month & $3_{rd} $ month & $4_{th}$ month\\
+        \hline
+        Michele        & Web tier       & Web Client     & Mobile client   & Test Business    \\
+        Mattia         & Database       & Business tier  & Business tier   & Test Clients   \\
+        Alain          & Business tier  & Business tier  & Business tier   & Test Database  \\
+        \hline
+    \end{tabular}
+    \caption{Resource allocation for Implementation.}
+    \label{tab:impl-res-alloc}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \multirow{2}{*}{\textbf{Resource}} & \multicolumn{2}{c|}{\textbf{2016-01-22 to DA VEDERE}} \\
+        \cline{2-3}
+        & $1_{st}$ week & $2_{nd}$ week \\
+        \hline
+        Michele       &   Web tier - Business tier    & Business tier  - Data     \\
+        Mattia        &   Web tier - Business tier    & Business tier  - Data    \\
+        Alain         &   Web Client - Web tier       & Web tier - Mobile Client    \\
+        \hline
+    \end{tabular}
+    \caption{Resource allocation for Integration Testing.}
+    \label{tab:int-test-res-alloc}
+\end{table}

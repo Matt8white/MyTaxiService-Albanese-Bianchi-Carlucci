@@ -8,6 +8,7 @@
 \usepackage{url}
 \usepackage{subfigure}
 \usepackage{amsmath}
+\usepackage{pgfgantt}
 
 \hypersetup{
     pdfborder={0 0 0}
@@ -38,12 +39,12 @@
 
 \newcommand{\runcost}[8]{
 \paragraph{\tempa} \tempb \\
-#8 \\ 
+#8 \\
 \begin{table}[h]\centering \hspace*{-1.5cm} \small
 \begin{tabular}{| p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} |} \hline
 \ssc{\\ \textbf{\tempa} \\ \textbf{Descriptors} } & \tempc & \tempd & \tempe & \tempf & \tempg & #1\\ \hline
 \ssc{ \textbf{Rating} \\ \textbf{Levels} }  & \textbf{Very Low} & \textbf{Low} & \textbf{Nominal} & \textbf{High} & \textbf{Very High} & \textbf{Extra High} \\ \hline
-\ssc{ \textbf{Effort}\\ \textbf{Multipliers}} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline 
+\ssc{ \textbf{Effort}\\ \textbf{Multipliers}} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline
 \end{tabular}
 \caption{\tempa~Descriptors}
 \label{cost:#1}
@@ -52,11 +53,11 @@
 
 \newcommand{\scost}[9]{
 \paragraph{#1} #2 \\
-#9 \\ 
+#9 \\
 \begin{table}[h]\centering \hspace*{-1.5cm} \small
 \begin{tabular}{| p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} | p{2cm} |} \hline
     \ssc{ \textbf{Rating} \\ \textbf{Levels} }  & \textbf{Very Low} & \textbf{Low} & \textbf{Nominal} & \textbf{High} & \textbf{Very High} & \textbf{Extra High} \\ \hline
-\ssc{ \textbf{Effort} \\ \textbf{Multipliers} } & #3 & #4 & #5 & #6 & #7 & #8 \\ \hline 
+\ssc{ \textbf{Effort} \\ \textbf{Multipliers} } & #3 & #4 & #5 & #6 & #7 & #8 \\ \hline
 \end{tabular}
 \caption{#1~Cost Driver}
 \label{cost:#1}

@@ -40,7 +40,7 @@ In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task
         Project Plan        & 2016-01-21            & 2016-02-02        \\
         Presentation        & 2016-02-02            & 2016-02-12        \\
         Implementation      & 2015-12-05            & DA DEFINIRE       \\
-        Integration Testing & 2016-01-07            & DA DEFINIRE       \\
+        Integration Testing & 2016-01-22            & DA DEFINIRE       \\
         \hline
     \end{tabular}
     \caption{Schedule for project tasks.}
@@ -53,7 +53,7 @@ In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task
         vgrid={*{6}{draw=none},dotted},
         time slot format=isodate,
         x unit=0.7mm,
-        today=2016-02-12,
+        today=2016-02-02,
         today rule/.style= {blue, ultra thick},
         today label=Today,
         link bulge=6, link tolerance=5,
@@ -67,7 +67,7 @@ In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task
         \ganttbar[name=pplan]{Plan}{2016-01-21}{2016-02-02} \\
         \ganttbar[name=pres]{Present.}{2016-02-02}{2016-02-12} \\
         \ganttbar[name=impl]{Implementation}{2015-12-05}{2016-06-01} \\ %Cambiare data fine
-        \ganttbar[name=int-test]{IntTest}{2016-01-07}{2016-06-15} %cambiare data fine
+        \ganttbar[name=int-test]{IntTest}{2016-01-22}{2016-06-15} %cambiare data fine
         \ganttlink{rasd}{dd}
         \ganttlink{dd}{itpd}
         \ganttlink{impl}{int-test}
