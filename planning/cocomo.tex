@@ -1,12 +1,12 @@
 %!TEX root = planning.tex
-\section{COCOMO: effort \& cost estimation}
+\section{COCOMO\rr: effort \& cost estimation}
 \label{sec:cocomo}
 \subsection{Overview} % (fold)
 \label{sub:cocomo_overview}
-The \textbf{COCOMO II Cost Estimation Model} is a complex estimation technique used 
+The \textbf{COCOMO\rr II Cost Estimation Model} is a complex estimation technique used 
 by thousands of software engineers all over the world. \\
 It is used to estimate the effort cost of a software engineering project.
-The core of COCOMO II is the use of the \emph{Effort Equation} to estimate the number
+The core of COCOMO\rr II is the use of the \emph{Effort Equation} to estimate the number
 of Person/Month required to develop a complex project.
 
 We have used \cite{bib:cocomo} as a reference.
@@ -15,48 +15,49 @@ We have used \cite{bib:cocomo} as a reference.
 \label{sub:scale_drivers}
 \begin{figure}[h]
     \includegraphics[trim={0.23cm 0.2cm 0.43cm 0.55cm},clip,width=\linewidth]{img/scaledriver.png}
-    \caption{Scale Factor Values for COCOMO II Models}
+    \caption{Scale Factor Values for COCOMO\rr II Models}
     \label{tbl:scale}
 \end{figure}
 
 \pagebreak 
-In this section we will talk about COCOMO II Scale Drivers. They are a significant
-source of exponential variation on a project effort. Each driver has a range of 
-rating levels, from \emph{Very Low} to \emph{Extra High}, each with its own rate. 
+In this section we will talk about COCOMO\rr II Scale Drivers. 
+They are a significant source of exponential variation on a project effort. 
+Each driver has a range of rating levels, from \emph{Very Low} to 
+\emph{Extra High}, each with its own rate. 
 
 \paragraph{PREC} Precedentedness. \\  % QUESTA PAROLA NON ESISTE! :/
-This driver reflects the previous experience that the developers have in this 
+This driver reflects the previous experience that developers have in this 
 field. Actually, this is our first experience, so we think the best value for
-our team is \texttt{LOW}.
+our team is \texttt{Low}.
 
 \paragraph{FLEX} Development flexibility. \\
 This driver will change due to our flexibility degree in the development.
-Our schedule is quite strict, so we choose \texttt{LOW} for this project.
+Our schedule is quite strict, so we choose \texttt{Low} for this project.
 
 \paragraph{RESL} Risk resolution. \\
-% TODO!!
-It reflects the extension of the risk analysis. We choose 'generally'
-because reasons. % <- TODO WTF AL? XD
+It reflects the extension of risk analysis. A very low value means we have done
+a little analysis, high means a complete risk analysis. We choose \texttt{High}
+because we did a detailed analysis (Chapter 5). 
 
 \paragraph{TEAM} Team cohesion. \\
 This value is correlated to how well the development team know each other. 
-In this case we are a very cooperative team, so \texttt{VERY HIGH} value is
+In this case we are a very cooperative team, so \texttt{Very high} value is
 our choice.
 
 \paragraph{PMAT} Process maturity. \\
-% TODO!!
-Here there is the weighted average of ``Yes'' answers to CMM Maturity Questionnaire.
-Let's try with High, Level 3. % TODO in che senso???
+This parameter reflects the process maturity of the organizazion. In particular,
+this parameter has been choosen according to a weighted average of ``Yes'' answers 
+to CMM Maturity Questionnaire. In our case we have chosen \texttt{High} (CMM Level 3).
 
 \begin{table}[h!]
     \centering
 \begin{tabular}{ p{5cm} | c | c }
     Scale Driver            & Factor             &  Value   \\ \hline
-    Precedentedness         & \texttt{LOW}       &  4.96    \\
-    Development Flexibility & \texttt{LOW}       &  4.05    \\
-    Risk Resolution         & \texttt{HIGH}      &  2.83    \\
-    Team Cohesion           & \texttt{VERY HIGH} &  1.10    \\
-    Process Maturity        & \texttt{HIGH}      &  3.12    \\ \hline
+    Precedentedness         & \texttt{Low}       &  4.96    \\
+    Development Flexibility & \texttt{Low}       &  4.05    \\
+    Risk Resolution         & \texttt{High}      &  2.83    \\
+    Team Cohesion           & \texttt{Very high} &  1.10    \\
+    Process Maturity        & \texttt{High}      &  3.12    \\ \hline
     Total                   &                    & 16.06  
 \end{tabular}
     \caption{Sum of the results}
@@ -65,7 +66,7 @@ Let's try with High, Level 3. % TODO in che senso???
 
 \pagebreak
 \subsection{Cost Drivers} % (fold)
-These are the effort multipliers used in COCOMO II model to adjust the
+These are the effort multipliers used in COCOMO\rr II model to adjust the
 nominal effort. 
 \label{sub:cost_drivers}
 
@@ -73,7 +74,7 @@ nominal effort.
 {Slight inconvenience}{Easily recoverable losses}{Easily recoverable losses}
 {High financial loss}{Risk to human life}{}
 {0.82}{0.92}{1.00}{1.10}{1.26}{n/a} {
-    This is the measure of software reliability. \texttt{NOMINAL} is our choice
+    This is the measure of software reliability. \texttt{Nominal} is our choice
     for this case because a downtime would not lead to high financial losses
     but will cause problems to passengers.
 }
@@ -207,7 +208,8 @@ nominal effort.
 
 \pagebreak
 
-Here's a sum of our choice:
+\paragraph{Product} 
+Now we can compute the product of all Cost Drivers.
 
 \begin{table}[h!]
     \centering
@@ -236,7 +238,38 @@ Product                                   &                    &  0.71    \\ \hl
 \label{tab:cocomo2}
 \end{table}
 
+\pagebreak
 \subsection{Effort Equation} % (fold)
 \label{sub:effort_equation}
 
-Test
+Now, having both cost drivers product and scale drivers factors we can compute
+the effort, in Person-Month with the following equation:
+$$ Effort = A * EAF * KSLOC^E $$
+
+Where $A$ is the COCOMO\rr 2000 constant, $ A = 2.94 $. $EAF$ is the product of
+all cost drivers. In our case it is $ EAF = 0.71 $. Using function points estimation
+we can say that $ KSLOC = 8.694 $.
+Last thing: $E$ is the exponent derived from Scale Drivers. It is calculated with
+the following formula:
+
+$$ E = B + 0.01 * \sum_{i=1}^5 SF_i $$
+
+Where $ B = 0.91 $ in COCOMO\rr 2000.
+In our project, we can derive that $ E = 0.91 + 0.01 * 16.06 = 0.91 + 0.1606 \cong 1.07 $.
+
+Using this parameter, we can compute our effort:
+
+$$ Effort = 2.94 * 0.71 * 8.694^{1.07} = 21.11~PM $$
+
+\subsection{Schedule Estimation}
+\label{sub:schedule_estimation}
+
+Now we can estimate the project duration with the following equation:
+$$ Duration = 3.67 * Effort^F $$
+
+Where $Effort$ is the estimated effort and $SE$ is the schedule equation exponent derived
+from the five Scale Drivers.
+We can obtain $SE$ using the following formula:
+$$ F = D + 0.2 * 0.01 * \sum_{i=1}^5 SF_i = 0.28 + 0.2 * 0.01 * 16.06 \cong 0.31 $$
+$$ Duration = 3.67 * 21.11^F = 3.67 * 21.11^{0.31} \cong 9.44 $$
+
