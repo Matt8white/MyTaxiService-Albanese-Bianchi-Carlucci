@@ -2,14 +2,13 @@
 \section{COCOMO: effort \& cost estimation}
 \subsection{Overview} % (fold)
 \label{sub:cocomo_overview}
-The COCOMO II Cost Estimation Model is a complex estimation technique used 
+The \textbf{COCOMO II Cost Estimation Model} is a complex estimation technique used 
 by thousands of software engineers all over the world. \\
-It's used to estimate the effort cost of a software engineering project.
-The core of COCOMO II is the use of the Effort Equation to estimate the number
+It is used to estimate the effort cost of a software engineering project.
+The core of COCOMO II is the use of the \emph{Effort Equation} to estimate the number
 of Person/Month required to develop a complex project.
 
-We have used this file as reference: \\ 
-\url{http://csse.usc.edu/csse/research/COCOMOII/cocomo2000.0/CII_modelman2000.0.pdf}
+We have used \cite{bib:cocomo} as a reference.
 
 \subsection{Scale Drivers} % (fold)
 \label{sub:scale_drivers}
@@ -20,49 +19,52 @@ We have used this file as reference: \\
 \end{figure}
 
 \pagebreak 
-In this section we'll talk about COCOMO II Scale Drivers. They are a significant
-source of exponential variation on project's effort. Each driver has a range of 
-rating levels, from Very Low to Extra High, each with its own rate. 
+In this section we will talk about COCOMO II Scale Drivers. They are a significant
+source of exponential variation on a project effort. Each driver has a range of 
+rating levels, from \emph{Very Low} to \emph{Extra High}, each with its own rate. 
 
-\paragraph{PREC} Precedentedness. \\ 
+\paragraph{PREC} Precedentedness. \\  % QUESTA PAROLA NON ESISTE! :/
 This driver reflects the previous experience that the developers have in this 
 field. Actually, this is our first experience, so we think the best value for
-our team is \emph{LOW}.
+our team is \texttt{LOW}.
 
 \paragraph{FLEX} Development flexibility. \\
 This driver will change due to our flexibility degree in the development.
-Our schedule is quite strict, so we choose \emph{LOW} for this project.
+Our schedule is quite strict, so we choose \texttt{LOW} for this project.
 
 \paragraph{RESL} Risk resolution. \\
 % TODO!!
 It reflects the extension of the risk analysis. We choose 'generally'
-because reasons. % <- TODO
+because reasons. % <- TODO WTF AL? XD
 
 \paragraph{TEAM} Team cohesion. \\
 This value is correlated to how well the development team know each other. 
-In this case we are a very cooperative team, so \emph{VERY HIGH} value is
+In this case we are a very cooperative team, so \texttt{VERY HIGH} value is
 our choice.
 
 \paragraph{PMAT} Process maturity. \\
 % TODO!!
 Here there is the weighted average of ``Yes'' answers to CMM Maturity Questionnaire.
-Let's Try with High, Level 3
+Let's try with High, Level 3. % TODO in che senso???
 
-Here is a sum of archieved results.
-
+\begin{table}[h!]
+    \centering
 \begin{tabular}{ p{5cm} | c | c }
     Scale Driver            & Factor             &  Value   \\ \hline
     Precedentedness         & \texttt{LOW}       &  4.96    \\
     Development Flexibility & \texttt{LOW}       &  4.05    \\
     Risk Resolution         & \texttt{HIGH}      &  2.83    \\
     Team Cohesion           & \texttt{VERY HIGH} &  1.10    \\
-    Proces Maturity         & \texttt{HIGH}      &  3.12    \\ \hline
+    Process Maturity        & \texttt{HIGH}      &  3.12    \\ \hline
     Total                   &                    & 16.06  
 \end{tabular}
+    \caption{Sum of the results}
+    \label{tab:cocomo1}
+\end{table}
 
 \pagebreak
 \subsection{Cost Drivers} % (fold)
-These are the efforti multipliers used in COCOMO II model to adjust the
+These are the effort multipliers used in COCOMO II model to adjust the
 nominal effort. 
 \label{sub:cost_drivers}
 
@@ -70,7 +72,7 @@ nominal effort.
 {Slight inconvenience}{Easily recoverable losses}{Easily recoverable losses}
 {High financial loss}{Risk to human life}{}
 {0.82}{0.92}{1.00}{1.10}{1.26}{n/a} {
-    This is the measure of software reliability. \emph{NORMAL} is our choice
+    This is the measure of software reliability. \texttt{NOMINAL} is our choice
     for this case because a downtime would not lead to high financial losses
     but will cause problems to passengers.
 }
@@ -81,9 +83,7 @@ nominal effort.
     We do not have a test database, so we use \emph{Nominal} as value.
 }
 \scost{CPLEX}{Product Complexity} { 0.73}{0.87}{1.00}{1.17}{1.34}{1.74} { 
-    According to \emph{Table 20} 
-    \footnote{ \url{http://sunset.usc.edu/research/COCOMOII/expert/cocomo/drivers.html} }
-    our software could be marked as \emph{Nominal}.
+    According to \cite[Table~20]{bib:cocomo2}, our software could be marked as \emph{Nominal}.
 }
 
 \cost{RUSE}{Required Reusability}
@@ -105,14 +105,16 @@ nominal effort.
 
 \pagebreak
 
+% TODO: CONFRONTARE CON RASD SE QUESTO E' VERO
 \scost{TIME}{Execution Time Constraint}{n/a}{n/a}{1.00}{1.11}{1.29}{1.63} {
-    This is a measure of the execution time constraint. We don't have any
-    constraint in this case, so we will set it as \emph{Very Low}.
+    This is a measure of the execution time constraint. We don't have strict constraints in this case, so we will set it as \emph{Low}.
 }
 
+% TODO: CONFRONTARE CON RASD SE QUESTO E' VERO
+% SPAZIO INFINITO? O.o
 \scost{STOR}{Main Storage Constraint}{n/a}{n/a}{1.00}{1.05}{1.17}{1.46} {
     This is a measure of the degree of main storage constraint. 
-    We don't have any constraint, so we will set it as \emph{Very Low}.
+    We don't have any constraint, so we will set it as \emph{Low}.
 }
 
 \cost{PVOL}{Platform Volatility}{ }{Major: 12 months. Minor: 1 month.}
