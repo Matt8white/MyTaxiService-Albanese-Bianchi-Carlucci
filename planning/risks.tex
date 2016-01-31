@@ -1,6 +1,6 @@
 %!TEX root = planning.tex
 \section{Risks}
-Risks have to considered in a complete project planning, owing their uncertain ad dangerous nature. A sudden change in mind, actions, economical situations and alike could drift the project development into failure; this is the reason they are here analyzed. Three main risk categories will be later described:
+Risks have to be considered in a complete project planning, owing to their uncertain ad dangerous nature. A sudden change in mind, actions, economical situations and alike could drift the project development into failure; this is the reason why they are here analyzed. Three main risk categories will be later described:
 \begin{itemize}
     \item \textbf{Project risks}: involving the \emph{project plan} (described in these pages). Project schedule and overall costs may be subject to (worse) changes due to these risks.
     \item \textbf{Technical risks}: involving the actual \emph{implementation} of the project. They may affect the quality of the software being developed.
@@ -13,8 +13,8 @@ Risks have to considered in a complete project planning, owing their uncertain a
     \risk{No estimations/schedules have been made before this project. A lack of experience in this area can lead to serious errors in evaluating development time}{High}{Critical}{Studying previous works on a similar subject can be very helpful in this.}
     \risk{Due to several overlapping tasks the team is involved into, the project is very likely to suffer from schedule delays}{High}{Critical}{A strict organization among the team components is fundamental. This implies a constant cooperation between developers, in order to squeeze even the tiniest time slots available for this project.}
     \risk{A sudden growth in requirements can lead to a rush to meeting deadlines, jeopardizing the overall quality}{Medium}{Critical}{Thinking with a broader mind on the first stages can be very helpful; however, the team should be careful against over-engineering (which can also paralyze the development)}
-    \risk{Collaboration issues can sometimes be crucial, especially when dealing with task divisions.}{Medium}{Medium}{Meeting often can be a solution, other than explicitly writing who has to do what}
-    \risk{The team is very small (3 people) but homogeneous; if someone leaves or gets ill then the remaining team will have serious repercussions.}{Low}{Catastrophic}{All team members must be able to cover all development sections and cooperate effectively.}
+    \risk{Collaboration issues can sometimes be crucial, especially when dealing with task divisions.}{Medium}{Medium}{Meeting often can be a solution, other than explicitly writing whose responsibility for each task is.}
+    \risk{The team is very small (3 people) but homogeneous; if someone leaves or gets ill then the remaining team would have serious repercussions.}{Low}{Catastrophic}{All team members must be able to cover all development sections and cooperate effectively.}
 \end{itemize}
 
 \subsection{Technical Risks}
@@ -25,7 +25,7 @@ Risks have to considered in a complete project planning, owing their uncertain a
 
   \risk{The application may be susceptible to security issues if not well-designed.}{Medium}{Critical}{All modern standards in computer security guidelines must be followed, especially when dealing with the user input, which has to be correctly verified and processed.}
 
-  \risk{Testing may difficult (for example, if several mocks are necessary) or highlight problems which are hard to solve, especially when doing integration testing or ---even worse---validation.}{Medium}{Critical}{All components must be unit tested as soon as possible, to eliminate serious bugs when they first appear; integration testing must be done according to the specifications contained in \cite{bib:itpd}. A periodic check of requirements contained in \cite{bib:rasd} is also required.}
+  \risk{Testing may prove difficult (for example, if several mocks are necessary) or highlight problems which are hard to solve, especially when doing integration testing or ---even worse---validation.}{Medium}{Critical}{All components must be unit tested as soon as possible, to eliminate serious bugs when they first appear; integration testing must be done according to the specifications contained in \cite{bib:itpd}. A periodic check of requirements contained in \cite{bib:rasd} is also required.}
 
 \end{itemize}
 
