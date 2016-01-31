@@ -10,6 +10,12 @@
 \usepackage{amsmath}
 \usepackage{pgfgantt}
 \usepackage{multirow}
+\usepackage{fancyhdr}
+
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
+\fancyfoot{}
 
 \hypersetup{
     pdfborder={0 0 0}
@@ -48,7 +54,7 @@
 \ssc{ \textbf{Effort}\\ \textbf{Multipliers}} & #2 & #3 & #4 & #5 & #6 & #7 \\ \hline
 \end{tabular}
 \caption{\tempa~Descriptors}
-\label{cost:#1}
+\label{cost#1}
 \end{table}
 }
 
@@ -61,7 +67,7 @@
 \ssc{ \textbf{Effort} \\ \textbf{Multipliers} } & #3 & #4 & #5 & #6 & #7 & #8 \\ \hline
 \end{tabular}
 \caption{#1~Cost Driver}
-\label{cost:#1}
+\label{cost#1}
 \end{table}
 }
 
@@ -78,6 +84,7 @@
 
 \newpage{}
 
+\pagestyle{fancy}
 \input{fp.tex}
 
 \newpage
@@ -133,7 +140,5 @@
 
 \vfill
 
-\section*{Hours spent}
-Each member has spent 10 hours while writing this document.
 
 \end{document}

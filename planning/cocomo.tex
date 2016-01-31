@@ -83,7 +83,8 @@ nominal effort.
 {This values tries to estimate effects that large databases could have in our application.
     We do not have a test database, so we use \emph{Nominal} as value.
 }
-\scost{CPLEX}{Product Complexity} { 0.73}{0.87}{1.00}{1.17}{1.34}{1.74} { 
+\scost{CPLEX}{Product Complexity}
+{ 0.73}{0.87}{1.00}{1.17}{1.34}{1.74} { 
     According to \cite[Table~20]{bib:cocomo2}, our software could be marked as \emph{Nominal}.
 }
 
@@ -107,18 +108,21 @@ nominal effort.
 \pagebreak
 
 % TODO: CONFRONTARE CON RASD SE QUESTO E' VERO
-\scost{TIME}{Execution Time Constraint}{n/a}{n/a}{1.00}{1.11}{1.29}{1.63} {
+\scost{TIME}{Execution Time Constraint}
+{n/a}{n/a}{1.00}{1.11}{1.29}{1.63} {
     This is a measure of the execution time constraint. We don't have strict constraints in this case, so we will set it as \emph{Low}.
 }
 
 % TODO: CONFRONTARE CON RASD SE QUESTO E' VERO
 % SPAZIO INFINITO? O.o
-\scost{STOR}{Main Storage Constraint}{n/a}{n/a}{1.00}{1.05}{1.17}{1.46} {
+\scost{STOR}{Main Storage Constraint}
+{n/a}{n/a}{1.00}{1.05}{1.17}{1.46} {
     This is a measure of the degree of main storage constraint. 
     We don't have any constraint, so we will set it as \emph{Low}.
 }
 
-\cost{PVOL}{Platform Volatility}{ }{Major: 12 months. Minor: 1 month.}
+\cost{PVOL}{Platform Volatility}
+{ }{Major: 12 months. Minor: 1 month.}
 { Major: 6 months. Minor: 2 weeks } { Major: 2 months. Minor: 1 weeks }
 { Major: 2 weeks. Minor: 2 days } { }
 {n/a}{0.87}{1.00}{1.15}{1.30}{n/a} {
@@ -126,12 +130,14 @@ nominal effort.
     \emph{Low} is a good choice here.
 }
 
-\scost{ACAP}{Analyst Capability}{1.42}{1.19}{1.00}{0.85}{0.71}{n/a} {
+\scost{ACAP}{Analyst Capability}
+{1.42}{1.19}{1.00}{0.85}{0.71}{n/a} {
     This driver should be set to \emph{High} since we dedicated a lot of
     effort in analysing the problem requirements.
 }
 
-\scost{PCAP}{Programmer Capability}{1.34}{1.15}{1.00}{0.88}{0.76}{n/a} {
+\scost{PCAP}{Programmer Capability}
+{1.34}{1.15}{1.00}{0.88}{0.76}{n/a} {
     This driver should emphasize our programmers' capabilites as a team. 
     Our cooperation is quite good, so we set it as \emph{High}.
 }
@@ -139,7 +145,8 @@ nominal effort.
 \cost{APEX}{Application Experience}
 { $ \leq $ 2 months } { 6 months } {1 year } {3 years} {6 years} { }
 {1.22}{1.10}{1.00}{0.88}{0.81}{n/a} { 
-    Our experience in this field is very low. So we set this value as \emph {Very Low}.
+    Our experience in this field is very low. So we think that a good estimate
+    will happen if we set this value to \emph {Very Low}.
 }
 
 \cost{PLEX}{Platform Experience}
@@ -149,13 +156,87 @@ nominal effort.
     is around 1 year. We set this value as \emph{Nominal}.
 }
 
-\paragraph{Language and Tool Experience}
-\paragraph{Personnell Continuity}
-\paragraph{Usage of Software Tools}
-\paragraph{Multisite Development}
-\paragraph{Required development schedule}
+\cost{LTEX}{Language and Tool Experience}
+{ $ \leq $ 2 months } { 6 months } {1 year } {3 years} {6 years} { }
+{1.20}{1.09}{1.00}{0.91}{0.84}{n/a} { 
+    This is like the previous parameter. Our experience is around one year,
+    so this value will be set to \emph{Nominal}.
+}
+\pagebreak
+\cost{PCON}{Personnel continuity}
+{48 \% / year} { 24 \% / year} { 12 \% / year} { 6 \% / year} { 3 \% / year} { }
+{1.29}{1.12}{1.00}{0.90}{0.81}{n/a} { 
+    We can estimate a \emph{High} personnel continuity.
+}
 
-% subsection cost_drivers (end)
-% subsection scale_drivers (end)
+\cost{TOOL}{Use of software tools}
+{Edit, code, debug}
+{Simple, frontend, backend CASE, little integration}
+{Basic lifecycle tools, moderately integrated}
+{Strong, mature lifecycle tools, moderately integrated}
+{Strong, mature, proactive lifecycle tools, well integrated with processes, methods, reuse}
+{ }
+{1.17}{1.09}{1.00}{0.90}{0.78}{n/a} { 
+    We are going to use basic tools like Eclipse as IDE, Maven as dependency manager
+    and GIT as versioning tool. So we think that \emph{Nominal} will be good for us.
+}
+
+\pagebreak
+\cost{SITE}{Multisite development}
+{Some phone, mail}
+{Individual phone, FAX}
+{Narrowband email}
+{Wideband electronic communication}
+{Wideband elect. comm, occasional video conf.}
+{Interactive multimedia}
+{1.22}{1.09}{1.00}{0.93}{0.86}{0.80} { 
+    We are going to use chats, emails and phone calls.
+    So we choose \emph{High} here.
+}
+
+\cost{SCED}{Required development schedule}
+{75\% of nominal}
+{85\% of nominal}
+{100\% of nominal}
+{130\% of nominal}
+{160\% of nominal}
+{}
+{1.43}{1.14}{1.00}{1.00}{1.00}{n/a} { 
+    One hundred percent is good for us. So we will choose \emph{Nominal} here.
+}
+
+\pagebreak
+
+Here's a sum of our choice:
+
+\begin{table}[h!]
+    \centering
+\begin{tabular}{| p{8cm} | c | c |} \hline
+Cost Driver                               & Factor             &  Value   \\ \hline 
+Required Software Reliability             & \texttt{Nominal}   &  1.00    \\
+Database Size                             & \texttt{Nominal}   &  1.00    \\
+Product Complexity                        & \texttt{Nominal}   &  1.00    \\
+Required Reusability                      & \texttt{High}      &  1.07    \\
+Documentation match to life\-cycle needs  & \texttt{Nominal}   &  1.00    \\
+Execution Time Constraint                 & \texttt{Low}       &   n/a    \\
+Main Storage Constraint                   & \texttt{Low}       &   n/a    \\
+Platform Volatility                       & \texttt{Low}       &  0.87    \\
+Analyst Capability                        & \texttt{High}      &  0.85    \\  
+Programmer Capability                     & \texttt{High}      &  0.88    \\  
+Application Experience                    & \texttt{Very Low}  &  1.22    \\  
+Platform Experience                       & \texttt{Nominal}   &  1.00    \\  
+Language and Tool Experience              & \texttt{Nominal}   &  1.00    \\  
+Personnel continuity                      & \texttt{High}      &  0.90    \\  
+Use of software tools                     & \texttt{Nominal}   &  1.00    \\  
+Multisite development                     & \texttt{High}      &  0.93    \\   
+Required development schedule             & \texttt{Nominal}   &  1.00    \\ \hline
+Product                                   &                    &  0.71    \\ \hline
+\end{tabular}
+\caption{Product between Cost driver results}
+\label{tab:cocomo2}
+\end{table}
+
 \subsection{Effort Equation} % (fold)
 \label{sub:effort_equation}
+
+Test
