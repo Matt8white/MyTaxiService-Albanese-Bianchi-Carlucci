@@ -1,0 +1,97 @@
+\documentclass[a4paper,11pt]{article} 
+
+% ----------------
+% SETTINGS
+% ----------------
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{import}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{tcolorbox}
+\usepackage{url}
+\usepackage{soul}
+
+\graphicspath{{figures/}{../figures/}}
+\input{setpath.tex}
+\subimport{\CommonPath/../}{alloy-style.tex}
+\subimport{\CommonPath/../}{usecase.tex}
+% ----------------
+% DOCUMENT
+% ----------------
+\begin{document}
+% ----------------
+% TITLE
+% ----------------
+\begin{titlepage}
+\begin{center}
+\textsc{\LARGE Requirement Analysis and Specification Document}\\[1.5cm] % 
+
+\rule{\linewidth}{0.5mm} \\[0.7cm]
+{\huge \bfseries MyTaxiService}\\[0.4cm] % Thesis title
+\rule{\linewidth}{0.5mm} \\[1.5cm]
+ 
+\emph{Authors:}\\
+M. Albanese, M. Bianchi, A. Carlucci\\[2.0cm] 
+
+\vfill
+\vfill
+\includegraphics[width=50mm]{polimi.png}\\
+%\textsc{Politecnico Di Milano}
+\end{center}
+\end{titlepage}
+
+% ----------------
+% TABLE OF CONTENTS
+% ----------------
+\tableofcontents
+\pagebreak
+
+% ----------------
+% INTRODUCTION
+% ----------------
+\subimport{\CommonPath}{introduction.tex}
+
+% ----------------
+% DESCRIPTION
+% ----------------
+\subimport{\CommonPath}{description.tex}
+
+% ----------------
+% REQUIREMENTS
+% ----------------
+\subimport{\CommonPath}{requirements.tex}
+
+% ----------------
+% SCENARIO AND DIAGRAMS
+% ----------------
+\subimport{\CommonPath}{scenario_diagrams.tex}
+
+% ----------------
+% ALLOY
+% ----------------
+\subimport{\CommonPath}{alloy.tex}
+
+\subimport{\CommonPath}{appendix.tex}
+% ----------------
+% SOME USEFUL STUFF
+% ----------------
+
+% \begin{usecase}
+% 	\begin{description}
+% 	\item[{Use case: }] 
+% 	\item[{Actors: }]
+% 	\item[{Type: }] % Primary or secondary, essential, etc
+% 	\item[{Description: }] 
+% 	\item[{Cross-reference: }] % (Requirement references)
+% 	\item[{Uses: }] % use cases that it uses
+% 	\item[{Extended by: }] % use cases that extends current use case
+% 	\item[{Extends: }] % use case that curent one extends
+% 	\end{description}
+% \end{usecase}
+
+\end{document}

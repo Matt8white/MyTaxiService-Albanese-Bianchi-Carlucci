@@ -1,0 +1,139 @@
+\pagebreak
+\section{Specific requirements}
+\label{sec:req}
+
+% Counter Goals
+\newcounter{FunReqG}
+% Counter Requirements, si resetta quando cambia quello dei goal
+\newcounter{FunReqR}[FunReqG]
+% Counter Dom. Assumptions, si resetta quando cambia quello dei goal
+\newcounter{FunReqD}[FunReqG]
+
+% --- TUTORIAL SU COME FARE GOALS ---
+% \begin{Goal}{etichetta_x_refs}{Titolo}{
+%     \Req{...}
+%     \Dom{...}
+% }
+% \end{Goal}
+% --- END TUTORIAL ---
+%
+
+% creo l'environment goal
+\newenvironment{Goal}[2]{
+    \refstepcounter{FunReqG}
+    \paragraph{Goal \arabic{FunReqG}:} #2.
+    \label{goal:#1}
+    \begin{itemize}
+}{\end{itemize}}
+
+\newcommand{\Req}[1]{
+    \stepcounter{FunReqR}
+    \item[] \textbf{Requirement \arabic{FunReqR}}: #1.
+}
+
+\newcommand{\Dom}[1]{
+    \stepcounter{FunReqD}
+    \item[] \textbf{Domain Assumption \arabic{FunReqD}}: #1.
+}
+
+\subsection{Functional Requirements}
+
+\begin{Goal}{register}{Allow guests to register to the platform}{
+    %\Dom{The guest must not be already registrated}
+    %\Dom{The email used for registration must not be already
+%used by another user}
+    \Req{The service shall prevent guests from accessing any service before being registered or logged in}
+    \Req{The system shall validate any input by the guest}
+    \Req{The system shall send a verification link and an SMS with a code to the user who has just signed up in less than 5 minutes} 	
+    \Req{The system shall expire the validation link if not used after 48 hours}
+}
+\end{Goal}
+
+\begin{Goal}{login}{Allow users to access the platform by logging in}{
+    \Req{The system shall validate any input by the system before sending it}
+    \Req{The system shall check in the DB if user and password are correct and grant access if so}
+    \Req{The system shall prevent anyone from logging more than once at a time} 
+}
+\end{Goal}
+	
+\begin{Goal}{queue}{Guarantee a fair management of the zone queues}{
+    \Req{The system shall send a notification to the taxi driver on top of the queue when a request comes from a customer in the same zone} 
+    %\Req{Taxi drivers must positively answer to the notification within 30 seconds}
+    \Dom{There is always an available taxi driver in every queue}
+    \Dom{At least a driver in a queue is available to accept a ride}
+}
+\end{Goal}
+
+%????
+% \subsubsection{[G3] A driver who misses or refuses a call is removed from the queue and reinserted at the bottom of it.}
+% 	\begin{enumerate}
+% 	\item \textbf [R1] ??
+% 	\end{enumerate}
+%????	
+
+\begin{Goal}{availability}{Allow taxi drivers to indicate their availability}{
+    \Req{The system shall provide two buttons on the taxi driver's app, ``Notify Availability'' and ``Notify Unavailability''}
+    \Req{The system shall let a taxi driver to notify his availability only when unavailable and viceversa}
+    \Dom{A taxi driver notifies his availability if and only if he is actually available for a ride (not busy in another one nor not working at the moment)}
+}
+\end{Goal}
+
+\begin{Goal}{zone}{\st{Guarantee presence of taxi drivers in every zone}}{
+   \Req{\st{The system shall assign each taxi to a zone only if the number of taxis in that zone is between a minimum and a maximum threshold, determined according to the expected traffic}}
+   \Dom{\st{The number of drivers is greater than the number of zones}}
+}
+\end{Goal}
+    
+\begin{Goal}{api}{Allow developers to add functionalities to the system}{
+   \Req{The system must provide APIs in at least a programming language}
+   \Req{The system shall provide all basic functionalities that can be found in the web/mobile app through these APIs}
+   \Req{The system must check that every command submitted by APIs could be run at that user level of privileges}
+}
+\end{Goal}
+    
+\begin{Goal}{call}{Allow customers to request a taxi}{
+   \Req{The system shall let the user insert starting point, destination, payment method and number of people}
+   \Req{The system shall check if the input is valid (aka the places actually exist)}
+   \Req{The system shall send the request as soon as the customer clicks on the Request button}
+   \Req{The system shall show a confirmation screen with the Taxi ID and expected time of arrival}
+   \Req{The system shall let the user choose a payment method between cash and credit card} 
+   \Dom{If a customer reserves or requests a taxi, he will use it}
+}
+\end{Goal}
+
+\begin{Goal}{allocate}{Allow the system to efficiently allocate a taxi}{
+    \Req{When a customer calls for a taxi using his app, the system must deliver a request to the first taxi driver in the customer's zone queue that meets the payment prerequisites (e.g. only POS-enabled taxis must be used when the customer decided to use a credit card as payment method) and has enough seats}
+    \Req{The system shall set the taxi driver status to Busy when a request is accepted by him}
+    \Req{The system shall dequeue the taxi driver from the front and enqueue it in the bottom if he does not accept a request}
+    \Dom{If a taxi driver wants to take care of a request, he accepts it}
+}
+\end{Goal}
+
+\begin{Goal}{reserve}{Allow customers to reserve a taxi for a given date and time}{
+    \Req{The system shall let the user insert starting point, destination, payment method, number of people and date time}
+    \Req{The system shall prevent the customer from reserving a taxi in less than 2 hours}
+    \Req{The system shall start the allocation process only 10 minutes before the reservation time}
+    \Req{The system shall check if the input is valid (aka the places actually exist)}
+    \Req{The system shall let the user choose a payment method between cash and credit card}
+
+    \Dom{If a customer reserves or requests a taxi, he will use it}
+    \Dom{The customer will actually show up at the given place, date and time when his request or reservation is made}
+}
+\end{Goal}
+
+\begin{Goal}{share}{Allow customers to share a ride}{
+    \Req{The system shall provide a Sharing option when reserving a taxi}
+    \Req{The system shall automatically insert the customer willing to share in the first shared-reserved taxi if the info provided coincide and at least one taxi meet these requirements}
+    \Req{If a user wants to share a ride but no taxis are already shared-reserved, the system shall let the user reserve a new one as usual}
+    \Req{The system shall automatically elaborate the shortest path to reach each customer for that ride}
+    \Req{The system shall calculate each fee according to the actual distance run by each customer}  
+    \Dom{Given a place, the system can always detect the zone where it is}
+    \Dom{Customers who decided to share a taxi always accept other customers without any discrimination}
+}
+\end{Goal}
+
+\begin{Goal}{share}{Allow customers to manage their reservations}{
+    \Req{The system shall provide a list of personal reservations}
+    \Req{The system shall let the possibility to remove a reservation if that is done at least 10 minutes before the reservation time}
+}
+\end{Goal}

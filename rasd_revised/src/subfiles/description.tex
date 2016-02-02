@@ -1,0 +1,94 @@
+\pagebreak
+\subsection{Product perspective}
+
+The software-to-be is going to be made of several parts: two front-end applications for the customers, a different one for the taxi drivers and an API for developers. 
+
+Concerning the customer interface, it will be pretty similar to other related apps (for example, Uber or MyTaxi), since it will supply similar functions. It will primarly let them reserve or request a taxi.
+
+As for the taxi drivers, a simpler interface will be given, since only one functionality will be developed (accepting a request for a ride).
+
+Finally, the API will provide all public methods described in the class diagram. 
+ 
+\subsubsection{User interfaces}
+The application will have two client interfaces, a web app and a mobile app. For simplicity's sake, here are presented the mobile interfaces only.
+
+\pagebreak
+\mockup{home}{The home app page. Clicking on ``Call a taxi'' opens the ``Request a taxi'' screen.}
+
+\mockup{login}{The login screen for a customer.}
+\mockup{signup}{The registration page for a guest willing to become a customer.}
+\mockup{reserve}{Here is the page where a customer can reserve a taxi for a specified day. Starting point, destination and time are mandatory information. The mockup also illustrates the ``Sharing'' option enabled. The ``Request a taxi'' functionality uses a stripped-down version of this window (no sharing option, only current day available}
+
+\mockup{manage}{Here is the page where a customer can delete one of his reservations.}
+
+\mockup{confirm}{After requesting or reserving a taxi, the service shows you a confirmation screen.}
+
+\mockup{call}{This shows how the notification appears on a taxi driver's smartphone. No web app interfaces available for this functionality.}
+
+\pagebreak
+\subsubsection{Hardware interfaces}
+In order to correctly use myTaxiService, a GPS system is required in order to track all vehicles and distribute them fairly in each zone. In addition to this, some vehicles have a point-of-sale terminal (POS), which is expressely indicated in the system; this way, if a user chooses to pay with a credit card, only POS-enabled cars are used to grant the service.
+
+\subsubsection{Software interfaces}
+\begin{itemize}
+\item \textbf{Back-end}
+\begin{itemize}
+	\item \textbf{DBMS}:
+	\begin{itemize}
+		\item Name: MySQL
+		\item Version: 5.7
+		\item Source: \url{http://www.mysql.it/}
+	\end{itemize}
+	
+	\item \textbf{Programming language}:
+	\begin{itemize}
+		\item Name: Java (EE framework)
+		\item Version: 7
+		\item Source: \url{http://www.oracle.com/technetwork/java/javaee/overview/index.html}
+	\end{itemize}
+	
+	\item \textbf{Operating System}:
+	\begin{itemize}
+		\item Name: Linux Debian
+		\item Version: 8.2
+		\item Source: \url{https://www.debian.org/}
+	\end{itemize}	
+	
+	\item \textbf{Map API}:
+	\begin{itemize}
+		\item Name: Google Maps
+		\item Source: \url{https://developers.google.com/maps/}
+	\end{itemize}	
+\end{itemize}
+
+\item \textbf{Front-end}
+\begin{itemize}
+\item \textbf{Operating Systems}:
+	\begin{itemize}
+		\item Android (Client + Driver mobile app)
+		\item iOS (client)
+		\item Blackberry (client)
+	\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\pagebreak
+
+\subsection{Assumptions}
+Here is a list of domain assumptions the writers of this document assume to hold in the real world:
+\begin{itemize}
+    \item A taxi driver is available only when in his own vehicle 
+    \item A taxi driver notifies his availability if and only if he is actually available for a ride (not busy in another one nor not working at the moment)
+    \item At least a driver in a queue is available to accept a ride
+    \item Customers who decided to share a taxi always accept other customers without any discrimination
+    \item Each request is sent to one taxi at a time
+    \item Each taxi driver actually serves a request if he accepted it
+    \item Given a place, the system can always detect the zone where it is
+    \item If a customer reserves or requests a taxi, he will use it
+    \item If a taxi driver wants to take care of a request, he accepts it
+    \item The customer will actually show up at the given place, date and time when his request or reservation is made
+    \item The number of drivers is greater or equal than the number of zones
+    \item There already is a geolocalization system for each taxi, based on the GPS information
+    \item There is always an available taxi driver in every queue
+    \item There is a bijection between a taxi and its driver (aka a taxi belongs to just a driver and a driver uses just a vehicle)
+\end{itemize}

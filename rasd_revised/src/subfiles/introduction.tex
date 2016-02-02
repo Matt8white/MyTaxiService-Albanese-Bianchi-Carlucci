@@ -1,0 +1,40 @@
+\section{Introduction}
+
+\subsection{Purpose}
+This is the Requirement Analysis and Specification Document (RASD from now on). The aim of this document is to show the functional and non-functional requirements of the system-to-be, based on several important aspects: the needs expressed by the stakeholders, the constraints which it is subject to, the typical scenarios that will happen after its deployment. The targeted audience is mainly made of software engineers and developers who have to actually develop the service here described.
+
+\subsection{Scope}
+The system will be an optimization of a pre-existing, non-software solution for renting taxis already in use in the city. The new system will let users to rent or reserve a taxi through a mobile or a web application and will also let taxi drivers to take care of the users' requests in a more simple and effective way. In addition to a better user interface, the new system will focus on a smarter organization of the vehicles deployed in each city zone, resulting in a more efficient service for the citizens.
+
+\subsection{Stakeholders}
+MyTaxiService has several stakeholders.
+The prime stakeholder on the supply side is the \textbf{government}, whose aim is to expand and simplify its taxi service in order to make it more easy and immediate to use and also to save public money by tightening the reservation process.
+
+Another supply-side stakeholders are \textbf{taxi drivers} whose right amount of work will be guaranteed and communication with citizens will be improved.
+
+On the demand side, the prime stakeholders are \textbf{citizens}. Their taxi experience will be enhanced using all the platform's functionalities and services.
+Last but not least, also third-party developers are stakeholders because they will be constantly improving this service.
+
+\subsection{Definitions, acronyms and abbreviations}
+\subsubsection{Definitions}
+	\begin{itemize}
+		\item \textbf{Request} for a taxi: A customer asks for a taxi that he wants to use immediately. 
+		\item \textbf{Reserve} a taxi: A customer asks for a taxi for a specified date and hour.
+		\item \textbf{Place}: the address made of street name and street number
+		\item \textbf{Sharing}: The possibility for a customer to share a reserved taxi (does not apply to requested taxis).		
+		
+		\item \textbf{Agents}
+		\begin{itemize}
+			\item \textbf{Guest}: A person who has not logged in yet. He can only sign up or sign in if already registered in the system.
+			\item \textbf{User}: A registered person either as a Customer or as a Taxi driver.
+			\item \textbf{Customer} / \textbf{Passenger}: A person who has already registered as a client of the service via mobile or web app. He can call for a taxi, reserve one or modify his own profile info.
+			\item \textbf{Taxi driver}: This user is registered as a counterpart of an actual driver. The registration into the system is not made by the driver himself but by the City after verifying its necessary documents. He can notify his availability to the system and accept a request for a ride.
+		\end{itemize}
+		
+		\item \textbf{Taxi queue}: the internal data structure that handles the taxi for a certain zone in the city.
+
+	
+		\item \textbf{Zone}: area of approximately 2 mq\textsuperscript{2}. The city is partitioned into several zones, each of which is covered by at most a taxi.
+		
+		\item \textbf{Taxi Handler}: the object which handles each taxi allocation after a request or a reservation has been made by a customer.
+\end{itemize}

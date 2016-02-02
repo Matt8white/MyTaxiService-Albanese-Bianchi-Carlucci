@@ -1,0 +1,90 @@
+\tcbuselibrary{skins}
+
+\newcolumntype{Y}{>{\hsize=.5\hsize}X}
+ 
+\tcbset{tab2/.style={
+	enhanced,
+	fonttitle=\bfseries,
+	fontupper=\normalsize\sffamily,
+	colback=white,
+	colframe=black,
+	colbacktitle=white,
+	coltitle=black,
+}}
+
+\newcounter{UseCaseCounter}
+\newcounter{ScenarioCounter}
+\newcounter{MockupCounter}
+\newcounter{SequenceCounter}
+\newcounter{FSMCounter}
+
+\newcommand{\usecase}[6]{
+	\refstepcounter{UseCaseCounter}
+	\begin{tcolorbox}[
+		tab2,
+		tabularx*={\arrayrulewidth0.25mm}{Y|X},
+		title=Use Case \arabic{UseCaseCounter},
+		boxrule=1pt
+	]
+		Name & #1 \\ \hline
+		Description & #2 \\ \hline
+		Primary Actor & #3 \\ \hline
+		Basic Flow & #4 \\ \hline
+		Alternate Flows & #5 \\ \hline
+		Exception & #6 
+	\end{tcolorbox}
+}
+
+\newcommand{\scenario}[3]{
+    \vfill
+	\refstepcounter{ScenarioCounter}
+	\label{scenario:#1}
+	\begin{tcolorbox}[
+		tab2,
+		title=Scenario \arabic{ScenarioCounter},
+		boxrule=1pt
+	]
+		\textbf{#2}
+		\tcblower
+		#3
+	\end{tcolorbox}
+    \vspace{1.5cm}
+    \vfill
+}
+
+\newcommand{\mockup}[2]{
+    \refstepcounter{MockupCounter}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{mockup_#1.jpg}
+        \caption*{Mockup \arabic{MockupCounter}: #2}
+        \label{mockup:#1}
+    \end{figure}
+}
+
+\newcommand{\sequence}[2]{
+    \refstepcounter{SequenceCounter}
+    \pagebreak
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Sequence#1.png}
+        \caption*{Sequence Diagram \arabic{SequenceCounter}: #2}
+        \label{sequence:#1}
+    \end{figure}
+    \pagebreak
+}
+
+\newcommand{\FSM}[2]{
+    \refstepcounter{FSMCounter}
+    \pagebreak
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{#1.png}
+        \caption*{FSM \arabic{FSMCounter}: #2}
+        \label{sequence:#1}
+    \end{figure}
+    \pagebreak
+}
+% \usecase{Name}{Description}{PrimaryActor}{BasicFlow}{AlternateFlow}{Exception}
