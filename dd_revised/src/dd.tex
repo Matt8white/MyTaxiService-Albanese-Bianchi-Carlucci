@@ -1,0 +1,90 @@
+\documentclass[a4paper,11pt]{article}
+
+% ----------------
+% SETTINGS
+% ----------------
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{import}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{soul}
+\usepackage[toc,page]{appendix}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage[variablett]{lmodern}
+\graphicspath{{figures/}{../figures/}}
+\input{setpath.tex}
+% ----------------
+% DOCUMENT
+% ----------------
+\begin{document}
+% ----------------
+% TITLE
+% ----------------
+\begin{titlepage}
+\begin{center}
+\textsc{\LARGE Software Design Document}\\[1.5cm] %
+
+\rule{\linewidth}{0.5mm} \\[0.7cm]
+{\huge \bfseries MyTaxiService}\\[0.4cm] % Thesis title
+\rule{\linewidth}{0.5mm} \\[1.5cm]
+
+\emph{Authors:}\\
+M. Albanese, M. Bianchi, A. Carlucci\\[2.0cm]
+
+\vfill
+\vfill
+\includegraphics[width=50mm]{polimi.png}\\
+%\textsc{Politecnico Di Milano}
+\end{center}
+\end{titlepage}
+
+% ----------------
+% TABLE OF CONTENTS
+% ----------------
+\tableofcontents
+\pagebreak
+
+% ----------------
+% INTRODUCTION
+% ----------------
+\subimport{\CommonPath}{introduction.tex}
+
+% ----------------
+% ARCHITECTURAL DESIGN
+% ----------------
+\subimport{\CommonPath}{architectural.tex}
+
+% ----------------
+% ALGORITHM DESIGN
+% ----------------
+\subimport{\CommonPath}{algorithm.tex}
+
+% ----------------
+% USER INTERFACE DESIGN
+% ----------------
+\subimport{\CommonPath}{ui.tex}
+
+% ----------------
+% REQUIREMENTS TRACEABILITY
+% ----------------
+\subimport{\CommonPath}{traceability.tex}
+
+\subimport{\CommonPath}{references.tex}
+
+\subimport{\CommonPath}{appendix.tex}
+
+\end{document}

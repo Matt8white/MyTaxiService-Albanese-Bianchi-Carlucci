@@ -1,0 +1,484 @@
+%!TEX root = ../dd.tex
+\pagebreak
+\section{Architectural Design}
+ 
+% \subsection{Overview}
+% Starting from a very general depiction of the overall system, the document 
+% explains in detail each component, through several class and component diagrams.
+
+% In addition to this, a deployment view representing the physical implementation 
+% of myTaxiService and a description of the main patterns and styles used are provided. 
+
+% Please refer to each subsection for more details.
+
+\subsection{High level components and their interaction}
+According to the requirements described in \cite{rasd} and the typical guidelines for an enterprise application, we designed the architecture depicted in Figure~\ref{fig:hlarch}. 
+
+The main logic lies in the Application Server, which contains 5 \textbf{main macrocomponents}:
+\begin{itemize}
+    \item \textbf{Data Layer}: \emph{data} and \emph{data access};
+    \item \textbf{UserManager}: this layer contains all operations regarding \emph{guests} and registered \emph{users} (login, logout, editing profile\ldots); it interacts with the data layer to accomplish them.
+    \item \textbf{RideManager} which contains all operations regarding \emph{calls} (be them \emph{reservations} or \emph{requests}) and associated \emph{rides}. Common operations involve inserting a new call (even a shared one) and getting info about a ride (for example, the precalculated fee or the available payment methods). It interacts with the data layer to accomplish all this.
+    \item \textbf{TaxiAllocationManager} which contains all operations regarding the \emph{allocation} of a new ride. It interacts with the data layer to accomplish them.
+    \item \textbf{TaxiDriverManager} which contains all operations for the interaction between the application server and the driver mobile app. It uses 
+\end{itemize}
+
+Two \textbf{clients} interact with the application server: the usual \emph{client interface} (via web or mobile application) and the \emph{mobile driver application}, which has dedicated functions and a completely different UI. \\
+
+Eventually two \textbf{external services} are used: one handling payments done via POS and another one for pushing notifications into the driver app (for more information on this, see \cite{gcm}). \\
+
+For a detailed description of each component please refer to section \ref{sub:component_view} instead.
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\textwidth]{HighLevelREVISED}
+    \caption{High Level Architecture}
+    \label{fig:hlarch}
+\end{sidewaysfigure}
+
+\pagebreak
+\subsection{Component view}
+\label{sub:component_view}
+
+% The whole architecture can be described from two different points of view: 
+% \begin{itemize}
+% 	\item \emph{Tier division}: description of each tier, as given in section \ref{sec:deploy}.
+% 	\item \emph{Functionality}: each \emph{component} represents a logical collection of correlated classes in the system (either representing data or business rules). The following subsections will explain each component at a class-level point of view.
+% \end{itemize}
+
+\subsubsection{Data Layer} % (fold)
+\label{par:db}
+This layer contains all \emph{Entity Beans} (object/relational mappings with the DB) and the classes that guarantee access to the DB (and actually retrieve data for these entities, the so-called \emph{DAOs}).
+In order to better represent the structure of the database supporting this service, a ER diagram is provided. 
+
+\begin{figure}
+    \centering
+    \includegraphics[trim={0.5cm 2cm 0.5cm 3cm},clip,width=0.85\textwidth]{ER}
+    \caption{Entity Relationship Diagram}
+    \label{fig:er}
+\end{figure}
+% paragraph db (end)
+
+\pagebreak
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{CompClassClientREVISED}
+    \caption{Component view: Client}
+    \label{fig:compclassclient}
+\end{figure}
+
+\subsubsection{Client} % (fold)
+Here are contained all classes related to a \emph{customer}. In particular, two managers (one for guests and one for registered users) are given. \\
+
+Whenever a \emph{guest/customer} wants to do something strictly related to
+themselves (e.g. signing up, logging in\ldots) he has to refer to this component.
+
+
+% paragraph client (end)
+        
+\pagebreak
+\subsubsection{Taxi Reservation} % (fold)
+This component is responsible for two main objects in the entire system, Calls and Rides. 
+A \emph{Call} is either a request or a reservation made by a customer, whereas a \emph{Ride} describes the effective ride by a Taxi and can be associated with multiple Calls.
+
+Whenever an action involves one of these classes, this is the component that must be used.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.2\textwidth]{CompClassTaxiResREVISED}
+    \caption{Component view: Taxi Reservation}
+    \label{fig:compclasstaxires}
+\end{figure}
+
+% paragraph taxires (end)
+        
+\pagebreak
+\subsubsection{Taxi Allocation} % (fold)
+This is a central component for the service, since it is responsible for the actual \emph{allocation} of a taxi for a certain ride. It holds a daemon always refreshing the ride queue (\texttt{refreshRideQueue()}) to be processed from the DB by any TaxiHandler created by it.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{CompClassTaxiAllocREVISED}
+    \caption{Component view: Taxi Allocation}
+    \label{fig:compclasstaxialloc}
+\end{figure}
+% paragraph taxiallocation (end)
+
+\pagebreak
+\subsubsection{Taxi Driver} % (fold)
+This component is responsible for the interaction between the \emph{mobile application} and the application server (for example, updating the position of a cab according to the GPS data). Whenever a taxi driver has to do something related to the system, he has to use classes from this component. Please note that only classes on the server side are specified: those regarding the mobile application are no further detailed.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{CompClassTaxiDriverREVISED}
+    \caption{Component view: Taxi Driver}
+    \label{fig:compclasstaxidriver}
+\end{figure}
+
+\pagebreak
+\subsection{Deployment view}
+\label{sec:deploy}
+In this section we will talk describe the deployment of the application. In Figure~\ref{fig:deploy} 
+you can easily see the physical structure of the system. In the following
+paragraphs we will explain in more detail relevant items.
+
+\paragraph{Servers} We choose to use three different physical servers as 
+\emph{Web server}, \emph{Application server} and \emph{Database server}. 
+
+Each of them is a \emph{Dell PowerEdge R220}\cite{r220}, a very common and 
+powerful rack server.
+Each server is running a Linux distribution called Debian
+\footnote{Debian is a free operating system based on Linux and the ISO image is downloadable from its website, 
+\url{https://www.debian.org}}
+which is a very secure and customizable operating system, the right choice for our system. 
+
+All of these three servers must be physically protected and the communication between
+every tier must be encrypted using \emph{Transport Layer Security} (TLS) protocol.
+
+\paragraph{Database server} This server will run the \emph{Database Management System}
+(DBMS).
+MySQL Community Edition is the designated software. It is highly reliable, free
+and widely used. When more processing power is needed, the DBMS will be 
+migrated to \emph{MySQL Cluster Edition}. Application server will be configured 
+to use this server as database backend.
+This server should communicate only with the application server using the standard
+MySQL protocol, wrapped into a TLS layer.
+
+\paragraph{Application server} GlassFish, one of the most used J2EE implementations
+will be installed in this server and configured to serve our application.
+Database communication is made possible by \emph{Java Persistence API} (JPA), which will wrap all
+database functionalities. This server will handle all the logic behind the system.
+GlassFish is a highly scaleable software server, if more computational power 
+is needed we will increase the number of the servers in this tier.
+Communication with the Web Tier and with the smartphone App relies on 
+\emph{Simple Object Access Protocol} (SOAP).
+
+\paragraph{Web server} This server is responsible for the Web Interface.
+The whole web interface will be implemented using \emph{Java Server Faces} (JSF), while 
+the software web server will still be Glassfish Server.
+
+\paragraph{Clients}
+We currently support 2 different kind of clients: \emph{Smartphone users} and 
+\emph{Web Interface users}.
+The smartphone application directly connects to the Application Server via SOAP protocol
+while the Web interface will be accessible by connecting to our Web Server via
+a common Web browser.
+
+\begin{sidewaysfigure}
+    \centering
+    \includegraphics[width=\textwidth]{DeploymentDgrmREVISITED}
+    \caption{Deployment Diagram}
+    \label{fig:deploy}
+\end{sidewaysfigure}
+
+\pagebreak
+
+\subsection{Runtime view}
+Since the actual representation of processes and threads running within myTaxiService would have been quite complex and difficult to explain, no runtime unit diagrams have been used. As shown in the algorithm section (\ref{sec:algorithm}), there is however something important on this point: TaxiAllocationDaemon and TaxiHandler work in a similar way to SocketManager and Socket. In fact, TaxiAllocationDaemon \emph{listens} to new rides through a repeated fetch operation on the DB and allocates a new TaxiHandler to manage one ride at a time.
+
+Nevertheless, in order to catch the behaviour of the overall system, here are presented the improved sequence diagrams, better explaining what happens \emph{inside the box}.
+
+\subsubsection{Sign in} % (fold)
+\label{ssec:signin}
+% xxx
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={0 7cm 0 0},width=0.9\textwidth]{SequenceSignIn}
+    \caption{Sequence Diagram, Sign In}
+    \label{fig:signin}
+\end{figure}
+
+\subsubsection{Sign up} % (fold)
+\label{ssec:signup}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={0 7cm 0 0},width=\textwidth]{SequenceSignUp}
+    \caption{Sequence Diagram, Sign Up}
+    \label{fig:signup}
+\end{figure}
+
+\subsubsection{Allocate a taxi} % (fold)
+\label{ssec:allocate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceAllocateTaxi}
+    \caption{Sequence Diagram, Allocate a Taxi}
+    \label{fig:allocate}
+\end{figure}
+
+\subsubsection{Request a taxi} % (fold)
+\label{ssec:request}
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={2cm 10cm 2cm 0},width=\textwidth]{SequenceRequestTaxi}
+    \caption{Sequence Diagram, Request a Taxi}
+    \label{fig:request}
+\end{figure}
+
+\subsubsection{Reserve a taxi} % (fold)
+\label{ssec:reserve}
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={2cm 7cm 2cm 0},width=\textwidth]{SequenceReservation}
+    \caption{Sequence Diagram, Reserve a Taxi}
+    \label{fig:reserve}
+\end{figure}
+
+\subsubsection{Delete reservation} % (fold)
+\label{ssec:delete}
+\begin{figure}[H]
+    \centering
+    \includegraphics[trim={2cm 9cm 3cm 0},width=\textwidth]{DeleteReservation}
+    \caption{Sequence Diagram, Delete reservation}
+    \label{fig:delete}
+\end{figure}
+
+\pagebreak
+\subsection{Selected architectural styles and patterns}
+This section describes high level patterns we decided to use in myTaxiService.
+
+\paragraph{Deployment} A four-tier architecture is used in this project.
+The whole infrastructure is divided in the following tiers:
+
+\begin{itemize}
+    \item{\textbf{Client tier} which is composed of web browsers and mobile app.}
+    \item{\textbf{Presentation tier} whose aim is to generate user interface and send it to clients.}
+    \item{\textbf{Logic tier} which coordinates the application: it performs calculation, makes logical decisions and moves data between Presentation tier and Data tier.}
+    \item{\textbf{Data tier} mainly made of entity beans and database. 
+    Here information is stored and retrieved.}
+\end{itemize}
+
+We choose to use this kind of architecture because it provides a model by which
+we can create a flexible and scalable system.
+
+\paragraph{Communication} We chose to use a \emph{Service-Oriented Architecture}, 
+an architecture which provides application functionality as a set of services, 
+and applications that use those software services. 
+
+Services are \textit{loosely coupled} units of functionality that are self-contained, 
+Each service is an implementation of some interfaces, which provide a communication schema with
+each application. Also, interfaces can be published and invoked.
+
+\paragraph{Structure} Here we chose to use the Object-Oriented Architectural Style.
+This is a design paradigm based on the division of responsibilities for a complex system
+into small and reusable parts called ``Objects''.
+They communicate with each other through interfaces, by sending and receiving messages
+or by calling methods in other objects.
+
+The main benefits of this approach are that it is:
+
+\begin{itemize}
+    \item{\textbf{Extensible} because there are a lot of structures which ensures that a change of implementation does not imply a change of interface.}
+    \item{\textbf{Reusable} if each object should be developed as a reusable small piece of code.}
+    \item{\textbf{Testable} because of the incapsulation, which improves testability.}
+    \item{\textbf{Understandable} because it maps the application more closely to the real world.}
+\end{itemize}
+
+\pagebreak
+\subsection{Component interfaces}
+\label{sub:component_interfaces}
+
+\subsubsection{Connection client - web server} % (fold)
+\label{ssub:https}
+The connection through the website to the service is guaranteed through standard HTTPS requests and are not described in detail here.
+% subsubsection https (end)
+
+\subsubsection{Connection application server - DB} % (fold)
+\label{ssub:connection_application_server_db}
+The application server uses EntityBeans to map relations into Java objects, which themselves refer to the underlying DB through JDBC calls. Since these connections are pretty standard (i.e. connection, query, handling results), they are not described in detail here.
+% subsubsection connection_application_server_db (end)
+
+\subsubsection{Web Service: JAX-WS} % (fold)
+\label{ssub:web_service_jax_ws}
+The following public methods are available through a Web service, which is handled by JAX-WS on the server side. This means that each client knowing the address of the service can use it according to the functions described in detail below. Authorization for specific operations is controlled by tokens, as it is required in the parameter list.
+% API PUBBLICA PUBBLICA (nel senso accessibile anche da esterno??) => WSDL
+
+\pagebreak
+\paragraph{Guest Manager} % (fold)
+\label{par:guest_manager}
+The GuestManager bean is responsible for operations on \emph{unregistered} users; it let customers register, sign in or confirm their email after signing up.
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{3}{*}{signup} 			& 	\multirow{3}{*}{NO}		&	\multirow{3}{*}{Guest}	&	Username			&	Username for this customer			& True if operation succedeed \\
+    									&							&							& Password			& Password for this customer \\
+    									&							&							& Mail			& Mail for this customer \\\cmidrule{1-6}
+    \multirow{2}{*}{login} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Guest}	&	Username			&	Username chosen during signup 			& Access token \\
+    									&							&							& Password		& Hashed password for this user \\\cmidrule{1-6}
+    \multirow{2}{*}{confirmEmail} 			& 	\multirow{2}{*}{NO}		&	\multirow{2}{*}{Customer}	&	Token			&	Mail token sent during registration			& Boolean response \\
+    									&							&							& Mail		& Mail to be confirmed \\
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph guestmanager (end)
+
+\paragraph{Customer Manager} % (fold)
+\label{par:customer_manager}
+The CustomerManager bean is responsible for operations on \emph{registered} users;
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    
+	\multirow{3}{*}{editProfile} 			& 	\multirow{3}{*}{YES}		&	\multirow{3}{*}{Customer}	&	Username			&	New username 			& Boolean response \\
+   									&							&							& Password		& New password \\
+   									&							&							& Payment Method		& New payment method (POS or cash) \\\cmidrule{1-6}
+
+   \multirow{2}{*}{deleteProfile} 			& 	\multirow{2}{*}{YES}		&	\multirow{2}{*}{Customer}	&	Username			&	Username chosen during signup 			& - \\
+   									&							&							& Password		& Password for this username \\\cmidrule{1-6}
+    
+    getPreviousRides 			& 	YES		&	Customer	&	Page			&	Page number of rides (10 rides per page)			& List of rides \\\cmidrule{1-6}
+     
+     logout 			& 	YES		&	-	&	-			&	-			& - \\
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph taxiresmanager (end)
+
+\paragraph{TaxiResManager} % (fold)
+\label{par:taxiresmanager}
+TaxiResManager is responsible for the management of any call (aka request or reserve).
+
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{6}{*}{addCall} 			& 	\multirow{6}{*}{YES}		&	\multirow{6}{*}{Customer}	&	dateTime			&	When the call was made			& - \\
+                                        &                           &                           & rideDateTime            & When the ride starts \\
+    									&							&							& startPoint			& Starting point in associated ride \\
+    									&							&							& endPoint			& Ending point in associated ride \\
+    									&							&							& nrPeople			& How many seats are reserved \\
+    									&							&							& paymentMethod			& POS / Cash \\\cmidrule{1-6}
+
+    showCalls          &   YES     &   Customer    &   -          &   -        & Array of calls by this customer \\\cmidrule{1-6}
+    removeCall 			& 	YES		&	Customer	&	IDCall			&	Call ID in DB table			& - \\
+    									
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph customer_manager (end)
+
+\paragraph{TaxiDriverManager} % (fold)
+\label{par:taxidrivermanager}
+TaxiDriverManager is responsible for the management of a single taxi driver through his own app.
+
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token (Taxi)} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    setAvailabilityStatus 			& 	YES		&	Taxi Driver / System	&	Status	& New status for this taxi & - \\\cmidrule{1-6}
+
+    updatePosition			& 	YES		&	Taxi Driver	&	GPSCoords			&	Current GPS Coordinates for taxi		& - \\\cmidrule{1-6}
+
+    setRideComplete          &   YES     &   Taxi Driver &   rideID           &   ID for current ride       & - \\
+    									
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph taxidrivermanager (end)
+
+\pagebreak
+\subsubsection{Internal classes} % (fold)
+\label{ssub:internal_classes}
+Here are described the classes that are somewhat important for the service but that are not available publicly.
+% subsection internal_classes (end)
+
+\paragraph{RideManager} % (fold)
+\label{par:ridemanager}
+RideManager is responsible for any action involving a ride: adding one when a call is added to the DB, modifying one when something changes (for example, a new client in a shareable ride), deleting one or setting a new status for it.
+
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}        &   \textbf{Token}  &   \textbf{User}   &   \textbf{Parameter Name}     & \textbf{Parameter Description}    & \textbf{Returns} \\
+    \midrule
+    \multirow{4}{*}{addRide}            &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       IDRide      &       Ride ID     & - \\
+                                        &                           &                           & startTime         & When the ride starts \\
+                                        &                           &                           & nrPeople          & Total number of people for this taxi \\
+                                        &                           &                           & expectedFee           & Fee calculated in advance for each customer \\\cmidrule{1-6}
+
+    removeRide          &   YES     &   System  &   IDRide          &   Ride ID in DB table         & - \\\cmidrule{1-6}
+
+    \multirow{4}{*}{updateRide}             &   \multirow{4}{*}{YES}        &   \multirow{4}{*}{System} &       RideID      &       Ride ID     & Boolean response \\
+                                        &                           &                           & nrPeople      & New total number of people  \\
+                                        &                           &                           & expectedFee       & New expected fee  \\
+                                        &                           &                           & endTime       & When the ride ends (optional)  \\\cmidrule{1-6}
+
+    \multirow{2}{*}{setStatus}          &   \multirow{2}{*}{YES}        &   \multirow{2}{*}{Systen} &   IDRide          &   Ride ID             & - \\
+                                        &                           &                           & Status        & New status for this ride \\\cmidrule{1-6}
+    
+    getRideInfo             &   YES     &   System  &   IDRide          &   Ride ID in DB table         & Ride Info \\\cmidrule{1-6}
+
+    getFee             &   YES     &   System  &   IDRide          &   Ride ID in DB table         & - \\
+
+    \bottomrule
+\end{tabular}}
+\end{table}
+% paragraph ridemanager (end)
+
+\paragraph{TaxiAllocationDaemon} % (fold)
+\label{par:taxiallocationdaemon}
+This is a Singleton JavaBean, responsible for allocating a taxi for each ride when necessary. It also holds all the Queues, divided by zone, for fast access.
+
+\begin{table}[h!]
+\centering
+\resizebox{1\textwidth}{!}{
+\begin{tabular}{llllll}
+\toprule
+    \textbf{Method name}		&	\textbf{Token} 	&	\textbf{User} 	&	\textbf{Parameter Name} 	& \textbf{Parameter Description} 	& \textbf{Returns} \\
+    \midrule
+    \multirow{2}{*}{addTaxiToZoneQueue} 			& 	\multirow{2}{*}{YES (Taxi Driver)}		&	\multirow{2}{*}{Taxi Driver}	&		taxi		&		The taxi to be added		& - \\
+    									&							&							& zone			& The zone where to add the taxi \\\cmidrule{1-6}
+
+    handleNewRide 			& 	NO		&	System	&	-			&	-			& - \\\cmidrule{1-6}
+    
+    refreshRideQueue 			& 	YES		&	System	&	-			&	-			& - \\
+
+    \bottomrule
+\end{tabular}}
+\end{table}
+
+% paragraph taxiallocationdaemon (end)
+
+% subsubsection web_service_jax_ws (end)
+\pagebreak
+\subsection{Other design decisions}
+\label{sec:otherdesign}
+
+There are two aspects of myTaxiService we haven't discussed yet: communication 
+with smartphones and geolocalization.
+
+\paragraph {Mobile communication}
+We need to send instant notifications to 
+user or taxi's mobile devices. There is a standard way to do this, 
+which is the one we have chosen, \textit{Push Notification}.
+
+We decided to support both iOS and Android smartphones. In order to send push
+notifications to iOS smartphone, we have to use \textit{Apple Push Notification Service}.
+The same applies to Android world, Google has its own push service, called 
+\textit{Google Cloud Messaging}.
+
+\paragraph {Geolocalization}
+We decided to use Google Maps as geolocalization service because it is highly
+reliable, fast and extremely used in the world.
+Also, it offers powerful APIs that will be used to calculate the best route
+among two or more points in the map (for example, when shared rides are involved).
