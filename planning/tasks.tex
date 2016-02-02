@@ -15,7 +15,7 @@ The main tasks of this project are the following:
 For the first tasks the activities were already given along with corresponding deadlines for the submission of needed documents. Starting from the implementation, instead, no schedule was given so, according to the COCOMO estimation performed and described in \ref{sec:cocomo}, we expect the implementation of the application to be complete in 9.5 months, around the 15th of September 2016.
 Regarding the integration testing, it will take place in the last month of developement.
 
-The development of the application will start after the creation of the Design Document and will be carried on in parallel with the rest of the tasks.
+The development of the application started after the creation of the Design Document and will be carried on in parallel with the rest of the tasks.
 Tests will be run on the developing application in order to verify the proper functioning of every new functionality added.
 
 In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task, in~\autoref{tab:schedule}, instead, you can find the schedule of every task. Also the Gantt chart for the project is provided in~\autoref{fig:gantt}.
@@ -34,13 +34,13 @@ In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task
         \hline
         \textbf{Activity}   & \textbf{Start Date}   & \textbf{Deadline} \\
         \hline
-        Project Plan        & 2015-10-02            & 2015-10-14        \\
         RASD                & 2015-10-15            & 2015-11-06        \\
         DD                  & 2015-11-11            & 2015-12-04        \\
         ITPD                & 2016-01-07            & 2016-01-21        \\
-        Presentation        & 2016-02-02            & 2016-02-12        \\
-        Implementation      & 2015-12-05            & 2016-15-08        \\
-        Integration Testing & 2016-08-01            & 2016-31-08        \\
+        Project Plan        & 2016-01-21            & 2016-02-02        \\
+        Presentation        & 2016-02-03            & 2016-02-12        \\
+        Implementation      & 2015-12-05            & 2016-09-15        \\
+        Integration Testing & 2016-09-01            & 2016-09-31        \\
         \hline
     \end{tabular}
     \caption{Schedule for project tasks.}
@@ -61,11 +61,11 @@ In~\autoref{fig:tasks-dep-graph} you can find the dependency graph of every task
         inline
         ]{2015-10-01}{2016-10-10}
         \gantttitlecalendar{year, month} \\
-        \ganttbar[name=pplan]{Plan}{2015-10-02}{2015-10-14} \\
         \ganttbar[name=rasd]{RASD}{2015-10-15}{2015-11-06} \\
         \ganttbar[name=dd]{DD}{2015-11-11}{2015-12-04} \\
         \ganttbar[name=itpd]{ITPD}{2016-01-07}{2016-01-21} \\
-        \ganttbar[name=pres]{Present.}{2016-02-02}{2016-02-12} \\
+        \ganttbar[name=pplan]{Plan}{2016-01-21}{2016-02-02} \\
+        \ganttbar[name=pres]{Present.}{2016-02-03}{2016-02-12} \\
         \ganttbar[name=impl]{Implementation}{2015-12-05}{2016-09-15} \\
         \ganttbar[name=int-test]{IntTest}{2016-09-01}{2016-09-31}
         \ganttlink{rasd}{dd}
