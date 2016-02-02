@@ -1,0 +1,277 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{stfloats}
+\usepackage{url}
+
+\hypersetup{
+    pdfborder={0 0 0}
+}
+
+\newcounter{tc}
+
+\begin{document}
+
+\newcommand{\code}[1]{
+    \texttt{#1}
+}
+
+\newcommand{\testx}[7]{
+	\stepcounter{tc}
+	\subsubsection{Test \thetc: #1} % (fold)
+
+	% subsubsection test_1 (end)
+	\begin{tabular}{l p{0.7\textwidth}}
+    \hline
+    \textbf{Test Case Identifier} & \thetc\\
+    \hline
+    \textbf{Test Item(s)} & \code{#2} $\rightarrow$ \code{#3}\\
+    \hline
+    \textbf{Input Specification} & #4\\
+    \hline
+    \textbf{Output Specification} & #5\\
+    \hline
+    \textbf{Environmental Needs} & #6\\
+    \hline
+    \textbf{Test Description} & #7\\
+    \hline
+	\end{tabular}
+}
+
+\title{Integration Test Plan Document}
+
+\author{M. Albanese, M. Bianchi, A. Carlucci}
+
+\maketitle
+\newpage{}
+\tableofcontents{}
+
+\newpage{}
+
+\section{Introduction}
+% \subsection{Revision History}
+% \label{sub:revision_history}
+
+\subsection{Purpose}
+\label{sub:purpose}
+The purpose of this document, the \textbf{Integration Test Plan Document} (ITPD), is to describe how integration tests are to be performed.
+
+The tests that will be described here will mainly focus on the flow of information between different modules rather than on the modules themselves.
+In particular, it describes the adopted methodologies, the sets of all tests to be performed, the tools that will be used during the whole process.
+
+\subsection{Scope} % (fold)
+\label{sub:scope}
+The system will be an optimization of a pre-existing, non-software solution for renting taxis already in use in the city. The new system will let users to rent or reserve a taxi through a mobile or a web application and will also let taxi drivers to take care of the users' requests in a more simple and effective way. In addition to a better user interface, the new system will focus on a smarter organization of the vehicles deployed in each city zone, resulting in a more efficient service for the citizens.
+
+% subsection scope (end)
+\subsection{List of definitions and abbreviations}
+\label{sub:list_of_definitions_and_abbreviations}
+
+\begin{description}
+    \item[JUnit] The tool used for unit testing. See Section~\ref{sub:tools_and_test_equipment_required} for more information.
+    \item[Mockito] A mocking framework used in conjuction with JUnit.
+    \item[Arquillian] The tool used for the actual integration testing. See Section~\ref{sub:tools_and_test_equipment_required} for more information.
+    \item[RASD] Requirements \& Analysis Specification Document
+    \item[DD] Design Document
+    \item[ITPD] Integration Test Plan Document
+    \item[DBMS] Database Management System
+    \item[GPS] Global Positioning System
+    \item[API] Application Programming Interface
+    \item[UI] User Interface
+    %\item[]
+\end{description}
+
+\newpage
+\section{Integration Strategy}
+\label{sec:integration_strategy}
+
+\subsection{Entry Criteria}
+\label{sub:entry_criteria}
+Several entry criteria must be met before Integration Testing phase.
+
+The whole architecture must be designed according to the contents of the \textbf{Design Document}, to be written along with this one.
+Following this phase, each component that will be integrated must be - of course - coded.
+
+After development phase, each module must successfully pass a thorough \textbf{unit testing}, which guarantees the absence of critical bugs in the codebase. As stated in Section~\ref{sub:tools_and_test_equipment_required}, \code{JUnit} will be the privileged tool for this phase.
+
+Along with unit testing, \textbf{code inspection} is done, via both manual and automated work; all these devices will lead to well-formed and robust modules, ready to be composed together.
+
+In addition to this, the following must have been produced:
+\begin{itemize}
+    \item A thorough Javadoc documentation covering public methods
+    \item The Requirements Analysis and Specification Document (RASD) \cite{bib:rasd}
+    \item The Design Document (DD) \cite{bib:dd}
+    \item Code Inspection Document (CID) \cite{bib:cid}
+\end{itemize}
+
+\subsection{Elements to be integrated}
+\label{sub:elements_to_be_integrated}
+
+The list of all elements to be integrated is reported in Table~\ref{tab:components}. As you may see, this closely parallels what was written in \cite{bib:dd}. For more information on the order of the integration tests, see Section~\ref{ssub:software_integration_sequence}; for more information about the tests themselves, see Section~\ref{sub:individual_steps_and_test_description}.
+
+\input{elementsTable.tex}
+
+\subsection{Integration Testing Strategy}
+\label{sub:integration_testing_strategy}
+The strategy that will be adopted is the so-called \textbf{bottom-up} approach.
+
+An incremental approach is fundamental, in order to prevent all shortcomings that are typical to \emph{Big Bang approach} (you have to wait until all modules are complete, localizing the faulty components can be difficult, some interfaces could be missed easily during testing...).
+
+We decided to choose bottom-up over top-down because there are many components at the lower levels (see Figure~\ref{fig:testplan}); this means that only few drivers, if any, are needed.
+
+\newpage
+\subsection{Sequence of Component/Function Integration}
+\label{sub:sequence_of_component_function_integration}
+As the system consists of several different parts interrelated one to the other, we decided to plan integration testing under two different points of view: \emph{subsystem} and \emph{class-level} testing. \\
+
+In particular, Section~\ref{ssub:software_integration_sequence} will explain how the main software components will be integrated, as they were defined in \cite{bib:dd} in the \emph{High Level Components} section, whilst the following section will explain how integration will take part on a upper level by considering subsystems only.
+
+\subsubsection{Software Integration Sequence}
+\label{ssub:software_integration_sequence}
+
+\input{componentIntegrationTable}
+First of all, all transactions with the DB must be operative in order to proceed with all other integrations: for this reason, all modules interacting with the DBMS are tested first (\code{DAOs} and \code{Entity Beans}).
+
+After that, modules in \code{ClientMgr} and \code{TaxiReservationMgr} are tested, so that \code{ClientMgr} is completely functional.\footnote{As written in \cite{bib:dd}, \code{ClientMgr} contains the data and the logic for managing registered users and guests. \code{TaxiReservationMgr} is needed for the retrieval of all calls done by a specified user}
+
+Since the allocation depends on at least a call, the integration between classes in \code{TaxiAllocationMgr} and \code{TaxiReservationMgr} is done next, followed by the integration between \code{TaxiDriverMgr} (which contains all logic for updating a specified taxi) and \code{TaxiAllocationMgr} (which contains the code for explicitly reserving a taxi).
+
+Eventually the core is complete; the last integration test is done on the mobile app of each taxi driver and the \code{TaxiDriverMgr} component (for example, to check if the \code{updatePosition()} method is working fine).
+
+\begin{table}
+    \centering
+    \begin{tabular}{| l | l | l |}
+        \hline
+        \textbf{N.} & \textbf{Subsystem} & \textbf{Integrates with} \\
+        \hline
+        1 & ClientMgr & DBMS \\
+        2 & TaxiResMgr & DBMS \\
+        3 & TaxiAllocationMgr & DBMS \\
+        4 & ClientMgr & TaxiReservationMgr \\
+        5 & TaxiAllocationMgr & TaxiReservationMgr \\
+        6 & TaxiDriverMgr & TaxiAllocationMgr \\
+        7 & Mobile App & TaxiDriverMgr \\
+        \hline
+    \end{tabular}
+    \caption{Integration order of the high-level components}
+    \label{tab:component-integration}
+\end{table}
+
+\subsubsection{Subsystem Integration Sequence}
+\label{ssub:subsystem_integration_sequence}
+
+Four main subsystems make up the whole architecture, listed in Table~\ref{tab:subsystem-integration}. All components described in \cite{bib:dd} make up the Core subsystem, which contains the main logic of the service; as stated in the previous section, the first important integration to be done is the one with the \code{DBMS}. When the core system is ready, the mobile application for a taxi driver must be tested in conjunction with the main service. Finally, the UI must be integrated with the business tier.
+
+\begin{table}
+    \centering
+    \begin{tabular}[h!bp]{| l | l | l |}
+        \hline
+        \textbf{N.} & \textbf{Subsystem} & \textbf{Integrates with} \\
+        \hline
+        1 & Core (Back-end) & DBMS \\
+        2 & Taxi Driver mobile application (logic and UI) & Core \\
+        3 & Mobile UI & Core \\
+        4 & Web UI & Core \\
+        \hline
+    \end{tabular}
+    \caption{Integration order of the subsystems}
+    \label{tab:subsystem-integration}
+\end{table}
+
+\begin{figure}[h!tb]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/elements.pdf}
+    \label{fig:testplan}
+    \caption{The elements to be integrated; the number refer to the tests described in Section~\ref{sub:individual_steps_and_test_description}}
+\end{figure}
+
+\newpage
+\section{Individual Steps and Test Description}
+\label{sub:individual_steps_and_test_description}
+
+% subsection component_tests (end)
+\input{testx.tex}
+
+\newpage
+\section{Tools and Test Equipment Required}
+\label{sub:tools_and_test_equipment_required}
+
+\begin{description}
+    \item[JUnit] JUnit is a simple framework to write repeatable tests. Each test is done on a single unit, usually composed of one public class. Tests can also be grouped in Suites for multiple instances at once.
+
+    Since complex environments must be described within this project (for example, the interaction between \code{TaxiHandler} and \code{Taxi} or all interactions between a module and the DBMS), a mock framework is necessary. Among several and similar products(JMock, EasyMock, Powermock...), we decided to use \textbf{Mockito} for its simplicity and clearness.
+
+    These tools are used \emph{before} Integration Testing happens (described throughout this document).
+
+    \item[Arquillian] Arquillian is an integration testing framework for business objects that are executed inside a container or that interact with the container as a client. \\
+\\
+It combines a unit testing framework (JUnit), and one or more supported target containers (Java EE container, servlet container, etc) to provide a simple, flexible and pluggable integration testing environment. \\ \\
+Arquillian strives to make integration testing no more complicated than basic unit testing, so we decided to use Arquillian as our integration testing framework for its semplicity.
+
+    \item[Cellular Phones] As described in \cite{bib:rasd}, the mobile application will be available for customers using Android and iOS. This implies that at least two cellular phones, one for each OS, have to be used for testing. In particular:
+    \begin{itemize}
+        \item Android phones must be updated to at least Android JellyBean
+        \item iOS phones must be updated to v.9
+        \item Each phone must have a working Internet connection and a GPS system enabled
+    \end{itemize}
+
+    \item[PCs] At least a personal computer must be used to ensure accessibility through the web app; in order to accomplish this, several browsers are used (mainly Google Chrome, Mozilla Firefox, Internet Explorer and Edge)
+
+\end{description}
+
+\newpage
+\section{Program Stubs and Test Data Required}
+\label{sub:program_stubs_and_test_data_required}
+In an undeveloped environment, following the criteria of \textbf{bottom-up approach}, we need to define and use \emph{drivers} in order to have a complete environment in which we can test the developed parts.
+
+\begin{description}
+    \item[Test Server:] A working Glassfish test server is needed in order to properly host the Application server. 
+
+    \item[Test database:] The target environment must have a working and configured \code{DBMS}, in which test data and tables must reflect the entities and the relations described in the ER-diagram showed in the Design Document. This mock DB should contain random valid and invalid data about \code{Taxi}, \code{Zone}, \code{Ride}, \code{Customer}, \code{Address}, \code{Call}
+
+    \item[Drivers for JavaEE:] Drivers used to test the proper behaviour of the Java Entity Beans while the Application server is not fully implemented. These are placeholders for all Managers in the application (\code{RideManager}, \code{CustomerManager}\ldots) and can be eliminated as the upper-level modules are ready. 
+
+    \item[API client:] It is also necessary to emulate a client application  with an API-client which interacts with the server via HTTP requests.
+
+    \item[Test e-mail confirmation:] An email sender/receiver is needed in order to test and automate the email confirmation process when a user signs up for the service.
+
+    \item[Fake GPS data:] In order to test position handling for taxis, a set of random GPS data are generated, both inside and outside the city.
+\end{description}
+
+\appendix
+
+\clearpage
+\addcontentsline{toc}{section}{References}
+
+\begin{thebibliography}{9}
+\bibitem{bib:assignment}
+    Prof. Di Nitto - \emph{Assignment 4 - Integration Test Plan}
+
+\bibitem{bib:spingrid}
+    AA.VV. - \emph{SpinGrid - Integration Test Plan Example}
+
+\bibitem{bib:rasd}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Requirements Analysis and Specification Document}
+
+\bibitem{bib:dd}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Design Document}
+
+\bibitem{bib:cid}
+        Albanese Michele, Bianchi Mattia, Carlucci Alain - \emph{myTaxiService: Code Inspection Document}
+
+\bibitem{bib:arquillian}
+        AA.VV. - \emph{Arquillian Reference Guide} {\small(\url{https://docs.jboss.org/author/display/ARQ/Reference+Guide?_sscc=t})}
+
+\bibitem{bib:mockito}
+        AA.VV. - \emph{Mockito Reference Guide} {\small(\url{http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html})}
+\end{thebibliography}
+
+\vfill
+
+\section*{Hours spent}
+Each member has spent 10 hours while writing this document.
+
+\end{document}

@@ -1,0 +1,54 @@
+\begin{table}
+    \centering
+    \resizebox{1\textwidth}{!}{
+    \begin{tabular}{| l | l | l | l | l |}
+    \hline
+    \textbf{Test ID} & \textbf{Component 1} & \textbf{Subsystem 1} & \textbf{Component 2} & \textbf{Subsystem 2} \\
+    \hline
+    A & DAOs & DataLayer & DBMS & DBMS \\
+    \hline
+    B & EntityBeans & DataLayer & DAOs & DataLayer \\
+    \hline
+    1 & Taxi & DataLayer & DBMS & DBMS \\
+    \hline
+    2 & Zone & DataLayer & DBMS & DBMS \\
+    \hline
+    3 & Ride & DataLayer & DBMS & DBMS \\
+    \hline
+    4 & Customer & DataLayer & DBMS & DBMS \\
+    \hline
+    5 & Address & DataLayer & DBMS & DBMS \\
+    \hline
+    6 & Call & DataLayer & DBMS & DBMS \\
+    \hline
+    7 & Request & DataLayer & DBMS & DBMS \\
+    \hline
+    8 & Reservation & DataLayer & DBMS & DBMS \\
+    \hline
+    9 & TaxiDriverManager & TaxiDriverMgr & Taxi & DataLayer \\
+    \hline
+    10 & TaxiHandler & TaxiAllocationMgr & Taxi & DataLayer \\
+    \hline
+    11 & TaxiHandler & TaxiAllocationMgr & Ride & DataLayer \\
+    \hline
+    12 & RideManager & TaxiReservationMgr & Ride & DataLayer \\
+    \hline
+    13 & CustomerManager & ClientMgr & Customer & DataLayer \\
+    \hline
+    14 & GuestManager & ClientMgr & Customer & DataLayer \\
+    \hline
+    15 & TaxiResManager & TaxiReservationMgr & RideManager & TaxiReservationMgr \\
+    \hline
+    16 & TaxiAllocationDaemon & TaxiAllocationMgr & TaxiHandler & TaxiAllocationMgr \\
+    \hline
+    17 & TaxiAllocationDaemon & TaxiAllocationMgr & Zone & DataLayer \\
+    \hline
+    18 & TaxiAllocationDaemon & TaxiAllocationMgr & Ride & DataLayer \\
+    \hline
+    19 & TaxiResManager & TaxiReservationMgr & Call & DataLayer \\
+    \hline
+    \end{tabular}
+    }
+    \caption{List of all components to be integrated}
+    \label{tab:components-integration}
+\end{table}

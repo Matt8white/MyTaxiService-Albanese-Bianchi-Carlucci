@@ -1,0 +1,228 @@
+\subsection{Component Tests} 
+Please note that the actual access to the DB is done by the corresponding DAO for each Entity Bean. In order to avoid further complexity, the following tests are simplified by considering the entity as the object doing operations on the DB. % (fold)
+\label{sub:component_tests}
+
+% === DB ===
+\testx
+{Taxi - Access to DB}
+{Taxi}
+{DBMS}
+{Frequent queries on table Taxi (get plate, driver name, status, payment methods accepted\ldots)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Zone - Access to DB}
+{Zone}
+{DBMS}
+{Frequent queries on table Zone (name, number of taxis)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Ride - Access to DB}
+{Ride}
+{DBMS}
+{Frequent queries on table Ride (associated calls, starting and ending time, number of people\ldots)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Customer - Access to DB}
+{Customer}
+{DBMS}
+{Frequent queries on table Customer (name, mail, password\ldots)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Address - Access to DB}
+{Address}
+{DBMS}
+{Frequent queries on table Address (e.g. GPS coordinates)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Call - Access to DB}
+{Call}
+{DBMS}
+{Frequent queries on table Call (date and time of registration, payment method chosen\ldots)}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Request - Access to DB}
+{Request}
+{DBMS}
+{Frequent queries on table Request.}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+\testx
+{Reservation - Access to DB}
+{Reservation}
+{DBMS}
+{Frequent queries on table Reservation.}
+{The corresponding tuples to the query.}
+{Working Glassfish Server, Working DB Server.}
+{Verify that all entities in the DB are correctly mapped through JavaBeans.}
+
+% === OTHERS ===
+\testx
+{TaxiDriverManager - Update Taxi entity}
+{TaxiDriverManager}
+{Taxi}
+{Update information on position and status of the taxi.}
+{Taxi has modified data.}
+{Working Glassfish Server, Working Database Server.}
+{The purpose of this test is to verify that all the information are correctly
+updated on the server.}
+
+\testx
+{TaxiHandler - Taxi assignment to a ride}
+{TaxiHandler}
+{Taxi}
+{There is a new ride available.}
+{This ride is assigned to a taxi and the corresponding taxi driver is notified.}
+{Working Glassfish Server, Working Database Server.}
+{The aim of this test is to verify that a new ride is properly assigned to
+a taxi in the correct zone and to ensure that the correct taxi driver is notified. This means that the taxi must be temporarily dequeued and set to BUSY status.}
+
+\testx
+{TaxiHandler - Ride completion with a taxi}
+{TaxiHandler}
+{Ride}
+{A new ride is on schedule.}
+{A Taxi is assigned to the specified ride.}
+{Working Glassfish Server, Working Database Server.}
+{This test aims to verify that a \code{Taxi} is correctly assigned to the ride
+when a request needs to be handled.}
+
+\testx
+{RideManager - Operations on rides}
+{RideManager}
+{Ride}
+{Some \code{Ride} needs to be changed, according to user or system decision.}
+{The corresponding \code{Ride} is correctly updated.}
+{Working Glassfish server, Working Database server.}
+{The purpose of the test is to verify that RideManager updates the correct
+information about a \code{Ride} properly. This means that all other rides must be unaffected by the update.}
+
+\testx
+{CustomerManager - Customer Services}
+{CustomerManager}
+{Customer}
+{There are some pending operations initiated by users, which aim is to change
+\code{User} entities. In particular, the following operartions must be tested: editing a profile, deleting one or logging out.}
+{For each operation, every involved \code{User} entity must be updated correctly,
+according to the specified operation.}
+{Working Glassfish Server, Working Database server.}
+{With this test, we can ensure that CustomerManager is working properly.}
+
+\testx
+{GuestManager - Guest Services}
+{GuestManager}
+{Customer}
+{There are some pending operations initiated by unauthenticated users.}
+{Every operation must be executed correctly, \emph{according to the user level}
+(unregistered!). This includes logging in, signing up and confirm his own mail (by using a mock mail sender - see Section~\ref{sub:tools_and_test_equipment_required})}
+{Working Glassfish Server, Working Database server.}
+{This test will check that every \code{Guest} operation is working properly
+and that guests could do actions \emph{if and only if} those actions are allowed to be done by guests.}
+
+\testx
+{TaxiResManager - Check existing rides}
+{TaxiResManager}
+{RideManager}
+{Call to existRide() method.}
+{Return value must be chosen according to the existance of this \code{Ride}.}
+{Working Glassfish Server, Working Database server.}
+{Check that \code{RideManager} gives back valid results. For example, if
+the \code{Ride} exists, the output should be \code{True}. Otherwise,
+\code{False} will be the expected result.}
+
+\testx
+{TaxiAllocationDaemon - Creation of a handler for an incoming ride}
+{TaxiAllocationDaemon}
+{TaxiHandler}
+{Ride to be handled.}
+{Association between a ride and a taxi.}
+{Working Glassfish Server, Working Database server.}
+{The aim of the test is to check that an handler is created for every incoming
+ride. This should test that TaxiAllocationDaemon allocates only one ride to a single TaxiHandler.}
+
+\testx
+{TaxiAllocationDaemon - Available taxis in zones}
+{TaxiAllocationDaemon}
+{Zone}
+{Queue related to a zone.}
+{Number of available taxis for a zone.}
+{Working Glassfish Server, Working Database server.}
+{The purpose of the test is to check that the number of available taxis in every
+zone is equal to each corresponding zone queue. This is done to guarantee consistency on results between different components.}
+
+\testx
+{TaxiAllocationDaemon - Retrieve ride information}
+{TaxiAllocationDaemon}
+{Ride}
+{Ride on schedule.}
+{Ride used in the creation of new TaxiHandler.}
+{Working Glassfish Server, Working Database server.}
+{The purpose is to check that the proper information are correctly retrived and
+used for the creation of a new TaxiHandler. The rides inside TaxiAllocationDaemon are the ones got by a periodic refresh on the DB (by using \code{refreshRideQueue()}).}
+
+\testx
+{TaxiResManager - Creation of a call}
+{TaxiResManager}
+{Call}
+{Information provided by the user.}
+{New Call entity.}
+{Working Glassfish Server, Working Database server.}
+{Verify that a new call object is correctly created, and then added to the database through Java Entity Beans with the correct information.}
+
+\subsection{Subsystem Tests} % (fold)
+\label{sub:subsystem_tests}
+
+\testx
+{Application Server - Main functionalities with DB}
+{Core (back-end)}
+{DBMS}
+{Standard query by the application server on the DB}
+{Correct tuples, based on the actual component that made the request}
+{Working Glassfish Server, Working Database server.}
+{Several components in the application server use DB for their functionalities, by either inserting, updating or deleting information. For more information, see the first tests in section Section~\ref{sub:component_tests}}
+
+\testx
+{Taxi Driver Mobile Application - Integration with the application server}
+{Taxi Driver Mobile Application}
+{Core (back-end)}
+{A request for a ride by the system}
+{A notification by the driver that he accepted / refused}
+{Working Glassfish Server, Working Database server, mobile phone with GPS enabled}
+{When a new Ride has to be assigned, TaxiHandler starts to send push notifications to taxi drivers in its queue, as specified in \cite[p.~22]{bib:dd}. The driver must take a decision, which is sent to back to the server}
+
+\testx
+{UI - Webapp}
+{UI}
+{Core (back-end)}
+{UI for the web app}
+{Results on the application server}
+{Working Glassfish Server, Working Database server, PC}
+{All principal functionalities must be tested through the web application. It must be guaranteed that the UI is easily displayed on all common browsers on different resolutions, respecting the laws about accessibility and privacy.}
+
+\testx
+{UI - Mobile app}
+{UI}
+{Core (back-end)}
+{UI for the mobile app}
+{Results on the application server}
+{Working Glassfish Server, Working Database server, Mobile Phone}
+{All principal functionalities must be tested through the mobile application. It must be guaranteed that the UI is easily displayed on all supported operating systems and being responsive.}
